@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class Sandrone {
     public static void main(String[] args) {
         String greetings =
@@ -10,20 +11,19 @@ public class Sandrone {
         System.out.println(greetings);
 
         Scanner scn = new Scanner(System.in);
-        String[] list = new String[100];
-        int index = 0;
-        String task = scn.nextLine();
-        while (!task.equals("bye")) {
-            if (task.equals("list")) {
-                for (int i = 0; i < index; i++) {
-                    System.out.println(i + ". " + list[i]);
-                }
+        TaskList list = new TaskList();
+        String input = scn.nextLine();
+
+        while (!input.equals("bye")) {
+            if (input.equals("list")) {
+                list.printList();
+            } else if (Pulonia.isValidCommand(input)) {
+                list.setTaskStatus(Pulonia.extractIndex(input), Pulonia.getAction(input).equals("mark"));
             } else {
-                list[index++] = task;
-                System.out.println("added: " + task);
+                list.addTask(input);
             }
 
-            task = scn.nextLine();
+            input = scn.nextLine();
         }
 
         System.out.println(farewell);
