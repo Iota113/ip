@@ -3,17 +3,27 @@ import java.util.Scanner;
 public class Sandrone {
     public static void main(String[] args) {
         String greetings =
-                " Hello! I'm Sandrone\n" +
-                " What can I do for you?\n";
-        String farewell = " Bye. Hope to see you again soon!\n";
+                "Look very closely, for standing before you is none other than Marionette" +
+                " Seventh of the Fatui Harbingers.\n";
+        String farewell = "Ad astra abyssosque! Welcome to Nod-Krai, dominion of the Fatui. \n";
 
         System.out.println(greetings);
 
         Scanner scn = new Scanner(System.in);
-        String sentence = scn.nextLine();
-        while (!sentence.equals("bye")) {
-            System.out.println(sentence);
-            sentence = scn.nextLine();
+        String[] list = new String[100];
+        int index = 0;
+        String task = scn.nextLine();
+        while (!task.equals("bye")) {
+            if (task.equals("list")) {
+                for (int i = 0; i < index; i++) {
+                    System.out.println(i + ". " + list[i]);
+                }
+            } else {
+                list[index++] = task;
+                System.out.println("added: " + task);
+            }
+
+            task = scn.nextLine();
         }
 
         System.out.println(farewell);
