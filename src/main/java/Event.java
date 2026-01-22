@@ -5,7 +5,7 @@ public class Event extends Task{
     public Event(String input) {
         super(input);
         this.desc = input.split(" /from ")[0].replace("event ", "");
-        this.from = input.split(" /from ")[1].split( " to ")[0];
+        this.from = input.split(" /from ")[1].split( " /to ")[0];
         this.to = input.split(" /to ")[1];
     }
 

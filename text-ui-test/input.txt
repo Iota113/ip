@@ -1,0 +1,9 @@
+todo MA2202 Exercise
+deadline CS2101 CA1 Readings /by Tomorrow
+event CS2103T Tutorial /from Thurs 5pm /to Thurs 6pm
+list
+mark 2
+list
+unmark 2
+list
+bye
