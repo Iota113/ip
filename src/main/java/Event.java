@@ -16,7 +16,6 @@ public class Event extends Task{
             throw new SandroneException("The task description is empty!");
         }
 
-
         String[] time_parts = desc_part[1].split("/to");
         if (time_parts.length < 2) {
             if (time_parts[0].trim().isEmpty()) throw new SandroneException("Both from and to fields are empty!");

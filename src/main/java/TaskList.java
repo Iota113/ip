@@ -1,24 +1,35 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskList {
-    private Task[] tasks = new Task[100];
-    private int count = 0;
+    private List<Task> tasks = new ArrayList<>();
 
-    private enum TaskType {
-        TODO, DEADLINE, EVENT, DEFAULT;
+    private enum Action {
+        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, DEFAULT;
 
-        public static TaskType fromCommand(String input) {
+        public static Action fromCommand(String input) {
             if (input == null) return DEFAULT;
             try {
-                return TaskType.valueOf(input.split(" ")[0].toUpperCase());
+                return Action.valueOf(input.split(" ")[0].toUpperCase());
             } catch (IllegalArgumentException e) {
                 return DEFAULT;
             }
         }
     }
 
-    public String addTask(String input) throws SandroneException {
-        TaskType taskType = TaskType.fromCommand(input);
-        Task newTask;
-        switch (taskType) {
+    public String act(String input) throws SandroneException {
+        Action action = Action.fromCommand(input);
+        Task newTask = null;
+        switch (action) {
+            case LIST:
+                printList();
+                return "";
+            case MARK:
+                return setTaskStatus(Pulonia.extractIndex(input), true);
+            case UNMARK:
+                return setTaskStatus(Pulonia.extractIndex(input), false);
+            case DELETE:
+                return deleteTask(Pulonia.extractIndex(input));
             case TODO:
                 newTask = new Todo(input);
                 break;
@@ -40,42 +51,44 @@ public class TaskList {
                 throw new SandroneException(message);
         }
 
-        tasks[count++] = newTask;
-
-        String message =
+        if (newTask!=null) tasks.add(newTask);
+        int count = tasks.size();
+        String addTaskmessage =
                 "Very well. You have " + count + " task(s) now.\n" +
                         count + "."
-                        + "[" + tasks[count - 1].getStatusIcon() + "]"
-                        + "[" + tasks[count - 1].getTaskType() + "] "
-                        + tasks[count - 1].getDescription();
-        return message;
+                        + "[" + tasks.get(count-1).getStatusIcon() + "]"
+                        + "[" + tasks.get(count-1).getTaskType() + "] "
+                        + tasks.get(count-1).getDescription();
+        return addTaskmessage;
     }
 
     public String setTaskStatus(int id, boolean isMark) {
-        if (id >= count) {
+        if (id > tasks.size()) {
             return "You do not have that many tasks.";
         }
 
         if (isMark) {
-            tasks[id].mark();
+            tasks.get(id).mark();
             return "Very well.";
         } else {
-            tasks[id].unmark();
+            tasks.get(id).unmark();
             return "Utterly risible.";
         }
     }
 
+    public String deleteTask(int id) {
+        tasks.remove(id);
+        return "Your task has been deleted.";
+    }
+
     public void printList() {
-        System.out.println("____________________________________________________________");
         System.out.println("Your List:");
-        for (int i = 0; i < count; i++) {
-            // not my favourite solution to zero-index
+        for (int i = 0; i < tasks.size(); i++) {
             System.out.println(
                     (i+1) + "."
-                    + "[" + tasks[i].getStatusIcon() + "]"
-                    + "[" + tasks[i].getTaskType() + "] "
-                    + tasks[i].getDescription());
+                            + "[" + tasks.get(i).getStatusIcon() + "]"
+                            + "[" + tasks.get(i).getTaskType() + "] "
+                            + tasks.get(i).getDescription());
         }
-        System.out.println("____________________________________________________________");
     }
 }

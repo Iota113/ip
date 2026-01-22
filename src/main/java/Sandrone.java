@@ -16,16 +16,10 @@ public class Sandrone {
 
         while (!input.equals("bye")) {
             try {
-                if (input.equals("list")) {
-                    list.printList();
-                } else if (Pulonia.isMarkCommand(input)) {
-                    printResponse(
-                            list.setTaskStatus(Pulonia.extractIndex(input),
-                                    Pulonia.getAction(input).equals("mark"))
-                    );
-                } else {
-                    printResponse(list.addTask(input));
-                }
+                System.out.println("____________________________________________________________");
+                String message = list.act(input);
+                if (!message.isEmpty()) System.out.println(message);
+                System.out.println("____________________________________________________________");
             } catch (SandroneException e) {
                 printResponse(e.getMessage());
             }
