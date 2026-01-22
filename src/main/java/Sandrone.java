@@ -15,15 +15,19 @@ public class Sandrone {
         String input = scn.nextLine();
 
         while (!input.equals("bye")) {
-            if (input.equals("list")) {
-                list.printList();
-            } else if (Pulonia.isMarkCommand(input)) {
-                printResponse(
-                        list.setTaskStatus(Pulonia.extractIndex(input),
-                                Pulonia.getAction(input).equals("mark"))
-                );
-            } else {
-                printResponse(list.addTask(input));
+            try {
+                if (input.equals("list")) {
+                    list.printList();
+                } else if (Pulonia.isMarkCommand(input)) {
+                    printResponse(
+                            list.setTaskStatus(Pulonia.extractIndex(input),
+                                    Pulonia.getAction(input).equals("mark"))
+                    );
+                } else {
+                    printResponse(list.addTask(input));
+                }
+            } catch (SandroneException e) {
+                printResponse(e.getMessage());
             }
 
             input = scn.nextLine();

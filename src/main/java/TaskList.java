@@ -15,7 +15,7 @@ public class TaskList {
         }
     }
 
-    public String addTask(String input) {
+    public String addTask(String input) throws SandroneException {
         TaskType taskType = TaskType.fromCommand(input);
         switch (taskType) {
             case TODO:
@@ -29,7 +29,7 @@ public class TaskList {
                 tasks[count++] = new Event(input);
                 break;
             default:
-                tasks[count++] = new Task(input);
+                throw new SandroneException("You Fool. What are you saying.");
         }
 
         String message =
