@@ -1,7 +1,11 @@
 public class Todo extends Task {
 
-    public Todo(String desc) {
+    public Todo(String desc) throws SandroneException {
         super(desc);
+
+        if (desc.trim().equals("todo")) {
+            throw new SandroneException("The description of a todo cannot be empty.");
+        }
     }
 
     @Override

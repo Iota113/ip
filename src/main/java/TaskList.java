@@ -17,20 +17,30 @@ public class TaskList {
 
     public String addTask(String input) throws SandroneException {
         TaskType taskType = TaskType.fromCommand(input);
+        Task newTask;
         switch (taskType) {
             case TODO:
-                tasks[count++] = new Todo(input);
-                System.out.println();
+                newTask = new Todo(input);
                 break;
             case DEADLINE:
-                tasks[count++] = new Deadline(input);
+                newTask = new Deadline(input);
                 break;
             case EVENT:
-                tasks[count++] = new Event(input);
+                newTask = new Event(input);
                 break;
             default:
-                throw new SandroneException("You Fool. What are you saying.");
+                String message =
+                        "You Fool. What are you saying.\n"
+                        + "Here are the valid commands:\n"
+                        + "1. todo [insert desc] \n"
+                        + "2. deadline [insert desc] /by [insert time]\n"
+                        + "3. event [insert desc] /from [insert time] /to [insert time]\n"
+                        + "4. mark/unmark [insert index]\n"
+                        + "5. list";
+                throw new SandroneException(message);
         }
+
+        tasks[count++] = newTask;
 
         String message =
                 "Very well. You have " + count + " task(s) now.\n" +
