@@ -1,9 +1,9 @@
 public class Task {
-    protected String description;
+    protected String desc;
     protected boolean isDone;
 
-    public Task(String description) {
-        this.description = description;
+    public Task(String desc) {
+        this.desc = desc;
         this.isDone = false;
     }
 
@@ -12,7 +12,11 @@ public class Task {
     }
 
     public String getDescription() {
-        return this.description;
+        return this.desc;
+    }
+
+    public String getTaskType() {
+        return " ";
     }
 
     public void mark() {

@@ -1,8 +1,13 @@
 public class Pulonia {
-    private static final String COMMAND_REGEX = "^(mark|unmark) ([1-9][0-9]?|100)$";
+//    private static final String COMMAND_REGEX = "^(mark|unmark|todo|deadline|event)";
+    private static final String MARK_REGEX = "^(mark|unmark) ([1-9][0-9]?|100)$";
 
-    public static boolean isValidCommand(String input) {
-        return input.matches(COMMAND_REGEX);
+//    public static boolean isValidCommand(String input) {
+//        return input.matches(COMMAND_REGEX);
+//    }
+
+    public static boolean isMarkCommand(String input) {
+        return input.matches(MARK_REGEX);
     }
 
     public static String getAction(String input) {

@@ -17,7 +17,7 @@ public class Sandrone {
         while (!input.equals("bye")) {
             if (input.equals("list")) {
                 list.printList();
-            } else if (Pulonia.isValidCommand(input)) {
+            } else if (Pulonia.isMarkCommand(input)) {
                 list.setTaskStatus(Pulonia.extractIndex(input), Pulonia.getAction(input).equals("mark"));
             } else {
                 list.addTask(input);
