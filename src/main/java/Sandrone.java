@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 public class Sandrone {
     public static void main(String[] args) {
+        // SAVING MECHANICS
+
         String greetings =
                 "Look very closely, for standing before you is none other than Marionette.\n" +
                 "Seventh of the Fatui Harbingers.";
@@ -11,13 +13,14 @@ public class Sandrone {
         printResponse(greetings);
 
         Scanner scn = new Scanner(System.in);
-        TaskList list = new TaskList();
         String input = scn.nextLine();
+
+        TaskList list = new TaskList();
 
         while (!input.equals("bye")) {
             try {
                 System.out.println("____________________________________________________________");
-                String message = list.act(input);
+                String message = list.performCommand(input);
                 if (!message.isEmpty()) System.out.println(message);
                 System.out.println("____________________________________________________________");
             } catch (SandroneException e) {
