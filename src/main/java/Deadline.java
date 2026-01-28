@@ -1,7 +1,9 @@
-public class Deadline extends Task{
-    private String by;
+import java.time.LocalDate;
 
-    public Deadline(String desc, String by) {
+public class Deadline extends Task{
+    private LocalDate by;
+
+    public Deadline(String desc, LocalDate by) {
         super(desc);
         this.by = by;
     }
@@ -13,7 +15,8 @@ public class Deadline extends Task{
 
     @Override
     public String getDescription() {
-        return this.desc + " (by: " + this.by + ")";
+        String formattedBy = Pulonia.formatDate(this.by);
+        return this.desc + " (by: " + formattedBy + ")";
     }
 
     @Override

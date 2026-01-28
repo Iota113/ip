@@ -1,4 +1,22 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Pulonia {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    public static LocalDate parseDate(String input) throws SandroneException {
+        try {
+            return LocalDate.parse(input, FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new SandroneException("Use the format yyyy-MM-dd (e.g., 2026-01-28) for dates.");
+        }
+    }
+
+    public static String formatDate(LocalDate date) {
+        return date.format(FORMATTER);
+    }
+
     public static Task parseNewTaskCommand(String fullCommand) throws SandroneException{
         if (fullCommand.startsWith("todo")) {
             return new Todo(fullCommand.replace("todo", "").trim());
@@ -13,12 +31,11 @@ public class Pulonia {
             }
 
             String desc = parts[0].substring(8).trim();
-            String by = parts[1];
-
             if (desc.isEmpty()) {
                 throw new SandroneException("The task cannot be empty.");
             }
 
+            LocalDate by = parseDate(parts[1]);
             return new Deadline(desc, by);
         } else if (fullCommand.startsWith("event")) {
             if (!(fullCommand.contains(" /from ") && fullCommand.contains(" /to"))) {
@@ -38,10 +55,14 @@ public class Pulonia {
                 if (time_parts[0].trim().isEmpty()) throw new SandroneException("Both from and to fields are empty!");
                 throw new SandroneException("The to field is empty!");
             }
-            String from = time_parts[0].trim();
-            String to = time_parts[1].trim();
-            if (from.isEmpty()) throw new SandroneException("The from field is empty!");
 
+            String fromString = time_parts[0].trim();
+            if (fromString.isEmpty()) throw new SandroneException("The from field is empty!");
+
+            String toString = time_parts[1].trim();
+
+            LocalDate from = parseDate(fromString);
+            LocalDate to = parseDate(toString);
             return new Event(desc, from, to);
         } else {
             return null;
