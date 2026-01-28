@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Event extends Task{
     private LocalDate from;
@@ -18,9 +17,8 @@ public class Event extends Task{
 
     @Override
     public String getDescription() {
-        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("EEEE, MMM dd yyyy");
-        String formattedFrom = this.from.format(customFormatter);
-        String formattedTo = this.to.format(customFormatter);
+        String formattedFrom = Pulonia.formatDate(this.from);
+        String formattedTo = Pulonia.formatDate(this.to);
         return this.desc + " (from: " + formattedFrom + " to: " + formattedTo + ")";
     }
 

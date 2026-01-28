@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task{
     private LocalDate by;
@@ -16,9 +15,8 @@ public class Deadline extends Task{
 
     @Override
     public String getDescription() {
-        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("EEEE, MMM dd yyyy");
-        String formattedDate = this.by.format(customFormatter);
-        return this.desc + " (by: " + formattedDate + ")";
+        String formattedBy = Pulonia.formatDate(this.by);
+        return this.desc + " (by: " + formattedBy + ")";
     }
 
     @Override

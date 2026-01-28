@@ -13,6 +13,10 @@ public class Pulonia {
         }
     }
 
+    public static String formatDate(LocalDate date) {
+        return date.format(FORMATTER);
+    }
+
     public static Task parseNewTaskCommand(String fullCommand) throws SandroneException{
         if (fullCommand.startsWith("todo")) {
             return new Todo(fullCommand.replace("todo", "").trim());
