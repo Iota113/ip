@@ -74,7 +74,7 @@ public class Storage {
                     loadedTasks.add(deadline);
                     break;
                 case "E":
-                    Event event = new Event(description, parts[3], parts[4]);
+                    Event event = new Event(description, Pulonia.parseDate(parts[3]), Pulonia.parseDate(parts[4]));
                     if (isDone) event.mark();
                     loadedTasks.add(event);
                     break;

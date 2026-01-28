@@ -51,10 +51,14 @@ public class Pulonia {
                 if (time_parts[0].trim().isEmpty()) throw new SandroneException("Both from and to fields are empty!");
                 throw new SandroneException("The to field is empty!");
             }
-            String from = time_parts[0].trim();
-            String to = time_parts[1].trim();
-            if (from.isEmpty()) throw new SandroneException("The from field is empty!");
 
+            String fromString = time_parts[0].trim();
+            if (fromString.isEmpty()) throw new SandroneException("The from field is empty!");
+
+            String toString = time_parts[1].trim();
+
+            LocalDate from = parseDate(fromString);
+            LocalDate to = parseDate(toString);
             return new Event(desc, from, to);
         } else {
             return null;
