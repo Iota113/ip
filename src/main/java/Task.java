@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     protected String desc;
     protected boolean isDone;
 
@@ -25,5 +25,9 @@ public class Task {
 
     public void unmark() {
         this.isDone = false;
+    }
+
+    public String toFileFormat() {
+        return "T | " + getStatusIcon() + " | " + this.desc;
     }
 }

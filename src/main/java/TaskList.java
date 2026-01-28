@@ -3,6 +3,7 @@ import java.util.List;
 
 public class TaskList {
     private List<Task> tasks = new ArrayList<>();
+    Storage listData = new Storage("./data/sandrone_task_list.txt");
 
     private enum Action {
         LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, DEFAULT;
@@ -51,7 +52,9 @@ public class TaskList {
                 throw new SandroneException(message);
         }
 
-        if (newTask!=null) tasks.add(newTask);
+        // Adding Task, Deadline or Event
+        tasks.add(newTask);
+        listData.saveTasks(tasks);
         int count = tasks.size();
         String addTaskmessage =
                 "Very well. You have " + count + " task(s) now.\n" +
@@ -69,15 +72,18 @@ public class TaskList {
 
         if (isMark) {
             tasks.get(id).mark();
+            listData.saveTasks(tasks);
             return "Very well.";
         } else {
             tasks.get(id).unmark();
+            listData.saveTasks(tasks);
             return "Utterly risible.";
         }
     }
 
     public String deleteTask(int id) {
         tasks.remove(id);
+        listData.saveTasks(tasks);
         return "Your task has been deleted.";
     }
 

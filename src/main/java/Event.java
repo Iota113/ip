@@ -36,4 +36,9 @@ public class Event extends Task{
     public String getDescription() {
         return this.desc + " (from: " + this.from + " to: " + this.to + ")";
     }
+
+    @Override
+    public String toFileFormat() {
+        return "E | " + getStatusIcon() + " | " + this.desc + " | " + from + " | " + to;
+    }
 }
