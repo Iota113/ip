@@ -1,4 +1,18 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Pulonia {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    public static LocalDate parseDate(String input) throws SandroneException {
+        try {
+            return LocalDate.parse(input, FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new SandroneException("Use the format yyyy-MM-dd (e.g., 2026-01-28) for dates.");
+        }
+    }
+
     public static Task parseNewTaskCommand(String fullCommand) throws SandroneException{
         if (fullCommand.startsWith("todo")) {
             return new Todo(fullCommand.replace("todo", "").trim());
@@ -13,12 +27,11 @@ public class Pulonia {
             }
 
             String desc = parts[0].substring(8).trim();
-            String by = parts[1];
-
             if (desc.isEmpty()) {
                 throw new SandroneException("The task cannot be empty.");
             }
 
+            LocalDate by = parseDate(parts[1]);
             return new Deadline(desc, by);
         } else if (fullCommand.startsWith("event")) {
             if (!(fullCommand.contains(" /from ") && fullCommand.contains(" /to"))) {

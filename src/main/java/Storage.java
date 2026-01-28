@@ -1,10 +1,8 @@
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class Storage {
 
     private void prepareFile() {
         try {
-            Path path = Paths.get(filePath);
+            Path path = Path.of(filePath);
             Path parentDir = path.getParent();
 
             if (parentDir != null && !Files.exists(parentDir)) {
@@ -47,7 +45,7 @@ public class Storage {
 
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> loadedTasks = new ArrayList<>();
-        Path path = Paths.get(filePath);
+        Path path = Path.of(filePath);
 
         if (!Files.exists(path)) {
             return loadedTasks;
@@ -71,7 +69,7 @@ public class Storage {
                     loadedTasks.add(todo);
                     break;
                 case "D":
-                    Deadline deadline = new Deadline(description, parts[3]);
+                    Deadline deadline = new Deadline(description, Pulonia.parseDate(parts[3]));
                     if (isDone) deadline.mark();
                     loadedTasks.add(deadline);
                     break;
