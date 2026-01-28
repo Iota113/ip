@@ -20,7 +20,7 @@ public class Sandrone {
         while (!input.equals("bye")) {
             try {
                 System.out.println("____________________________________________________________");
-                String message = list.act(input);
+                String message = list.performCommand(input);
                 if (!message.isEmpty()) System.out.println(message);
                 System.out.println("____________________________________________________________");
             } catch (SandroneException e) {

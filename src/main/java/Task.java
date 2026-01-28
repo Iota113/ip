@@ -27,7 +27,5 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public String toFileFormat() {
-        return "T | " + getStatusIcon() + " | " + this.desc;
-    }
+    public abstract String toFileFormat();
 }

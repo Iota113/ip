@@ -1,0 +1,3 @@
+T |   | MA2202
+D | X | MA2108 | today
+E |   | meeting | 8pm | 9pm

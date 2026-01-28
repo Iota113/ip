@@ -2,26 +2,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
-    private List<Task> tasks = new ArrayList<>();
-    Storage listData = new Storage("./data/sandrone_task_list.txt");
+    private List<Task> tasks;
+    private Storage listData;
 
-    private enum Action {
+    public TaskList() {
+        this.listData = new Storage("./data/sandrone_task_list.txt");
+        this.tasks = listData.loadTasks();
+    }
+
+    private enum Command {
         LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, DEFAULT;
 
-        public static Action fromCommand(String input) {
+        public static Command getCommand(String input) {
             if (input == null) return DEFAULT;
             try {
-                return Action.valueOf(input.split(" ")[0].toUpperCase());
+                return Command.valueOf(input.split(" ")[0].toUpperCase());
             } catch (IllegalArgumentException e) {
                 return DEFAULT;
             }
         }
     }
 
-    public String act(String input) throws SandroneException {
-        Action action = Action.fromCommand(input);
+    public String performCommand(String input) throws SandroneException {
+        Command command = Command.getCommand(input);
         Task newTask = null;
-        switch (action) {
+        switch (command) {
             case LIST:
                 printList();
                 return "";
@@ -32,13 +37,9 @@ public class TaskList {
             case DELETE:
                 return deleteTask(Pulonia.extractIndex(input));
             case TODO:
-                newTask = new Todo(input);
-                break;
             case DEADLINE:
-                newTask = new Deadline(input);
-                break;
             case EVENT:
-                newTask = new Event(input);
+                newTask = Pulonia.parseNewTaskCommand(input);
                 break;
             default:
                 String message =
