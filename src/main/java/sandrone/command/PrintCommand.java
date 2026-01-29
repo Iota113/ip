@@ -4,9 +4,16 @@ import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
 
+/**
+ * Represents a command to print all tasks in the task list.
+ * It retrieves all tasks from the task list and passes it to SandroneUi to print.
+ *
+ * @author Henry Tse
+ * @version 0.1
+ */
 public class PrintCommand extends Command {
     @Override
-    public void execute(TaskList tasks, SandroneUi ui, Storage storage) {
-        ui.printTaskList(tasks);
+    public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
+        ui.showTasks(taskList.getAllTasks());
     }
 }
