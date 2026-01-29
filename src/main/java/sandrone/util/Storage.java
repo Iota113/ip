@@ -13,15 +13,31 @@ import sandrone.task.Event;
 import sandrone.task.Task;
 import sandrone.task.Todo;
 
-
+/**
+ * Handles persistent storage for the chatbot.
+ * This class is responsible for reading from and writing task data to a
+ * local file, ensuring that the user's task list is preserved across sessions.
+ *
+ * @author Henry Tse
+ * @version 0.1
+ */
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a {@code Storage} object and prepares the necessary file structure.
+     *
+     * @param filePath The path to the local data file.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
         prepareFile();
     }
 
+    /**
+     * Ensures the data file and its parent directories exist.
+     * If the directories or file are missing, they are created automatically.
+     */
     public void prepareFile() {
         try {
             Path path = Path.of(filePath);
@@ -41,6 +57,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes the current list of tasks to the local file.
+     * Tasks are converted into a pipe-separated string format before saving.
+     *
+     * @param tasks The list of {@code Task} objects to be saved.
+     */
     public void saveTasks(ArrayList<Task> tasks) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {
@@ -51,6 +73,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Reads task data from the local file and reconstructs the task list.
+     * Parses each line of the file into specific {@code Todo}, {@code Deadline},
+     * or {@code Event} objects.
+     *
+     * @return An {@code ArrayList} of tasks retrieved from the file.
+     */
     public ArrayList<Task> loadTasks() {
         ArrayList<Task> loadedTasks = new ArrayList<>();
         Path path = Path.of(filePath);

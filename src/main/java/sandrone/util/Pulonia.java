@@ -17,9 +17,24 @@ import sandrone.task.Event;
 import sandrone.task.Task;
 import sandrone.task.Todo;
 
+/**
+ * Handles the parsing of user input strings into executable commands and data types.
+ * This utility class (Pulonia) processes text commands for the Sandrone chatbot, ensuring
+ * that dates and command parameters are correctly formatted.
+ *
+ * @author Henry Tse
+ * @version 0.1
+ */
 public class Pulonia {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    /**
+     * Parses a date string into a {@code LocalDate} object.
+     *
+     * @param input The date string in the format yyyy-MM-dd.
+     * @return A {@code LocalDate} representation of the input.
+     * @throws SandroneException If the input does not match the expected format.
+     */
     public static LocalDate parseDate(String input) throws SandroneException {
         try {
             return LocalDate.parse(input, FORMATTER);
@@ -28,10 +43,23 @@ public class Pulonia {
         }
     }
 
+    /**
+     * Converts a {@code LocalDate} object into its standard string representation.
+     *
+     * @param date The date to format.
+     * @return A string formatted as yyyy-MM-dd.
+     */
     public static String formatDate(LocalDate date) {
         return date.format(FORMATTER);
     }
 
+    /**
+     * Interprets user input specific to creating new tasks (Todo, Deadline, Event).
+     *
+     * @param userInput The full command string provided by the user.
+     * @return An {@code AddCommand} containing the initialized task.
+     * @throws SandroneException If required components (task description, /by, /from, /to) are missing
+     */
     public static Command parseAddCommand(String userInput) throws SandroneException {
         if (userInput.startsWith("todo")) {
             Task newTodo = new Todo(userInput.replace("todo", "").trim());
@@ -93,6 +121,13 @@ public class Pulonia {
         }
     }
 
+    /**
+     * Extracts the integer index from a user command (e.g. "mark 2").
+     * Converts the 1-based index provided by the user to a 0-based index for internal use.
+     *
+     * @param userInput The command string containing an index.
+     * @return The 0-based integer index.
+     */
     public static int extractIndex(String userInput) {
         return Integer.parseInt(userInput.split(" ")[1]) - 1;
     }
@@ -116,6 +151,14 @@ public class Pulonia {
         }
     }
 
+    /**
+     * Core parsing method that determines the command type and returns the appropriate
+     * {@code Command} object.
+     *
+     * @param userInput The raw line of text entered by the user.
+     * @return The executable {@code Command} corresponding to the user's request.
+     * @throws SandroneException If the command is unrecognized or improperly formatted.
+     */
     public static Command parseCommand(String userInput) throws SandroneException {
         CommandType commandType = CommandType.getCommandType(userInput);
         switch (commandType) {
