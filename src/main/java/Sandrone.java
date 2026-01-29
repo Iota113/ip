@@ -2,13 +2,18 @@ import java.util.Scanner;
 
 
 public class Sandrone {
-    public static void main(String[] args) {
-        String greetings =
-                "Look very closely, for standing before you is none other than Marionette.\n" +
-                "Seventh of the Fatui Harbingers.";
-        String farewell = "Ad astra abyssosque! Welcome to Nod-Krai, dominion of the Fatui.";
+    private SandroneUI ui;
 
-        printResponse(greetings);
+    public Sandrone() {
+        this.ui = new SandroneUI();
+    }
+
+    public static void main(String[] args) {
+        new Sandrone().run();
+    }
+
+    public void run() {
+        ui.showGreetings();
 
         Scanner scn = new Scanner(System.in);
         String input = scn.nextLine();
@@ -17,23 +22,18 @@ public class Sandrone {
 
         while (!input.equals("bye")) {
             try {
-                System.out.println("____________________________________________________________");
+                ui.printLine();
                 String message = list.performCommand(input);
                 if (!message.isEmpty()) System.out.println(message);
-                System.out.println("____________________________________________________________");
+                ui.printLine();
             } catch (SandroneException e) {
-                printResponse(e.getMessage());
+                ui.printResponse(e.getMessage());
             }
 
             input = scn.nextLine();
         }
+        ui.showFarewell();
 
-        printResponse(farewell);
     }
 
-    public static void printResponse(String message) {
-        System.out.println("____________________________________________________________");
-        System.out.println(message);
-        System.out.println("____________________________________________________________");
-    }
 }
