@@ -37,8 +37,8 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
-    archiveClassifier = null
+    archiveFileName = 'sandrone.jar'
+
 }
 
 run{
