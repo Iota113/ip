@@ -6,8 +6,8 @@ public class TaskList {
     private List<Task> tasks;
     private Storage listData;
 
-    public TaskList() {
-        this.listData = new Storage("./data/sandrone_task_list.txt");
+    public TaskList(Storage listData) {
+        this.listData = listData;
         this.tasks = listData.loadTasks();
     }
 
@@ -74,9 +74,11 @@ public class TaskList {
 
         if (isMark) {
             tasks.get(id).mark();
+            listData.saveTasks(tasks);
             return "Very well.";
         } else {
             tasks.get(id).unmark();
+            listData.saveTasks(tasks);
             return "Utterly risible.";
         }
     }

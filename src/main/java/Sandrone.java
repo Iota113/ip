@@ -3,9 +3,11 @@ import java.util.Scanner;
 
 public class Sandrone {
     private SandroneUI ui;
+    private Storage listData;
 
     public Sandrone() {
         this.ui = new SandroneUI();
+        this.listData = new Storage("./data/sandrone_task_list.txt");
     }
 
     public static void main(String[] args) {
@@ -18,7 +20,7 @@ public class Sandrone {
         Scanner scn = new Scanner(System.in);
         String input = scn.nextLine();
 
-        TaskList list = new TaskList();
+        TaskList list = new TaskList(this.listData);
 
         while (!input.equals("bye")) {
             try {
