@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class AddCommand extends Command {
     private Task newTask;
 
@@ -6,9 +8,18 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, SandroneUi ui, Storage storage) {
-        tasks.addTask(this.newTask);
-        storage.saveTasks(tasks.getTasks());
-        ui.printPleasedResponse();
+    public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
+        taskList.addTask(this.newTask);
+        ArrayList<Task> tasks = taskList.getTasks();
+        storage.saveTasks(tasks);
+
+        int count = taskList.getTasks().size();
+        String addTaskMessage =
+                "Very well. You have " + count + " task(s) now.\n" +
+                        count + "."
+                        + "[" + tasks.get(count - 1).getStatusIcon() + "]"
+                        + "[" + tasks.get(count - 1).getTaskType() + "] "
+                        + tasks.get(count - 1).getDescription();
+        System.out.println(addTaskMessage);
     }
 }
