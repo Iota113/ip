@@ -2,40 +2,41 @@ import java.util.Scanner;
 
 
 public class Sandrone {
-    private SandroneUI ui;
+    private SandroneUi ui;
+    private TaskList taskList;
     private Storage listData;
 
-    public Sandrone() {
-        this.ui = new SandroneUI();
-        this.listData = new Storage("./data/sandrone_task_list.txt");
-    }
+    public Sandrone(String filePath) {
+        this.ui = new SandroneUi();
+        this.listData = new Storage(filePath);
 
-    public static void main(String[] args) {
-        new Sandrone().run();
     }
 
     public void run() {
+        this.taskList = new TaskList(this.listData);
         ui.showGreetings();
 
         Scanner scn = new Scanner(System.in);
-        String input = scn.nextLine();
+        String userInput = scn.nextLine();
 
-        TaskList list = new TaskList(this.listData);
-
-        while (!input.equals("bye")) {
+        while (!userInput.equals("bye")) {
             try {
                 ui.printLine();
-                String message = list.performCommand(input);
-                if (!message.isEmpty()) System.out.println(message);
-                ui.printLine();
+                Command c = Pulonia.parseCommand(userInput);
+                c.execute(this.taskList, this.ui, this.listData);
             } catch (SandroneException e) {
-                ui.printResponse(e.getMessage());
+                System.out.println(e.getMessage());
             }
 
-            input = scn.nextLine();
+            ui.printLine();
+            userInput = scn.nextLine();
         }
         ui.showFarewell();
 
+    }
+
+    public static void main(String[] args) {
+        new Sandrone("./data/sandrone_task_list.txt").run();
     }
 
 }
