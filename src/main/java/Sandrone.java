@@ -2,38 +2,41 @@ import java.util.Scanner;
 
 
 public class Sandrone {
-    public static void main(String[] args) {
-        String greetings =
-                "Look very closely, for standing before you is none other than Marionette.\n" +
-                "Seventh of the Fatui Harbingers.";
-        String farewell = "Ad astra abyssosque! Welcome to Nod-Krai, dominion of the Fatui.";
+    private SandroneUi ui;
+    private TaskList taskList;
+    private Storage listData;
 
-        printResponse(greetings);
+    public Sandrone(String filePath) {
+        this.ui = new SandroneUi();
+        this.listData = new Storage(filePath);
+
+    }
+
+    public void run() {
+        this.taskList = new TaskList(this.listData);
+        ui.showGreetings();
 
         Scanner scn = new Scanner(System.in);
-        String input = scn.nextLine();
+        String userInput = scn.nextLine();
 
-        TaskList list = new TaskList();
-
-        while (!input.equals("bye")) {
+        while (!userInput.equals("bye")) {
             try {
-                System.out.println("____________________________________________________________");
-                String message = list.performCommand(input);
-                if (!message.isEmpty()) System.out.println(message);
-                System.out.println("____________________________________________________________");
+                ui.printLine();
+                Command c = Pulonia.parseCommand(userInput);
+                c.execute(this.taskList, this.ui, this.listData);
             } catch (SandroneException e) {
-                printResponse(e.getMessage());
+                System.out.println(e.getMessage());
             }
 
-            input = scn.nextLine();
+            ui.printLine();
+            userInput = scn.nextLine();
         }
+        ui.showFarewell();
 
-        printResponse(farewell);
     }
 
-    public static void printResponse(String message) {
-        System.out.println("____________________________________________________________");
-        System.out.println(message);
-        System.out.println("____________________________________________________________");
+    public static void main(String[] args) {
+        new Sandrone("./data/sandrone_task_list.txt").run();
     }
+
 }

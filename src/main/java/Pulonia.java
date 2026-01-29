@@ -17,15 +17,16 @@ public class Pulonia {
         return date.format(FORMATTER);
     }
 
-    public static Task parseNewTaskCommand(String fullCommand) throws SandroneException{
-        if (fullCommand.startsWith("todo")) {
-            return new Todo(fullCommand.replace("todo", "").trim());
-        } else if (fullCommand.startsWith("deadline")) {
-            if (!fullCommand.contains(" /by ")) {
+    public static Command parseAddCommand(String userInput) throws SandroneException{
+        if (userInput.startsWith("todo")) {
+            Task newTodo = new Todo(userInput.replace("todo", "").trim());
+            return new AddCommand(newTodo);
+        } else if (userInput.startsWith("deadline")) {
+            if (!userInput.contains(" /by ")) {
                 throw new SandroneException("Incomplete command! A by needs a ' /by ' component.");
             }
 
-            String[] parts = fullCommand.split(" /by ");
+            String[] parts = userInput.split(" /by ");
             if (parts.length < 2 || parts[1].trim().isEmpty()) {
                 throw new SandroneException("The by cannot be empty.");
             }
@@ -36,14 +37,15 @@ public class Pulonia {
             }
 
             LocalDate by = parseDate(parts[1]);
-            return new Deadline(desc, by);
-        } else if (fullCommand.startsWith("event")) {
-            if (!(fullCommand.contains(" /from ") && fullCommand.contains(" /to"))) {
+            Task newDeadline = new Deadline(desc, by);
+            return new AddCommand(newDeadline);
+        } else if (userInput.startsWith("event")) {
+            if (!(userInput.contains(" /from ") && userInput.contains(" /to"))) {
                 throw new SandroneException("Incomplete command! An Event needs a ' /from ' and ' /to ' component.");
             }
 
             // Remove "event"
-            String command = fullCommand.substring(5).trim();
+            String command = userInput.substring(5).trim();
             String[] desc_part = command.split("/from");
             String desc = desc_part[0].trim();
             if (desc.isEmpty()) {
@@ -63,13 +65,57 @@ public class Pulonia {
 
             LocalDate from = parseDate(fromString);
             LocalDate to = parseDate(toString);
-            return new Event(desc, from, to);
+
+            Task newEvent = new Event(desc, from, to);
+            return new AddCommand(newEvent);
         } else {
             return null;
         }
     }
 
-    public static int extractIndex(String input) {
-        return Integer.parseInt(input.split(" ")[1]) - 1;
+    public static int extractIndex(String userInput) {
+        return Integer.parseInt(userInput.split(" ")[1]) - 1;
+    }
+
+    private enum CommandType {
+        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, DEFAULT;
+
+        public static CommandType getCommandType(String userInput) {
+            if (userInput == null) return DEFAULT;
+            try {
+                return valueOf(userInput.split(" ")[0].toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return DEFAULT;
+            }
+        }
+    }
+
+    public static Command parseCommand(String userInput) throws SandroneException {
+        CommandType commandType = CommandType.getCommandType(userInput);
+        switch (commandType) {
+        case LIST:
+            return new PrintCommand();
+        case MARK:
+            return new MarkCommand(extractIndex(userInput));
+        case UNMARK:
+            return new UnmarkCommand(extractIndex(userInput));
+        case DELETE:
+            return new DeleteCommand(extractIndex(userInput));
+        case TODO:
+        case DEADLINE:
+        case EVENT:
+            return parseAddCommand(userInput);
+        default:
+            String message =
+                    "You Fool. What are you saying.\n"
+                            + "Here are the valid commands:\n"
+                            + "1. todo [insert desc] \n"
+                            + "2. deadline [insert desc] /by [insert time]\n"
+                            + "3. event [insert desc] /from [insert time] /to [insert time]\n"
+                            + "4. mark/unmark [insert index]\n"
+                            + "5. list";
+            throw new SandroneException(message);
+        }
+
     }
 }
