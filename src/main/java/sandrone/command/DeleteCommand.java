@@ -12,9 +12,9 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, SandroneUi ui, Storage storage) {
-        tasks.deleteTask(TASK_INDEX);
-        storage.saveTasks(tasks.getAllTasks());
+    public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
+        taskList.deleteTask(TASK_INDEX);
+        storage.saveTasks(taskList.getAllTasks());
         ui.printPleasedResponse();
     }
 

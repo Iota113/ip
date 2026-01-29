@@ -23,8 +23,7 @@ public class SandroneUi {
         printLine();
     }
 
-    public void printTaskList(TaskList taskList) {
-        ArrayList<Task> tasks = taskList.getAllTasks();
+    public void printTasks(ArrayList<Task> tasks) {
         System.out.println("Your List:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(

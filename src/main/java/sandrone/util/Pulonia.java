@@ -1,11 +1,6 @@
 package sandrone.util;
 
-import sandrone.command.AddCommand;
-import sandrone.command.Command;
-import sandrone.command.DeleteCommand;
-import sandrone.command.MarkCommand;
-import sandrone.command.PrintCommand;
-import sandrone.command.UnmarkCommand;
+import sandrone.command.*;
 import sandrone.exception.SandroneException;
 import sandrone.task.Deadline;
 import sandrone.task.Event;
@@ -91,8 +86,12 @@ public class Pulonia {
         return Integer.parseInt(userInput.split(" ")[1]) - 1;
     }
 
+    public static String extractFind(String userInput) {
+        return userInput.substring(4).trim();
+    }
+
     private enum CommandType {
-        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, DEFAULT;
+        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
             if (userInput == null) return DEFAULT;
@@ -115,6 +114,8 @@ public class Pulonia {
             return new UnmarkCommand(extractIndex(userInput));
         case DELETE:
             return new DeleteCommand(extractIndex(userInput));
+        case FIND:
+            return new FindCommand(extractFind(userInput));
         case TODO:
         case DEADLINE:
         case EVENT:

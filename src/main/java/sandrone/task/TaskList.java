@@ -43,4 +43,14 @@ public class TaskList {
         return this.tasks.get(id);
     }
 
+    public ArrayList<Task> getMatchingTasks(String userInput) {
+        ArrayList<Task> matchingTasks = new ArrayList<>();
+        for (Task task : this.tasks) {
+            if (task.getDescription().contains(userInput)) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
+    }
+
 }
