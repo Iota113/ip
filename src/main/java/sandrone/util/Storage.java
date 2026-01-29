@@ -1,10 +1,5 @@
 package sandrone.util;
 
-import sandrone.task.Deadline;
-import sandrone.task.Event;
-import sandrone.task.Task;
-import sandrone.task.Todo;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
+import sandrone.task.Deadline;
+import sandrone.task.Event;
+import sandrone.task.Task;
+import sandrone.task.Todo;
+
 
 public class Storage {
     private String filePath;
@@ -62,7 +63,9 @@ public class Storage {
             List<String> lines = Files.readAllLines(path);
 
             for (String line : lines) {
-                if (line.trim().isEmpty()) continue;
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
 
                 String[] parts = line.split(" \\| ");
                 String type = parts[0];
@@ -72,18 +75,27 @@ public class Storage {
                 switch (type) {
                 case "T":
                     Todo todo = new Todo(description);
-                    if (isDone) todo.mark();
+                    if (isDone) {
+                        todo.mark();
+                    }
                     loadedTasks.add(todo);
                     break;
                 case "D":
                     Deadline deadline = new Deadline(description, Pulonia.parseDate(parts[3]));
-                    if (isDone) deadline.mark();
+                    if (isDone) {
+                        deadline.mark();
+                    }
                     loadedTasks.add(deadline);
                     break;
                 case "E":
                     Event event = new Event(description, Pulonia.parseDate(parts[3]), Pulonia.parseDate(parts[4]));
-                    if (isDone) event.mark();
+                    if (isDone) {
+                        event.mark();
+                    }
                     loadedTasks.add(event);
+                    break;
+                default:
+                    // do nothing
                     break;
                 }
             }
