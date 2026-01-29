@@ -1,15 +1,21 @@
 package sandrone.util;
 
-import sandrone.command.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import sandrone.command.AddCommand;
+import sandrone.command.Command;
+import sandrone.command.DeleteCommand;
+import sandrone.command.FindCommand;
+import sandrone.command.MarkCommand;
+import sandrone.command.PrintCommand;
+import sandrone.command.UnmarkCommand;
 import sandrone.exception.SandroneException;
 import sandrone.task.Deadline;
 import sandrone.task.Event;
 import sandrone.task.Task;
 import sandrone.task.Todo;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class Pulonia {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -50,27 +56,32 @@ public class Pulonia {
             return new AddCommand(newDeadline);
         } else if (userInput.startsWith("event")) {
             if (!(userInput.contains(" /from ") && userInput.contains(" /to"))) {
-                throw new SandroneException("Incomplete command! An sandrone.task.Event needs a ' /from ' and ' /to ' component.");
+                throw new SandroneException("Incomplete command! An sandrone.task.Event needs "
+                        + "a ' /from ' and ' /to ' component.");
             }
 
             // Remove "event"
             String command = userInput.substring(5).trim();
-            String[] desc_part = command.split("/from");
-            String desc = desc_part[0].trim();
+            String[] descParts = command.split("/from");
+            String desc = descParts[0].trim();
             if (desc.isEmpty()) {
                 throw new SandroneException("The task description is empty!");
             }
 
-            String[] time_parts = desc_part[1].split("/to");
-            if (time_parts.length < 2) {
-                if (time_parts[0].trim().isEmpty()) throw new SandroneException("Both from and to fields are empty!");
+            String[] timeParts = descParts[1].split("/to");
+            if (timeParts.length < 2) {
+                if (timeParts[0].trim().isEmpty()) {
+                    throw new SandroneException("Both from and to fields are empty!");
+                }
                 throw new SandroneException("The to field is empty!");
             }
 
-            String fromString = time_parts[0].trim();
-            if (fromString.isEmpty()) throw new SandroneException("The from field is empty!");
+            String fromString = timeParts[0].trim();
+            if (fromString.isEmpty()) {
+                throw new SandroneException("The from field is empty!");
+            }
 
-            String toString = time_parts[1].trim();
+            String toString = timeParts[1].trim();
 
             LocalDate from = parseDate(fromString);
             LocalDate to = parseDate(toString);
@@ -94,7 +105,9 @@ public class Pulonia {
         LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
-            if (userInput == null) return DEFAULT;
+            if (userInput == null) {
+                return DEFAULT;
+            }
             try {
                 return valueOf(userInput.split(" ")[0].toUpperCase());
             } catch (IllegalArgumentException e) {

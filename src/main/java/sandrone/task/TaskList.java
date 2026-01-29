@@ -1,7 +1,8 @@
 package sandrone.task;
 
-import sandrone.util.Storage;
 import java.util.ArrayList;
+
+import sandrone.util.Storage;
 
 public class TaskList {
     private ArrayList<Task> tasks;
@@ -52,5 +53,4 @@ public class TaskList {
         }
         return matchingTasks;
     }
-
 }

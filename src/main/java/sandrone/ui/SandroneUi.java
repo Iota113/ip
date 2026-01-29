@@ -1,17 +1,16 @@
 package sandrone.ui;
 
-import sandrone.task.Task;
-import sandrone.task.TaskList;
-
 import java.util.ArrayList;
+
+import sandrone.task.Task;
 
 public class SandroneUi {
     private static final String greetings =
-            "Look very closely, for standing before you is none other than Marionette.\n" +
-                    "Seventh of the Fatui Harbingers.";
+            "Look very closely, for standing before you is none other than Marionette.\n"
+                    + "Seventh of the Fatui Harbingers.";
     private static final String farewell = "Ad astra abyssosque! Welcome to Nod-Krai, dominion of the Fatui.";
 
-    public void showGreetings () {
+    public void showGreetings() {
         printLine();
         System.out.println(greetings);
         printLine();
@@ -26,8 +25,7 @@ public class SandroneUi {
     public void printTasks(ArrayList<Task> tasks) {
         System.out.println("Your List:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(
-                    (i + 1) + "."
+            System.out.println((i + 1) + "."
                             + "[" + tasks.get(i).getStatusIcon() + "]"
                             + "[" + tasks.get(i).getTaskType() + "] "
                             + tasks.get(i).getDescription());

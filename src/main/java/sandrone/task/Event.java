@@ -1,9 +1,10 @@
 package sandrone.task;
 
-import sandrone.util.Pulonia;
 import java.time.LocalDate;
 
-public class Event extends Task{
+import sandrone.util.Pulonia;
+
+public class Event extends Task {
     private LocalDate from;
     private LocalDate to;
 
