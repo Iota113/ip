@@ -40,7 +40,7 @@ public class Storage {
         }
     }
 
-    public void saveTasks(List<Task> tasks) {
+    public void saveTasks(ArrayList<Task> tasks) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {
                 writer.println(task.toFileFormat());
