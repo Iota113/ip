@@ -21,7 +21,7 @@ public class Storage {
         prepareFile();
     }
 
-    private void prepareFile() {
+    public void prepareFile() {
         try {
             Path path = Path.of(filePath);
             Path parentDir = path.getParent();

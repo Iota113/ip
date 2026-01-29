@@ -1,7 +1,6 @@
 package sandrone.task;
 
 import sandrone.util.Storage;
-
 import java.util.ArrayList;
 
 public class TaskList {
@@ -32,8 +31,16 @@ public class TaskList {
         return "Your task has been deleted.";
     }
 
-    public ArrayList<Task> getTasks() {
+    public ArrayList<Task> getAllTasks() {
         return this.tasks;
+    }
+
+    public int getTaskCount() {
+        return this.tasks.size();
+    }
+
+    public Task getTask(int id) {
+        return this.tasks.get(id);
     }
 
 }

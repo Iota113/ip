@@ -24,7 +24,7 @@ public class SandroneUi {
     }
 
     public void printTaskList(TaskList taskList) {
-        ArrayList<Task> tasks = taskList.getTasks();
+        ArrayList<Task> tasks = taskList.getAllTasks();
         System.out.println("Your List:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(

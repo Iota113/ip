@@ -14,7 +14,7 @@ public class MarkCommand extends Command {
     @Override
     public void execute(TaskList tasks, SandroneUi ui, Storage storage) {
         tasks.setTaskStatus(TASK_INDEX, true);
-        storage.saveTasks(tasks.getTasks());
+        storage.saveTasks(tasks.getAllTasks());
         ui.printPleasedResponse();
     }
 }
