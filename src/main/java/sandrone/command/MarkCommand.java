@@ -12,9 +12,9 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, SandroneUi ui, Storage storage) {
-        tasks.setTaskStatus(TASK_INDEX, true);
-        storage.saveTasks(tasks.getAllTasks());
+    public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
+        taskList.setTaskStatus(TASK_INDEX, true);
+        storage.saveTasks(taskList.getAllTasks());
         ui.printPleasedResponse();
     }
 }
