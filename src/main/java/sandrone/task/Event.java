@@ -1,12 +1,27 @@
 package sandrone.task;
 
-import sandrone.util.Pulonia;
 import java.time.LocalDate;
 
-public class Event extends Task{
+import sandrone.util.Pulonia;
+
+/**
+ * Represents a task that occurs within a specific time range.
+ * An {@code Event} task includes a description, a start date, and an end date.
+ *
+ * @author Henry Tse
+ * @version 0.1
+ */
+public class Event extends Task {
     private LocalDate from;
     private LocalDate to;
 
+    /**
+     * Constructs an {@code Event} task with a description and a date range.
+     *
+     * @param desc The description of the event.
+     * @param from The starting date of the event.
+     * @param to The ending date of the event.
+     */
     public Event(String desc, LocalDate from, LocalDate to) {
         super(desc);
         this.from = from;
