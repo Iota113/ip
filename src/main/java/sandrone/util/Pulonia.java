@@ -1,3 +1,17 @@
+package sandrone.util;
+
+import sandrone.command.AddCommand;
+import sandrone.command.Command;
+import sandrone.command.DeleteCommand;
+import sandrone.command.MarkCommand;
+import sandrone.command.PrintCommand;
+import sandrone.command.UnmarkCommand;
+import sandrone.exception.SandroneException;
+import sandrone.task.Deadline;
+import sandrone.task.Event;
+import sandrone.task.Task;
+import sandrone.task.Todo;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -17,7 +31,7 @@ public class Pulonia {
         return date.format(FORMATTER);
     }
 
-    public static Command parseAddCommand(String userInput) throws SandroneException{
+    public static Command parseAddCommand(String userInput) throws SandroneException {
         if (userInput.startsWith("todo")) {
             Task newTodo = new Todo(userInput.replace("todo", "").trim());
             return new AddCommand(newTodo);
@@ -41,7 +55,7 @@ public class Pulonia {
             return new AddCommand(newDeadline);
         } else if (userInput.startsWith("event")) {
             if (!(userInput.contains(" /from ") && userInput.contains(" /to"))) {
-                throw new SandroneException("Incomplete command! An Event needs a ' /from ' and ' /to ' component.");
+                throw new SandroneException("Incomplete command! An sandrone.task.Event needs a ' /from ' and ' /to ' component.");
             }
 
             // Remove "event"

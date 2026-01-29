@@ -1,3 +1,7 @@
+package sandrone.task;
+
+import sandrone.exception.SandroneException;
+
 public class Todo extends Task {
 
     public Todo(String desc) throws SandroneException {

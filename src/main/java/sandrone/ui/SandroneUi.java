@@ -1,3 +1,8 @@
+package sandrone.ui;
+
+import sandrone.task.Task;
+import sandrone.task.TaskList;
+
 import java.util.ArrayList;
 
 public class SandroneUi {
