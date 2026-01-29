@@ -1,3 +1,9 @@
+package sandrone.command;
+
+import sandrone.task.TaskList;
+import sandrone.ui.SandroneUi;
+import sandrone.util.Storage;
+
 public class MarkCommand extends Command {
     private final int TASK_INDEX;
 

@@ -1,3 +1,7 @@
+package sandrone.task;
+
+import sandrone.util.Storage;
+
 import java.util.ArrayList;
 
 public class TaskList {

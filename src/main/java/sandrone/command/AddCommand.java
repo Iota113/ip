@@ -1,3 +1,10 @@
+package sandrone.command;
+
+import sandrone.task.Task;
+import sandrone.task.TaskList;
+import sandrone.ui.SandroneUi;
+import sandrone.util.Storage;
+
 import java.util.ArrayList;
 
 public class AddCommand extends Command {
