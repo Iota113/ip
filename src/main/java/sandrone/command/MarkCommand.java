@@ -5,15 +5,15 @@ import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
 
 public class MarkCommand extends Command {
-    private final int TASK_INDEX;
+    private int taskIndex;
 
-    public MarkCommand(int TASK_INDEX) {
-        this.TASK_INDEX = TASK_INDEX;
+    public MarkCommand(int taskIndex) {
+        this.taskIndex = taskIndex;
     }
 
     @Override
     public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
-        taskList.setTaskStatus(TASK_INDEX, true);
+        taskList.setTaskStatus(taskIndex, true);
         storage.saveTasks(taskList.getAllTasks());
         ui.printPleasedResponse();
     }

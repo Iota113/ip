@@ -1,11 +1,11 @@
 package sandrone.command;
 
+import java.util.ArrayList;
+
 import sandrone.task.Task;
 import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
-
-import java.util.ArrayList;
 
 public class AddCommand extends Command {
     private Task newTask;
@@ -21,12 +21,11 @@ public class AddCommand extends Command {
         storage.saveTasks(tasks);
 
         int count = taskList.getAllTasks().size();
-        String addTaskMessage =
-                "Very well. You have " + count + " task(s) now.\n" +
-                        count + "."
-                        + "[" + tasks.get(count - 1).getStatusIcon() + "]"
-                        + "[" + tasks.get(count - 1).getTaskType() + "] "
-                        + tasks.get(count - 1).getDescription();
+        String addTaskMessage = "Very well. You have " + count + " task(s) now.\n"
+                + count + "."
+                + "[" + tasks.get(count - 1).getStatusIcon() + "]"
+                + "[" + tasks.get(count - 1).getTaskType() + "] "
+                + tasks.get(count - 1).getDescription();
         System.out.println(addTaskMessage);
     }
 }
