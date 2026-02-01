@@ -74,12 +74,15 @@ public class TaskList {
         return this.tasks.get(id);
     }
 
+<<<<<<< HEAD
     /**
      * Filters the task list for tasks containing the specified keyword.
      *
      * @param userInput The keyword to search for within task descriptions.
      * @return A list of tasks that match the search criteria.
      */
+=======
+>>>>>>> branch-Level-9
     public ArrayList<Task> getMatchingTasks(String userInput) {
         ArrayList<Task> matchingTasks = new ArrayList<>();
         for (Task task : this.tasks) {
@@ -89,4 +92,9 @@ public class TaskList {
         }
         return matchingTasks;
     }
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> branch-Level-9

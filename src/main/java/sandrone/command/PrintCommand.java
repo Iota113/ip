@@ -14,6 +14,10 @@ import sandrone.util.Storage;
 public class PrintCommand extends Command {
     @Override
     public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
+<<<<<<< HEAD
         ui.showTasks(taskList.getAllTasks());
+=======
+        ui.printTasks(taskList.getAllTasks());
+>>>>>>> branch-Level-9
     }
 }

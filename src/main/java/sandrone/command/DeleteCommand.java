@@ -26,7 +26,11 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
+<<<<<<< HEAD
         taskList.deleteTask(taskIndex);
+=======
+        taskList.deleteTask(TASK_INDEX);
+>>>>>>> branch-Level-9
         storage.saveTasks(taskList.getAllTasks());
         ui.printPleasedResponse();
     }

@@ -36,6 +36,7 @@ public class SandroneUi {
         printLine();
     }
 
+<<<<<<< HEAD
     /**
      * Prints a formatted list of tasks to the console.
      * Each task is displayed with its index, status icon, type, and description.
@@ -43,6 +44,9 @@ public class SandroneUi {
      * @param tasks The list of tasks to be displayed.
      */
     public void showTasks(ArrayList<Task> tasks) {
+=======
+    public void printTasks(ArrayList<Task> tasks) {
+>>>>>>> branch-Level-9
         System.out.println("Your List:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + "."
