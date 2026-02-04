@@ -163,8 +163,10 @@ public class Pulonia {
         CommandType commandType = CommandType.getCommandType(userInput);
         switch (commandType) {
         case LIST:
+            System.out.println("MAMBO");
             return new PrintCommand();
         case MARK:
+            System.out.println("MARK");
             return new MarkCommand(extractIndex(userInput));
         case UNMARK:
             return new UnmarkCommand(extractIndex(userInput));

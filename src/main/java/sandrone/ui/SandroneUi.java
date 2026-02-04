@@ -17,9 +17,45 @@ public class SandroneUi {
             "Look very closely, for standing before you is none other than Marionette.\n"
                     + "Seventh of the Fatui Harbingers.";
     private static final String farewell = "Ad astra abyssosque! Welcome to Nod-Krai, dominion of the Fatui.";
+    private static final String pleasedResponse = "Very well.";
+    private static final String unhappyResponse = "Utterly risible.";
 
     public void printLine() {
         System.out.println("____________________________________________________________");
+    }
+
+    public String getGreetings() {
+        return greetings;
+    }
+
+    public String getFarewell() {
+        return farewell;
+    }
+
+    public String getTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            return "Your list is currently empty!";
+        }
+
+        StringBuilder sb = new StringBuilder("Your list:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public String getTaskAdded(Task task, int totalCount) {
+        StringBuilder sb = new StringBuilder("Very well. You have " + totalCount + " task(s) now.");
+        sb.append(task);
+        return sb.toString();
+    }
+
+    public String getPleasedResponse() {
+        return pleasedResponse;
+    }
+
+    public String getUnhappyResponse() {
+        return unhappyResponse;
     }
 
     /**
@@ -70,11 +106,11 @@ public class SandroneUi {
     }
 
     public void printPleasedResponse() {
-        System.out.println("Very well.");
+        System.out.println(pleasedResponse);
     }
 
     public void printUnhappyResponse() {
-        System.out.println("Utterly risible.");
+        System.out.println(unhappyResponse);
     }
 
 }
