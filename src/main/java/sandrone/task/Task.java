@@ -44,4 +44,9 @@ public abstract class Task {
     }
 
     public abstract String toFileFormat();
+
+    @Override
+    public String toString() {
+        return String.format("[%s][%s] %s", getStatusIcon(), getTaskType(), desc);
+    }
 }

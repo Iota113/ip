@@ -22,5 +22,12 @@ public abstract class Command {
      * @param ui The user interface used to interact with or provide feedback to the user.
      * @param storage The file handler used to save or load task data.
      */
-    public abstract void execute(TaskList taskList, SandroneUi ui, Storage storage);
+    public abstract String execute(TaskList taskList, SandroneUi ui, Storage storage);
+
+    /**
+     * Returns true if this command should terminate the application.
+     */
+    public boolean isExit() {
+        return false;
+    }
 }
