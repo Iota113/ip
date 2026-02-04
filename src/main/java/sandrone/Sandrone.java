@@ -47,6 +47,10 @@ public class Sandrone {
         }
     }
 
+    public String getGreetings() {
+        return ui.getGreetings();
+    }
+
     /**
      * Starts the main execution loop of the chatbot.
      * Continues to read and execute user commands until the "bye" command is received.

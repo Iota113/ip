@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 import sandrone.command.AddCommand;
 import sandrone.command.Command;
 import sandrone.command.DeleteCommand;
+import sandrone.command.ExitCommand;
 import sandrone.command.FindCommand;
 import sandrone.command.MarkCommand;
 import sandrone.command.PrintCommand;
@@ -137,7 +138,7 @@ public class Pulonia {
     }
 
     private enum CommandType {
-        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, DEFAULT;
+        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, BYE, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
             if (userInput == null) {
@@ -163,10 +164,8 @@ public class Pulonia {
         CommandType commandType = CommandType.getCommandType(userInput);
         switch (commandType) {
         case LIST:
-            System.out.println("MAMBO");
             return new PrintCommand();
         case MARK:
-            System.out.println("MARK");
             return new MarkCommand(extractIndex(userInput));
         case UNMARK:
             return new UnmarkCommand(extractIndex(userInput));
@@ -178,6 +177,8 @@ public class Pulonia {
         case DEADLINE:
         case EVENT:
             return parseAddCommand(userInput);
+        case BYE:
+            return new ExitCommand();
         default:
             String message =
                     "You Fool. What are you saying.\n"

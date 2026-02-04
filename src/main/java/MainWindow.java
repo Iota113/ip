@@ -29,11 +29,20 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+
     }
 
-    /** Injects the Duke instance */
+    /** Injects the Sandrone instance and calls a welcome message */
     public void setSandrone(Sandrone s) {
-        sandrone = s;
+        this.sandrone = s;
+        showWelcomeMessage();
+    }
+
+    private void showWelcomeMessage() {
+        String greeting = sandrone.getGreetings();
+        dialogContainer.getChildren().add(
+                DialogBox.getSandroneDialog(greeting, sandroneImage)
+        );
     }
 
     /**
