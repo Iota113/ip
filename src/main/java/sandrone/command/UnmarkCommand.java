@@ -26,11 +26,7 @@ public class UnmarkCommand extends Command {
 
     @Override
     public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
-<<<<<<< HEAD
         taskList.setTaskStatus(taskIndex, false);
-=======
-        taskList.setTaskStatus(TASK_INDEX, false);
->>>>>>> branch-Level-9
         storage.saveTasks(taskList.getAllTasks());
         ui.printUnhappyResponse();
     }

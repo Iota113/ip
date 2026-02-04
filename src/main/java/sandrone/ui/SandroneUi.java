@@ -18,6 +18,10 @@ public class SandroneUi {
                     + "Seventh of the Fatui Harbingers.";
     private static final String farewell = "Ad astra abyssosque! Welcome to Nod-Krai, dominion of the Fatui.";
 
+    public void printLine() {
+        System.out.println("____________________________________________________________");
+    }
+
     /**
      * Displays the initial greeting message to the user.
      */
@@ -36,7 +40,6 @@ public class SandroneUi {
         printLine();
     }
 
-<<<<<<< HEAD
     /**
      * Prints a formatted list of tasks to the console.
      * Each task is displayed with its index, status icon, type, and description.
@@ -44,9 +47,6 @@ public class SandroneUi {
      * @param tasks The list of tasks to be displayed.
      */
     public void showTasks(ArrayList<Task> tasks) {
-=======
-    public void printTasks(ArrayList<Task> tasks) {
->>>>>>> branch-Level-9
         System.out.println("Your List:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + "."
@@ -75,10 +75,6 @@ public class SandroneUi {
 
     public void printUnhappyResponse() {
         System.out.println("Utterly risible.");
-    }
-
-    public void printLine() {
-        System.out.println("____________________________________________________________");
     }
 
 }

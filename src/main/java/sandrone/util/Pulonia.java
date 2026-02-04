@@ -1,6 +1,5 @@
 package sandrone.util;
 
-<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -12,9 +11,6 @@ import sandrone.command.FindCommand;
 import sandrone.command.MarkCommand;
 import sandrone.command.PrintCommand;
 import sandrone.command.UnmarkCommand;
-=======
-import sandrone.command.*;
->>>>>>> branch-Level-9
 import sandrone.exception.SandroneException;
 import sandrone.task.Deadline;
 import sandrone.task.Event;
