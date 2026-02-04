@@ -33,8 +33,17 @@ public class Deadline extends Task {
 
     @Override
     public String getDescription() {
+        return this.desc + this.getDueDateString();
+    }
+
+    public String getDueDateString() {
         String formattedBy = Pulonia.formatDate(this.by);
-        return this.desc + " (by: " + formattedBy + ")";
+        return " (by: " + formattedBy + ")";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + this.getDueDateString();
     }
 
     @Override

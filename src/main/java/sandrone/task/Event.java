@@ -35,9 +35,18 @@ public class Event extends Task {
 
     @Override
     public String getDescription() {
+        return this.desc + this.getDurationString();
+    }
+
+    public String getDurationString() {
         String formattedFrom = Pulonia.formatDate(this.from);
         String formattedTo = Pulonia.formatDate(this.to);
-        return this.desc + " (from: " + formattedFrom + " to: " + formattedTo + ")";
+        return " (from: " + formattedFrom + " to: " + formattedTo + ")";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + this.getDurationString();
     }
 
     @Override
