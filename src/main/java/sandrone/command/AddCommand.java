@@ -29,12 +29,12 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, SandroneUi ui, Storage storage) {
+    public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
         taskList.addTask(this.newTask);
         ArrayList<Task> tasks = taskList.getAllTasks();
         storage.saveTasks(tasks);
 
         int count = taskList.getAllTasks().size();
-        ui.showTaskAdded(newTask, count);
+        return ui.getTaskAdded(newTask, count);
     }
 }
