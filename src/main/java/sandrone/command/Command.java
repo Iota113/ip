@@ -23,4 +23,11 @@ public abstract class Command {
      * @param storage The file handler used to save or load task data.
      */
     public abstract String execute(TaskList taskList, SandroneUi ui, Storage storage);
+
+    /**
+     * Returns true if this command should terminate the application.
+     */
+    public boolean isExit() {
+        return false;
+    }
 }

@@ -1,3 +1,5 @@
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -6,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import javafx.util.Duration;
 import sandrone.Sandrone;
 
 /**
@@ -29,7 +32,6 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-
     }
 
     /** Injects the Sandrone instance and calls a welcome message */
@@ -58,5 +60,14 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getSandroneDialog(response, sandroneImage)
         );
         userInput.clear();
+
+        if (sandrone.shouldExit()) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(0.7));
+            delay.setOnFinished(event -> {
+                Platform.exit();
+                System.exit(0);
+            });
+            delay.play();
+        }
     }
 }

@@ -10,4 +10,8 @@ public class ExitCommand extends Command {
     public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
         return ui.getFarewell();
     }
+    @Override
+    public boolean isExit() {
+        return true;
+    }
 }
