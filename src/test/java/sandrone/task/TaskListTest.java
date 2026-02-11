@@ -1,6 +1,6 @@
 package sandrone.task;
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 import sandrone.StorageStub;
 import sandrone.exception.SandroneException;
@@ -14,7 +14,7 @@ public class TaskListTest {
         TaskList taskList = new TaskList(testStorage);
         taskList.addTask(new Todo("Read book"));
 
-        assertEquals(1, taskList.getTaskCount());
+        assertEquals(1, taskList.getTasksCount());
         assertEquals("Read book", taskList.getTask(0).getDescription());
     }
 
