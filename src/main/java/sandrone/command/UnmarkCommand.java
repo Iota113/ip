@@ -27,6 +27,8 @@ public class UnmarkCommand extends Command {
     @Override
     public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
         taskList.setTaskStatus(taskIndex, false);
+        boolean isMarked = taskList.getTask(taskIndex).isMarked();
+        assert !isMarked : "Task List did not unmark the task properly~";
         storage.saveTasks(taskList);
         return ui.getUnhappyResponse();
     }

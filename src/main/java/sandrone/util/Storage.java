@@ -126,7 +126,8 @@ public class Storage {
                     loadedTasks.add(event);
                     break;
                 default:
-                    // do nothing
+                    // This should be unreachable
+                    assert false : "Unknown task type: " + type;
                     break;
                 }
             }

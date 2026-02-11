@@ -1,5 +1,8 @@
 package sandrone.command;
 
+import java.util.ArrayList;
+
+import sandrone.task.Task;
 import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
@@ -26,7 +29,12 @@ public class DeleteCommand extends Command {
 
     @Override
     public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
+        int oldTasksCount = taskList.getTasksCount();
         taskList.deleteTask(taskIndex);
+
+        int newTasksCount = taskList.getTasksCount();
+        assert newTasksCount == oldTasksCount - 1 : "The size of the Tasks ArrayList is not updated properly~";
+
         storage.saveTasks(taskList);
         return ui.getPleasedResponse();
     }

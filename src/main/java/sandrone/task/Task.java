@@ -44,6 +44,10 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public boolean isMarked() {
+        return this.isDone;
+    }
+
     public abstract String toFileFormat();
 
     @Override
