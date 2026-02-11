@@ -1,5 +1,7 @@
 package sandrone.task;
 
+import sandrone.exception.SandroneException;
+
 /**
  * Represents a generic task in the Sandrone chatbot.
  * This abstract class provides the base functionality for all tasks,
@@ -19,6 +21,7 @@ public abstract class Task {
      * @param desc The description of the task.
      */
     public Task(String desc) {
+        assert !desc.isEmpty() : "Pulonia failed to check for empty descriptions!";
         this.desc = desc;
         this.isDone = false;
     }

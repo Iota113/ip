@@ -36,30 +36,32 @@ public class TaskList {
     /**
      * Updates the completion status of a task at the specified index.
      *
-     * @param id The 0-based index of the task in the list.
+     * @param taskIndex The 0-based index of the task in the list.
      * @param isMark {@code true} to mark as completed, {@code false} to unmark.
      */
-    public void setTaskStatus(int id, boolean isMark) {
-        if (id > tasks.size()) {
-            System.out.println("You do not have that many tasks.");
-        }
+    public void setTaskStatus(int taskIndex, boolean isMark) {
+        checkTaskIndex(taskIndex);
 
         if (isMark) {
-            tasks.get(id).mark();
+            tasks.get(taskIndex).mark();
         } else {
-            tasks.get(id).unmark();
+            tasks.get(taskIndex).unmark();
+        }
+    }
+
+    private void checkTaskIndex(int taskIndex) {
+        if (taskIndex > tasks.size()) {
+            System.out.println("You do not have that many tasks.");
         }
     }
 
     /**
      * Removes a task from the list based on its index.
      *
-     * @param id The 0-based index of the task to be removed.
-     * @return A message confirming the deletion.
+     * @param taskIndex The 0-based index of the task to be removed.
      */
-    public String deleteTask(int id) {
-        tasks.remove(id);
-        return "Your task has been deleted.";
+    public void deleteTask(int taskIndex) {
+        tasks.remove(taskIndex);
     }
 
     public ArrayList<Task> getAllTasks() {

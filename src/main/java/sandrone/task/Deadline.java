@@ -2,6 +2,7 @@ package sandrone.task;
 
 import java.time.LocalDate;
 
+import sandrone.exception.SandroneException;
 import sandrone.util.Pulonia;
 
 /**
@@ -19,11 +20,11 @@ public class Deadline extends Task {
      * Constructs a {@code Deadline} task with a description and a due date.
      *
      * @param desc The description of the task.
-     * @param by The date the task is due.
+     * @param dueDate The date the task is due.
      */
-    public Deadline(String desc, LocalDate by) {
+    public Deadline(String desc, LocalDate dueDate) {
         super(desc);
-        this.by = by;
+        this.by = dueDate;
     }
 
     @Override

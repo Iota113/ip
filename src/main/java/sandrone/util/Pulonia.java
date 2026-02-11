@@ -55,74 +55,6 @@ public class Pulonia {
     }
 
     /**
-     * Interprets user input specific to creating new tasks (Todo, Deadline, Event).
-     *
-     * @param userInput The full command string provided by the user.
-     * @return An {@code AddCommand} containing the initialized task.
-     * @throws SandroneException If required components (task description, /by, /from, /to) are missing
-     */
-    public static Command parseAddCommand(String userInput) throws SandroneException {
-        if (userInput.startsWith("todo")) {
-            Task newTodo = new Todo(userInput.replace("todo", "").trim());
-            return new AddCommand(newTodo);
-        } else if (userInput.startsWith("deadline")) {
-            if (!userInput.contains(" /by ")) {
-                throw new SandroneException("Incomplete command! A by needs a ' /by ' component.");
-            }
-
-            String[] parts = userInput.split(" /by ");
-            if (parts.length < 2 || parts[1].trim().isEmpty()) {
-                throw new SandroneException("The by cannot be empty.");
-            }
-
-            String desc = parts[0].substring(8).trim();
-            if (desc.isEmpty()) {
-                throw new SandroneException("The task cannot be empty.");
-            }
-
-            LocalDate by = parseDate(parts[1]);
-            Task newDeadline = new Deadline(desc, by);
-            return new AddCommand(newDeadline);
-        } else if (userInput.startsWith("event")) {
-            if (!(userInput.contains(" /from ") && userInput.contains(" /to"))) {
-                throw new SandroneException("Incomplete command! An sandrone.task.Event needs "
-                        + "a ' /from ' and ' /to ' component.");
-            }
-
-            // Remove "event"
-            String command = userInput.substring(5).trim();
-            String[] descParts = command.split("/from");
-            String desc = descParts[0].trim();
-            if (desc.isEmpty()) {
-                throw new SandroneException("The task description is empty!");
-            }
-
-            String[] timeParts = descParts[1].split("/to");
-            if (timeParts.length < 2) {
-                if (timeParts[0].trim().isEmpty()) {
-                    throw new SandroneException("Both from and to fields are empty!");
-                }
-                throw new SandroneException("The to field is empty!");
-            }
-
-            String fromString = timeParts[0].trim();
-            if (fromString.isEmpty()) {
-                throw new SandroneException("The from field is empty!");
-            }
-
-            String toString = timeParts[1].trim();
-
-            LocalDate from = parseDate(fromString);
-            LocalDate to = parseDate(toString);
-
-            Task newEvent = new Event(desc, from, to);
-            return new AddCommand(newEvent);
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * Extracts the integer index from a user command (e.g. "mark 2").
      * Converts the 1-based index provided by the user to a 0-based index for internal use.
      *
@@ -192,4 +124,100 @@ public class Pulonia {
         }
 
     }
+
+    /**
+     * Interprets user input specific to creating new tasks (Todo, Deadline, Event).
+     *
+     * @param userInput The full command string provided by the user.
+     * @return An {@code AddCommand} containing the initialized task.
+     * @throws SandroneException If required components (task description, /by, /from, /to) are missing
+     */
+    public static AddCommand parseAddCommand(String userInput) throws SandroneException {
+        if (userInput.startsWith("todo")) {
+            return parseAddTodo(userInput);
+        } else if (userInput.startsWith("deadline")) {
+            return parseAddDeadline(userInput);
+        } else if (userInput.startsWith("event")) {
+            return parseAddEvent(userInput);
+        } else {
+            assert false : "Pulonia failed to properly identify add commands~";
+            return null;
+        }
+    }
+
+    private static AddCommand parseAddTodo(String userInput) {
+        String desc = userInput.replace("todo", "").trim();
+        Task newTodo = new Todo(desc);
+        return new AddCommand(newTodo);
+    }
+
+    private static AddCommand parseAddDeadline(String userInput) throws SandroneException {
+        if (!userInput.contains(" /by ")) {
+            throw new SandroneException("Incomplete command! A by needs a ' /by ' component.");
+        }
+
+        String[] parts = userInput.split(" /by ");
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new SandroneException("The by cannot be empty.");
+        }
+
+        String desc = parts[0].substring(8).trim();
+        if (desc.isEmpty()) {
+            throw new SandroneException("The description of a task cannot be empty!");
+        }
+
+        LocalDate dueDate = parseDate(parts[1]);
+        Task newDeadline = new Deadline(desc, dueDate);
+        return new AddCommand(newDeadline);
+    }
+
+    private static AddCommand parseAddEvent(String userInput) throws SandroneException {
+        // Removes "event" from userInput
+        String remainingCommand = userInput.substring(5).trim();
+
+        checkEventCommand(userInput);
+
+        String[] parts = remainingCommand.split("/from");
+        
+        String desc = parts[0].trim();
+        if (desc.isEmpty()) {
+            throw new SandroneException("The description of a task cannot be empty!");
+        }
+        
+        String[] timeParts = parts[1].split("/to");
+        checkFromToFields(timeParts);
+
+        String fromString = timeParts[0].trim();
+        String toString = timeParts[1].trim();
+        LocalDate from = parseDate(fromString);
+        LocalDate to = parseDate(toString);
+
+        Task newEvent = new Event(desc, from, to);
+        return new AddCommand(newEvent);
+    }
+
+    private static void checkEventCommand(String userInput) throws SandroneException {
+        boolean hasNoFrom = !userInput.contains(" /from ");
+        boolean hasNoTo = !userInput.contains(" /to");
+
+        if (hasNoFrom || hasNoTo) {
+            throw new SandroneException("Incomplete command! An sandrone.task.Event needs "
+                    + "a ' /from ' and ' /to ' component.");
+        }
+    }
+
+    private static void checkFromToFields(String[] timeParts) throws SandroneException {
+        if (timeParts.length < 2) {
+            if (timeParts[0].trim().isEmpty()) {
+                throw new SandroneException("Both from and to fields are empty!");
+            }
+            throw new SandroneException("The to field is empty!");
+        }
+
+
+        if (timeParts[0].trim().isEmpty()) {
+            throw new SandroneException("The from field is empty!");
+        }
+    }
+
 }
