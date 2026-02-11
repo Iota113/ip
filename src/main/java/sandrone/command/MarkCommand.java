@@ -29,7 +29,7 @@ public class MarkCommand extends Command {
         taskList.setTaskStatus(taskIndex, true);
         boolean isMarked = taskList.getTask(taskIndex).isMarked();
         assert isMarked : "Task List did not mark the task properly~";
-        storage.saveTasks(taskList.getAllTasks());
+        storage.saveTasks(taskList);
         return ui.getPleasedResponse();
     }
 }

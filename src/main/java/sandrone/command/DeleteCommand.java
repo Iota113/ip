@@ -31,12 +31,11 @@ public class DeleteCommand extends Command {
     public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
         int oldTasksCount = taskList.getTasksCount();
         taskList.deleteTask(taskIndex);
-        ArrayList<Task> tasks = taskList.getAllTasks();
 
         int newTasksCount = taskList.getTasksCount();
         assert newTasksCount == oldTasksCount - 1 : "The size of the Tasks ArrayList is not updated properly~";
 
-        storage.saveTasks(tasks);
+        storage.saveTasks(taskList);
         return ui.getPleasedResponse();
     }
 

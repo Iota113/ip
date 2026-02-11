@@ -19,6 +19,7 @@ public abstract class Task {
      * @param desc The description of the task.
      */
     public Task(String desc) {
+        assert !desc.isEmpty() : "Pulonia failed to check for empty descriptions!";
         this.desc = desc;
         this.isDone = false;
     }

@@ -1,6 +1,8 @@
 package sandrone.task;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import sandrone.util.Storage;
 
@@ -36,33 +38,36 @@ public class TaskList {
     /**
      * Updates the completion status of a task at the specified index.
      *
-     * @param id The 0-based index of the task in the list.
+     * @param taskIndex The 0-based index of the task in the list.
      * @param isMark {@code true} to mark as completed, {@code false} to unmark.
      */
-    public void setTaskStatus(int id, boolean isMark) {
-        if (id > tasks.size()) {
-            System.out.println("You do not have that many tasks.");
-        }
+    public void setTaskStatus(int taskIndex, boolean isMark) {
+        checkValidTaskIndex(taskIndex);
 
         if (isMark) {
-            tasks.get(id).mark();
+            tasks.get(taskIndex).mark();
         } else {
-            tasks.get(id).unmark();
+            tasks.get(taskIndex).unmark();
+        }
+    }
+
+    private void checkValidTaskIndex(int taskIndex) {
+        if (taskIndex > tasks.size()) {
+            System.out.println("You do not have that many tasks.");
         }
     }
 
     /**
      * Removes a task from the list based on its index.
      *
-     * @param id The 0-based index of the task to be removed.
-     * @return A message confirming the deletion.
+     * @param taskIndex The 0-based index of the task to be removed.
      */
-    public String deleteTask(int id) {
-        tasks.remove(id);
-        return "Your task has been deleted.";
+    public void deleteTask(int taskIndex) {
+        checkValidTaskIndex(taskIndex);
+        tasks.remove(taskIndex);
     }
 
-    public ArrayList<Task> getAllTasks() {
+    public List<Task> getAllTasks() {
         return this.tasks;
     }
 
@@ -77,16 +82,12 @@ public class TaskList {
     /**
      * Filters the task list for tasks containing the specified keyword.
      *
-     * @param userInput The keyword to search for within task descriptions.
+     * @param keyword The keyword to search for within task descriptions.
      * @return A list of tasks that match the search criteria.
      */
-    public ArrayList<Task> getMatchingTasks(String userInput) {
-        ArrayList<Task> matchingTasks = new ArrayList<>();
-        for (Task task : this.tasks) {
-            if (task.getDescription().contains(userInput)) {
-                matchingTasks.add(task);
-            }
-        }
-        return matchingTasks;
+    public List<Task> getMatchingTasks(String keyword) {
+        return this.tasks.stream()
+                .filter(task -> task.getDescription().contains(keyword))
+                .collect(Collectors.toList());
     }
 }

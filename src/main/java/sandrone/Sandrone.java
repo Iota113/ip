@@ -1,7 +1,5 @@
 package sandrone;
 
-import java.util.Scanner;
-
 import sandrone.command.Command;
 import sandrone.exception.SandroneException;
 import sandrone.task.TaskList;

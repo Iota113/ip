@@ -11,6 +11,7 @@ import java.util.List;
 import sandrone.task.Deadline;
 import sandrone.task.Event;
 import sandrone.task.Task;
+import sandrone.task.TaskList;
 import sandrone.task.Todo;
 
 /**
@@ -61,10 +62,11 @@ public class Storage {
      * Writes the current list of tasks to the local file.
      * Tasks are converted into a pipe-separated string format before saving.
      *
-     * @param tasks The list of {@code Task} objects to be saved.
+     * @param taskList The TaskList object to be saved
      */
-    public void saveTasks(ArrayList<Task> tasks) {
+    public void saveTasks(TaskList taskList) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            ArrayList<Task> tasks = taskList.getAllTasks();
             for (Task task : tasks) {
                 writer.println(task.toFileFormat());
             }

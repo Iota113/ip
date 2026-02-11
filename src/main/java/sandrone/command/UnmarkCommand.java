@@ -29,7 +29,7 @@ public class UnmarkCommand extends Command {
         taskList.setTaskStatus(taskIndex, false);
         boolean isMarked = taskList.getTask(taskIndex).isMarked();
         assert !isMarked : "Task List did not unmark the task properly~";
-        storage.saveTasks(taskList.getAllTasks());
+        storage.saveTasks(taskList);
         return ui.getUnhappyResponse();
     }
 }

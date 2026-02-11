@@ -1,6 +1,6 @@
 package sandrone.command;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import sandrone.task.Task;
 import sandrone.task.TaskList;
@@ -32,12 +32,11 @@ public class AddCommand extends Command {
     public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
         int oldTasksCount = taskList.getTasksCount();
         taskList.addTask(this.newTask);
-        ArrayList<Task> tasks = taskList.getAllTasks();
-
+      
         int newTasksCount = taskList.getTasksCount();
         assert newTasksCount == oldTasksCount + 1 : "The size of the Tasks ArrayList is not updated properly~";
-
-        storage.saveTasks(tasks);
+      
+        storage.saveTasks(taskList);
         return ui.getTaskAdded(newTask, newTasksCount);
     }
 }
