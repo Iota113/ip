@@ -2,19 +2,18 @@ package sandrone.task;
 
 import java.time.LocalDate;
 
-import sandrone.exception.SandroneException;
 import sandrone.util.Pulonia;
 
 /**
  * Represents a task with a specific deadline.
- * A {@code Deadline} object contains a description and a date by which
+ * A {@code Deadline} object contains a description and a date dueDate which
  * the task must be completed, represented as a {@code LocalDate}.
  *
  * @author Henry Tse
  * @version 0.1
  */
 public class Deadline extends Task {
-    private LocalDate by;
+    private LocalDate dueDate;
 
     /**
      * Constructs a {@code Deadline} task with a description and a due date.
@@ -24,7 +23,7 @@ public class Deadline extends Task {
      */
     public Deadline(String desc, LocalDate dueDate) {
         super(desc);
-        this.by = dueDate;
+        this.dueDate = dueDate;
     }
 
     @Override
@@ -38,8 +37,8 @@ public class Deadline extends Task {
     }
 
     public String getDueDateString() {
-        String formattedBy = Pulonia.formatDate(this.by);
-        return " (by: " + formattedBy + ")";
+        String formattedBy = Pulonia.formatDate(this.dueDate);
+        return " (dueDate: " + formattedBy + ")";
     }
 
     @Override
@@ -49,6 +48,6 @@ public class Deadline extends Task {
 
     @Override
     public String toFileFormat() {
-        return "D | " + getStatusIcon() + " | " + this.desc + " | " + this.by;
+        return "D | " + getStatusIcon() + " | " + this.desc + " | " + this.dueDate;
     }
 }

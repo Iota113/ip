@@ -40,7 +40,7 @@ public class TaskList {
      * @param isMark {@code true} to mark as completed, {@code false} to unmark.
      */
     public void setTaskStatus(int taskIndex, boolean isMark) {
-        checkTaskIndex(taskIndex);
+        checkValidTaskIndex(taskIndex);
 
         if (isMark) {
             tasks.get(taskIndex).mark();
@@ -49,7 +49,7 @@ public class TaskList {
         }
     }
 
-    private void checkTaskIndex(int taskIndex) {
+    private void checkValidTaskIndex(int taskIndex) {
         if (taskIndex > tasks.size()) {
             System.out.println("You do not have that many tasks.");
         }
@@ -61,6 +61,7 @@ public class TaskList {
      * @param taskIndex The 0-based index of the task to be removed.
      */
     public void deleteTask(int taskIndex) {
+        checkValidTaskIndex(taskIndex);
         tasks.remove(taskIndex);
     }
 
