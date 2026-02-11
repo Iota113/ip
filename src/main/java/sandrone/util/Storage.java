@@ -66,7 +66,7 @@ public class Storage {
      */
     public void saveTasks(TaskList taskList) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
-            ArrayList<Task> tasks = taskList.getAllTasks();
+            List<Task> tasks = taskList.getAllTasks();
             for (Task task : tasks) {
                 writer.println(task.toFileFormat());
             }
