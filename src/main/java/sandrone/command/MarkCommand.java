@@ -21,7 +21,6 @@ public class MarkCommand extends Command {
      * @param taskIndex The 0-based index of the task in the task list.
      */
     public MarkCommand(int taskIndex) {
-        assert taskIndex >= 0 : "You can only mark tasks with a positive index!";
         this.taskIndex = taskIndex;
     }
 
