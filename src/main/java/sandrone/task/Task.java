@@ -1,7 +1,5 @@
 package sandrone.task;
 
-import sandrone.exception.SandroneException;
-
 /**
  * Represents a generic task in the Sandrone chatbot.
  * This abstract class provides the base functionality for all tasks,

@@ -2,7 +2,6 @@ package sandrone.task;
 
 import java.time.LocalDate;
 
-import sandrone.exception.SandroneException;
 import sandrone.util.Pulonia;
 
 /**
