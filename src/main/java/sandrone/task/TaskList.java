@@ -1,6 +1,8 @@
 package sandrone.task;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import sandrone.util.Storage;
 
@@ -62,7 +64,7 @@ public class TaskList {
         return "Your task has been deleted.";
     }
 
-    public ArrayList<Task> getAllTasks() {
+    public List<Task> getAllTasks() {
         return this.tasks;
     }
 
@@ -77,16 +79,12 @@ public class TaskList {
     /**
      * Filters the task list for tasks containing the specified keyword.
      *
-     * @param userInput The keyword to search for within task descriptions.
+     * @param keyword The keyword to search for within task descriptions.
      * @return A list of tasks that match the search criteria.
      */
-    public ArrayList<Task> getMatchingTasks(String userInput) {
-        ArrayList<Task> matchingTasks = new ArrayList<>();
-        for (Task task : this.tasks) {
-            if (task.getDescription().contains(userInput)) {
-                matchingTasks.add(task);
-            }
-        }
-        return matchingTasks;
+    public List<Task> getMatchingTasks(String keyword) {
+        return this.tasks.stream()
+                .filter(task -> task.getDescription().contains(keyword))
+                .collect(Collectors.toList());
     }
 }

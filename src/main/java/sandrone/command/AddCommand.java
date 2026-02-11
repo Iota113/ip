@@ -1,6 +1,6 @@
 package sandrone.command;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import sandrone.task.Task;
 import sandrone.task.TaskList;
@@ -31,7 +31,7 @@ public class AddCommand extends Command {
     @Override
     public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
         taskList.addTask(this.newTask);
-        ArrayList<Task> tasks = taskList.getAllTasks();
+        List<Task> tasks = taskList.getAllTasks();
         storage.saveTasks(tasks);
 
         int count = taskList.getAllTasks().size();
