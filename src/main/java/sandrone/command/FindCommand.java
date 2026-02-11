@@ -1,6 +1,6 @@
 package sandrone.command;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import sandrone.task.Task;
 import sandrone.task.TaskList;
@@ -32,7 +32,7 @@ public class FindCommand extends Command {
 
     @Override
     public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
-        ArrayList<Task> matchingTasks = taskList.getMatchingTasks(userInput);
+        List<Task> matchingTasks = taskList.getMatchingTasks(userInput);
         return ui.getTasks(matchingTasks);
     }
 
