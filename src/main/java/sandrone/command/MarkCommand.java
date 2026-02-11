@@ -27,6 +27,8 @@ public class MarkCommand extends Command {
     @Override
     public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
         taskList.setTaskStatus(taskIndex, true);
+        boolean isMarked = taskList.getTask(taskIndex).isMarked();
+        assert isMarked : "Task List did not mark the task properly~";
         storage.saveTasks(taskList.getAllTasks());
         return ui.getPleasedResponse();
     }
