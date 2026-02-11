@@ -1,6 +1,7 @@
 package sandrone.ui;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import sandrone.task.Task;
 
@@ -44,7 +45,7 @@ public class SandroneUi {
      *
      * @param tasks The list of tasks to be displayed.
      */
-    public String getTasks(ArrayList<Task> tasks) {
+    public String getTasks(List<Task> tasks) {
         if (tasks.isEmpty()) {
             return "Your list is currently empty!";
         }

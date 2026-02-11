@@ -63,7 +63,7 @@ public class Storage {
      *
      * @param tasks The list of {@code Task} objects to be saved.
      */
-    public void saveTasks(ArrayList<Task> tasks) {
+    public void saveTasks(List<Task> tasks) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
             for (Task task : tasks) {
                 writer.println(task.toFileFormat());

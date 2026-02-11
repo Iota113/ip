@@ -1,6 +1,8 @@
 package sandrone;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import sandrone.task.Task;
 import sandrone.util.Storage;
 
@@ -15,7 +17,7 @@ public class StorageStub extends Storage {
     }
 
     @Override
-    public void saveTasks(ArrayList<Task> tasks) {
+    public void saveTasks(List<Task> tasks) {
         // do nothing
     }
 
