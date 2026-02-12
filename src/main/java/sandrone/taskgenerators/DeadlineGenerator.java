@@ -1,7 +1,10 @@
-package sandrone.task;
+package sandrone.taskgenerators;
 
 import java.time.LocalDate;
 import java.time.Period;
+
+import sandrone.task.Deadline;
+import sandrone.task.Task;
 
 /**
  * Represents a Deadline generator for the Sandrone chatbot
@@ -27,9 +30,10 @@ public class DeadlineGenerator extends TaskGenerator {
 
     @Override
     public Task createInstance() {
-        Task newTask = new Deadline(description, nextDueDate);
+        Task newRecurringTask = new Deadline(description, nextDueDate);
+        newRecurringTask.setRecurring(true);
         advanceDueDate();
-        return newTask;
+        return newRecurringTask;
     }
 
     private void advanceDueDate() {

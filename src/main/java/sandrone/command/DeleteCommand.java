@@ -1,8 +1,6 @@
 package sandrone.command;
 
-import java.util.ArrayList;
-
-import sandrone.task.Task;
+import sandrone.AppState;
 import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
@@ -28,7 +26,9 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
+    public String execute(AppState appState, SandroneUi ui, Storage storage) {
+        TaskList taskList = appState.getTaskList();
+
         int oldTasksCount = taskList.getTasksCount();
         taskList.deleteTask(taskIndex);
 

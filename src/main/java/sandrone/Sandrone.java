@@ -2,7 +2,6 @@ package sandrone;
 
 import sandrone.command.Command;
 import sandrone.exception.SandroneException;
-import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Pulonia;
 import sandrone.util.Storage;
@@ -18,8 +17,8 @@ import sandrone.util.Storage;
  */
 public class Sandrone {
     private SandroneUi ui;
-    private TaskList taskList;
-    private Storage listData;
+    private AppState appState;
+    private Storage storage;
     private boolean isExit = false;
 
     /**
@@ -29,8 +28,8 @@ public class Sandrone {
      */
     public Sandrone(String filePath) {
         this.ui = new SandroneUi();
-        this.listData = new Storage(filePath);
-        this.taskList = new TaskList(this.listData);
+        this.storage = new Storage(filePath);
+        this.appState = new AppState(storage);
     }
 
     /**
@@ -40,7 +39,7 @@ public class Sandrone {
         try {
             Command c = Pulonia.parseCommand(input);
             this.isExit = c.isExit();
-            return c.execute(this.taskList, this.ui, this.listData);
+            return c.execute(this.appState, this.ui, this.storage);
         } catch (SandroneException e) {
             return e.getMessage();
         }

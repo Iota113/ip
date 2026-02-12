@@ -11,6 +11,7 @@ package sandrone.task;
 public abstract class Task {
     protected String desc;
     protected boolean isDone;
+    protected boolean isRecurring;
 
     /**
      * Constructs a new {@code Task} with the given description.
@@ -25,7 +26,11 @@ public abstract class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : "–"); // mark done task with X
+    }
+
+    public String getRecurrenceIcon() {
+        return (isRecurring ? "R" : "–");
     }
 
     public String getDescription() {
@@ -33,7 +38,7 @@ public abstract class Task {
     }
 
     public String getTaskTypeIcon() {
-        return " ";
+        return "–";
     }
 
     public void mark() {
@@ -52,6 +57,10 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return String.format("[%s][%s] %s", getStatusIcon(), getTaskTypeIcon(), desc);
+        return String.format("[%s][%s][%s] %s", getStatusIcon(), getTaskTypeIcon(), getRecurrenceIcon(), desc);
+    }
+
+    public void setRecurring(boolean isRecurring) {
+        this.isRecurring = isRecurring;
     }
 }

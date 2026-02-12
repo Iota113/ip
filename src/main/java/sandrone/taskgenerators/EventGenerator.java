@@ -1,7 +1,10 @@
-package sandrone.task;
+package sandrone.taskgenerators;
 
 import java.time.LocalDate;
 import java.time.Period;
+
+import sandrone.task.Event;
+import sandrone.task.Task;
 
 public class EventGenerator extends TaskGenerator{
     private LocalDate startDate;
@@ -24,9 +27,10 @@ public class EventGenerator extends TaskGenerator{
 
     @Override
     public Task createInstance() {
-        Task newTask = new Event(description, startDate, endDate);
+        Task newRecurringTask = new Event(description, startDate, endDate);
+        newRecurringTask.setRecurring(true);
         advanceDates();
-        return newTask;
+        return newRecurringTask;
     }
 
     private void advanceDates() {

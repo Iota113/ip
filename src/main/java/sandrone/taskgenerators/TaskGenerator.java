@@ -1,6 +1,8 @@
-package sandrone.task;
+package sandrone.taskgenerators;
 
 import java.time.Period;
+
+import sandrone.task.Task;
 
 /**
  * Represents a task generator in the Sandrone chatbot for recurring tasks.

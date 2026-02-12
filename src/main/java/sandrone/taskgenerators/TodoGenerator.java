@@ -1,7 +1,10 @@
-package sandrone.task;
+package sandrone.taskgenerators;
 
 import java.time.LocalDate;
 import java.time.Period;
+
+import sandrone.task.Task;
+import sandrone.task.Todo;
 
 /**
  * Represents a Todo generator for the Sandrone chatbot
@@ -16,6 +19,8 @@ public class TodoGenerator extends TaskGenerator {
 
     @Override
     public Task createInstance() {
-        return new Todo(description);
+        Task newRecurringTask = new Todo(description);
+        newRecurringTask.setRecurring(true);
+        return newRecurringTask;
     }
 }

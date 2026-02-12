@@ -1,10 +1,12 @@
 package sandrone.util;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import sandrone.command.AddCommand;
+import sandrone.command.AddGeneratorCommand;
 import sandrone.command.Command;
 import sandrone.command.DeleteCommand;
 import sandrone.command.ExitCommand;
@@ -17,6 +19,8 @@ import sandrone.task.Deadline;
 import sandrone.task.Event;
 import sandrone.task.Task;
 import sandrone.task.Todo;
+import sandrone.taskgenerators.TaskGenerator;
+import sandrone.taskgenerators.TodoGenerator;
 
 /**
  * Handles the parsing of user input strings into executable commands and data types.
@@ -31,6 +35,7 @@ public class Pulonia {
     private static final String TODO_KEYWORD = "todo";
     private static final String DEADLINE_KEYWORD = "deadline";
     private static final String EVENT_KEYWORD = "event";
+    private static final String RECURSE_KEYWORD = "recur";
 
     /**
      * Parses a date string into a {@code LocalDate} object.
@@ -74,7 +79,7 @@ public class Pulonia {
 
     private enum CommandType {
         LIST, TODO, DEADLINE, EVENT, MARK, UNMARK,
-        DELETE, FIND, BYE, RECURRING, DEFAULT;
+        DELETE, FIND, BYE, RECUR, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
             if (userInput == null) {
@@ -109,10 +114,11 @@ public class Pulonia {
             return new DeleteCommand(extractIndex(userInput));
         case FIND:
             return new FindCommand(extractFind(userInput));
+        case RECUR:
+            return parseGeneratorCommand(userInput);
         case TODO:
         case DEADLINE:
         case EVENT:
-        case RECURRING:
             return parseAddCommand(userInput);
         case BYE:
             return new ExitCommand();
@@ -243,5 +249,11 @@ public class Pulonia {
             throw new SandroneException("The from field is empty!");
         }
     }
+
+    public static AddGeneratorCommand parseGeneratorCommand(String userInput) {
+        TaskGenerator newTaskGenerator = new TodoGenerator("TestRecurCommand", LocalDate.now(), Period.ofWeeks(1));
+        return new AddGeneratorCommand(newTaskGenerator);
+    }
+
 
 }
