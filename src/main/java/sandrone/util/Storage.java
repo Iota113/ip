@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +16,11 @@ import sandrone.task.Event;
 import sandrone.task.Task;
 import sandrone.task.TaskList;
 import sandrone.task.Todo;
+import sandrone.taskgenerators.DeadlineGenerator;
+import sandrone.taskgenerators.EventGenerator;
 import sandrone.taskgenerators.TaskGenerator;
 import sandrone.taskgenerators.TaskGeneratorList;
+import sandrone.taskgenerators.TodoGenerator;
 
 /**
  * Handles persistent storage for the chatbot.
@@ -40,16 +44,16 @@ public class Storage {
         this.taskFilePath = taskFilePath;
         this.generatorFilePath = genFilePath;
         prepareFile(this.taskFilePath);
-        prepareFile(generatorFilePath);
+        prepareFile(this.generatorFilePath);
     }
 
     /**
      * Ensures the data file and its parent directories exist.
      * If the directories or file are missing, they are created automatically.
      */
-    public void prepareFile(String pathStr) {
+    public void prepareFile(String pathStr) { // Use the parameter!
         try {
-            Path path = Path.of(taskFilePath);
+            Path path = Path.of(pathStr); // Fixed
             Path parentDir = path.getParent();
 
             if (parentDir != null && !Files.exists(parentDir)) {
@@ -59,10 +63,10 @@ public class Storage {
 
             if (!Files.exists(path)) {
                 Files.createFile(path);
-                System.out.println("New data file created: " + taskFilePath);
+                System.out.println("New data file created: " + pathStr); // Fixed
             }
         } catch (IOException e) {
-            System.err.println("Could not initialize storage: " + e.getMessage());
+            System.err.println("Could not initialize storage for " + pathStr + ": " + e.getMessage());
         }
     }
 
@@ -100,7 +104,6 @@ public class Storage {
         }
     }
 
-
     /**
      * Reads task data from the local file and reconstructs the task list.
      * Parses each line of the file into specific {@code Todo}, {@code Deadline},
@@ -112,7 +115,9 @@ public class Storage {
         ArrayList<Task> loadedTasks = new ArrayList<>();
         Path path = Path.of(taskFilePath);
 
-        if (!Files.exists(path)) return loadedTasks;
+        if (!Files.exists(path)) {
+            return loadedTasks;
+        }
 
         try {
             List<String> lines = Files.readAllLines(path);
@@ -121,49 +126,96 @@ public class Storage {
                     continue;
                 }
 
-                String[] dataComponents = parseCoreData(line);
-
-                Task task = getTask(dataComponents);
-
-                loadedTasks.add(task);
+                try {
+                    String[] data = parseCoreData(line);
+                    Task task = getTask(data);
+                    if (task != null) {
+                        loadedTasks.add(task);
+                    }
+                } catch (SandroneException | RuntimeException e) {
+                    System.err.println("Error parsing task: " + line + " | " + e.getMessage());
+                }
             }
-        } catch (Exception e) {
-            System.out.println("Error loading tasks: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Could not read task file: " + e.getMessage());
         }
         return loadedTasks;
     }
 
-    private static Task getTask(String[] dataComponents) throws SandroneException {
-        Task task;
+    public ArrayList<TaskGenerator> loadGenerators() {
+        ArrayList<TaskGenerator> loadedGens = new ArrayList<>();
+        Path path = Path.of(generatorFilePath);
 
+        if (!Files.exists(path)) {
+            return loadedGens;
+        }
+
+        try {
+            List<String> lines = Files.readAllLines(path);
+            for (String line : lines) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+
+                try {
+                    String[] data = parseCoreData(line);
+                    TaskGenerator gen = getGenerator(data);
+                    if (gen != null) {
+                        loadedGens.add(gen);
+                    }
+                } catch (SandroneException | RuntimeException e) {
+                    System.err.println("Error parsing generator: " + line + " | " + e.getMessage());
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Could not read generator file: " + e.getMessage());
+        }
+        return loadedGens;
+    }
+
+    private TaskGenerator getGenerator(String[] components) throws SandroneException {
+        String type = components[0];
+        java.time.Period freq = java.time.Period.parse(components[1]);
+        java.time.LocalDate nextInit = java.time.LocalDate.parse(components[2]);
+        String desc = components[3];
+
+        switch (type) {
+        case "T": return new TodoGenerator(desc, freq, nextInit);
+        case "D":
+            LocalDate nextDueDate = Pulonia.parseDate(components[4].trim());
+            return new DeadlineGenerator(desc, freq, nextInit, nextDueDate);
+        case "E":
+            LocalDate nextStartDate = Pulonia.parseDate(components[4].trim());
+            LocalDate nextEndDate = Pulonia.parseDate(components[5].trim());
+            return new EventGenerator(desc, freq, nextInit, nextStartDate, nextEndDate);
+        default: return null;
+        }
+    }
+
+    private Task getTask(String[] dataComponents) throws SandroneException {
         String type = dataComponents[0];
-        boolean isDone = dataComponents[0].equals("X");
+        boolean isDone = dataComponents[1].equals("X");
         boolean isRecurring = dataComponents[2].equals("R");
         String description = dataComponents[3];
 
+        Task task;
         switch (type) {
         case "T":
             task = new Todo(description);
             break;
         case "D":
-            LocalDate dueDate = Pulonia.parseDate(dataComponents[4].trim());
-            task = new Deadline(description, dueDate);
+            task = new Deadline(description, Pulonia.parseDate(dataComponents[4]));
             break;
         case "E":
-            LocalDate startDate = Pulonia.parseDate(dataComponents[4].trim());
-            LocalDate endDate = Pulonia.parseDate(dataComponents[5].trim());
-            task = new Event(description, startDate, endDate);
+            task = new Event(description, Pulonia.parseDate(dataComponents[4]),
+                    Pulonia.parseDate(dataComponents[5]));
             break;
-        default:
-            // This should be unreachable
-            assert false : "Unknown task type: " + type;
-            return null;
+        default: return null;
         }
 
         if (isDone) {
             task.mark();
         }
-
         task.setRecurring(isRecurring);
         return task;
     }

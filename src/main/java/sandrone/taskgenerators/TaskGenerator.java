@@ -27,7 +27,7 @@ public abstract class TaskGenerator {
     public TaskGenerator(String description, Period frequency, LocalDate nextInitDate) {
         this.description = description;
         this.frequency = frequency;
-        this.nextInitDate = this.nextInitDate;
+        this.nextInitDate = nextInitDate;
     }
 
     public String getTaskTypeIcon() {
@@ -37,4 +37,13 @@ public abstract class TaskGenerator {
     public abstract String toFileFormat();
 
     public abstract Task createInstance();
+
+    @Override
+    public String toString() {
+        return String.format("[%s] %s (Every %s, Next: %s)",
+                this.getClass().getSimpleName().replace("Generator", ""),
+                description,
+                frequency,
+                nextInitDate);
+    }
 }

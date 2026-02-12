@@ -18,7 +18,7 @@ public class TaskGeneratorList {
     private ArrayList<TaskGenerator> taskGenerators;
 
     public TaskGeneratorList(Storage storage) {
-        this.taskGenerators = new ArrayList<>();
+        this.taskGenerators = storage.loadGenerators();
     }
 
     /**
