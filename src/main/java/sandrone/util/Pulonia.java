@@ -73,7 +73,8 @@ public class Pulonia {
     }
 
     private enum CommandType {
-        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, BYE, DEFAULT;
+        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK,
+        DELETE, FIND, BYE, RECURRING, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
             if (userInput == null) {
@@ -111,6 +112,7 @@ public class Pulonia {
         case TODO:
         case DEADLINE:
         case EVENT:
+        case RECURRING:
             return parseAddCommand(userInput);
         case BYE:
             return new ExitCommand();

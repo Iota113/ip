@@ -32,7 +32,7 @@ public abstract class Task {
         return this.desc;
     }
 
-    public String getTaskType() {
+    public String getTaskTypeIcon() {
         return " ";
     }
 
@@ -52,6 +52,6 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return String.format("[%s][%s] %s", getStatusIcon(), getTaskType(), desc);
+        return String.format("[%s][%s] %s", getStatusIcon(), getTaskTypeIcon(), desc);
     }
 }

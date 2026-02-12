@@ -19,7 +19,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String getTaskType() {
+    public String getTaskTypeIcon() {
         return "T";
     }
 
