@@ -51,6 +51,11 @@ public class Event extends Task {
 
     @Override
     public String toFileFormat() {
-        return "E | " + getStatusIcon() + " | " + this.desc + " | " + from + " | " + to;
+        return getTaskTypeIcon() + " | "
+                + getStatusIcon() + " | "
+                + getRecurrenceIcon() + " | "
+                + this.desc + " | "
+                + this.from + " | "
+                + this.to;
     }
 }

@@ -48,6 +48,10 @@ public class Deadline extends Task {
 
     @Override
     public String toFileFormat() {
-        return "D | " + getStatusIcon() + " | " + this.desc + " | " + this.dueDate;
+        return getTaskTypeIcon() + " | "
+                + getStatusIcon() + " | "
+                + getRecurrenceIcon() + " | "
+                + this.desc + " | "
+                + this.dueDate;
     }
 }

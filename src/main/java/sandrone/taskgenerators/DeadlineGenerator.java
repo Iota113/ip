@@ -19,12 +19,13 @@ public class DeadlineGenerator extends TaskGenerator {
      * Constructs a {@code DeadlineGenerator} task with a description, a frequency
      * and an (updating) due date.
      *
-     * @param description The description of the task.
-     * @param frequency The frequency at which a new task is generated.
-     * @param nextDueDate The due date for the latest Deadline Task generated.
+     * @param description  The description of the task.
+     * @param frequency    The frequency at which a new task is generated.
+     * @param nextInitDate The next date at which a new task is generated.
+     * @param nextDueDate  The due date for the latest Deadline Task generated.
      */
-    public DeadlineGenerator(String description, Period frequency, LocalDate nextDueDate) {
-        super(description, frequency);
+    public DeadlineGenerator(String description, Period frequency, LocalDate nextInitDate, LocalDate nextDueDate) {
+        super(description, frequency, nextInitDate);
         this.nextDueDate = nextDueDate;
     }
 
@@ -34,6 +35,15 @@ public class DeadlineGenerator extends TaskGenerator {
         newRecurringTask.setRecurring(true);
         advanceDueDate();
         return newRecurringTask;
+    }
+
+    @Override
+    public String toFileFormat() {
+        return getTaskTypeIcon() + " | "
+                + "P1W" + " | "
+                + "NextInitDate:" + this.nextInitDate + " | "
+                + this.description + " | "
+                + this.nextDueDate;
     }
 
     private void advanceDueDate() {

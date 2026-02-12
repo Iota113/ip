@@ -1,5 +1,6 @@
 package sandrone.taskgenerators;
 
+import java.time.LocalDate;
 import java.time.Period;
 
 import sandrone.task.Task;
@@ -15,6 +16,7 @@ import sandrone.task.Task;
 public abstract class TaskGenerator {
     protected String description;
     protected Period frequency;
+    protected LocalDate nextInitDate;
 
     /**
      * Constructs a {@code TaskGenerator} task with a description and a frequency.
@@ -22,10 +24,17 @@ public abstract class TaskGenerator {
      * @param description The description of the task.
      * @param frequency The frequency at which a new task is generated.
      */
-    public TaskGenerator(String description, Period frequency) {
+    public TaskGenerator(String description, Period frequency, LocalDate nextInitDate) {
         this.description = description;
         this.frequency = frequency;
+        this.nextInitDate = this.nextInitDate;
     }
+
+    public String getTaskTypeIcon() {
+        return "–";
+    }
+
+    public abstract String toFileFormat();
 
     public abstract Task createInstance();
 }

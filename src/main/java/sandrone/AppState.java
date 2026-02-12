@@ -8,9 +8,9 @@ public class AppState {
     private final TaskList taskList;
     private final TaskGeneratorList generatorList;
 
-    public AppState(Storage listData) {
-        this.taskList = new TaskList(listData);
-        this.generatorList = new TaskGeneratorList();
+    public AppState(Storage storage) {
+        this.taskList = new TaskList(storage);
+        this.generatorList = new TaskGeneratorList(storage);
     }
 
     public TaskList getTaskList() {

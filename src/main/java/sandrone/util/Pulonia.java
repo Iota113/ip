@@ -251,7 +251,7 @@ public class Pulonia {
     }
 
     public static AddGeneratorCommand parseGeneratorCommand(String userInput) {
-        TaskGenerator newTaskGenerator = new TodoGenerator("TestRecurCommand", LocalDate.now(), Period.ofWeeks(1));
+        TaskGenerator newTaskGenerator = new TodoGenerator("TestRecurCommand", Period.ofWeeks(1), LocalDate.now());
         return new AddGeneratorCommand(newTaskGenerator);
     }
 

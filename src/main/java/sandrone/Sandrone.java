@@ -24,11 +24,12 @@ public class Sandrone {
     /**
      * Initializes the chatbot with the storage file path.
      *
-     * @param filePath The relative path to the local text file where tasks are saved.
+     * @param taskPath The relative path to the local text file where tasks are saved.
+     * @param generatorPath The relative path to the local text file where task generators are saved.
      */
-    public Sandrone(String filePath) {
+    public Sandrone(String taskPath, String generatorPath) {
         this.ui = new SandroneUi();
-        this.storage = new Storage(filePath);
+        this.storage = new Storage(taskPath, generatorPath);
         this.appState = new AppState(storage);
     }
 

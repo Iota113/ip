@@ -13,8 +13,16 @@ import sandrone.task.Todo;
  * @version 0.2
  */
 public class TodoGenerator extends TaskGenerator {
-    public TodoGenerator(String description, LocalDate nextDate, Period frequency) {
-        super(description, frequency);
+
+    /**
+     * Constructs a {@code TodoGenerator} task with a description and a frequency.
+     *
+     * @param description  The description of the task.
+     * @param frequency    The frequency at which a new task is generated.
+     * @param nextInitDate
+     */
+    public TodoGenerator(String description, Period frequency, LocalDate nextInitDate) {
+        super(description, frequency, nextInitDate);
     }
 
     @Override
@@ -22,5 +30,18 @@ public class TodoGenerator extends TaskGenerator {
         Task newRecurringTask = new Todo(description);
         newRecurringTask.setRecurring(true);
         return newRecurringTask;
+    }
+
+    @Override
+    public String getTaskTypeIcon() {
+        return "T";
+    }
+
+    @Override
+    public String toFileFormat() {
+        return getTaskTypeIcon() + " | "
+                + "P1W" + " | "
+                + "NextInitDate:" + this.nextInitDate + " | "
+                + this.description;
     }
 }

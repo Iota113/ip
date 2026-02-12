@@ -1,6 +1,9 @@
 package sandrone.taskgenerators;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import sandrone.util.Storage;
 
 /**
  * Manages the collection of task generators in the Sandrone chatbot.
@@ -14,7 +17,7 @@ import java.util.ArrayList;
 public class TaskGeneratorList {
     private ArrayList<TaskGenerator> taskGenerators;
 
-    public TaskGeneratorList() {
+    public TaskGeneratorList(Storage storage) {
         this.taskGenerators = new ArrayList<>();
     }
 
@@ -25,6 +28,10 @@ public class TaskGeneratorList {
      */
     public void addTaskGenerator(TaskGenerator newTaskGenerator) {
         this.taskGenerators.add(newTaskGenerator);
+    }
+
+    public List<TaskGenerator> getAllGenerators() {
+        return this.taskGenerators;
     }
 
 }
