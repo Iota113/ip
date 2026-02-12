@@ -28,6 +28,9 @@ import sandrone.task.Todo;
  */
 public class Pulonia {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final String TODO_KEYWORD = "todo";
+    private static final String DEADLINE_KEYWORD = "deadline";
+    private static final String EVENT_KEYWORD = "event";
 
     /**
      * Parses a date string into a {@code LocalDate} object.
@@ -133,11 +136,11 @@ public class Pulonia {
      * @throws SandroneException If required components (task description, /by, /from, /to) are missing
      */
     public static AddCommand parseAddCommand(String userInput) throws SandroneException {
-        if (userInput.startsWith("todo")) {
+        if (userInput.startsWith(TODO_KEYWORD)) {
             return parseAddTodo(userInput);
-        } else if (userInput.startsWith("deadline")) {
+        } else if (userInput.startsWith(DEADLINE_KEYWORD)) {
             return parseAddDeadline(userInput);
-        } else if (userInput.startsWith("event")) {
+        } else if (userInput.startsWith(EVENT_KEYWORD)) {
             return parseAddEvent(userInput);
         } else {
             assert false : "Pulonia failed to properly identify add commands~";
@@ -145,58 +148,64 @@ public class Pulonia {
         }
     }
 
+    private static String removeCommandKeyword(String userInput, String keyword) {
+        assert userInput.contains(keyword) : "remove command is used before checking the command is valid~";
+        return userInput.substring(keyword.length());
+    }
+
     private static AddCommand parseAddTodo(String userInput) {
-        String desc = userInput.replace("todo", "").trim();
+        String desc = removeCommandKeyword(userInput, TODO_KEYWORD);
         Task newTodo = new Todo(desc);
         return new AddCommand(newTodo);
     }
 
     private static AddCommand parseAddDeadline(String userInput) throws SandroneException {
-        if (!userInput.contains(" /by ")) {
-            throw new SandroneException("Incomplete command! A by needs a ' /by ' component.");
-        }
+        String remainingCommand = removeCommandKeyword(userInput, DEADLINE_KEYWORD);
 
-        String[] parts = userInput.split(" /by ");
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throw new SandroneException("The by cannot be empty.");
-        }
+        validateDeadlineFormat(remainingCommand);
 
-        String desc = parts[0].substring(8).trim();
-        if (desc.isEmpty()) {
-            throw new SandroneException("The description of a task cannot be empty!");
-        }
-
-        LocalDate dueDate = parseDate(parts[1]);
+        String[] components = extractDeadlineComponents(remainingCommand);
+        String desc = components[0];
+        LocalDate dueDate = parseDate(components[1].trim());
         Task newDeadline = new Deadline(desc, dueDate);
         return new AddCommand(newDeadline);
     }
 
-    private static AddCommand parseAddEvent(String userInput) throws SandroneException {
-        // Removes "event" from userInput
-        String remainingCommand = userInput.substring(5).trim();
+    private static void validateDeadlineFormat(String userInput) throws SandroneException {
+        if (!userInput.contains(" /by ")) {
+            throw new SandroneException("Incomplete command! A by needs a ' /by ' component.");
+        }
+    }
 
-        checkEventCommand(userInput);
+    private static String[] extractDeadlineComponents(String remainingCommand) throws SandroneException {
+        String[] descTime = remainingCommand.split(" /by ");
+        if (descTime.length < 2 || descTime[1].trim().isEmpty()) {
+            throw new SandroneException("The by cannot be empty.");
+        }
 
-        String[] parts = remainingCommand.split("/from");
-        
-        String desc = parts[0].trim();
+        String desc = descTime[0];
         if (desc.isEmpty()) {
             throw new SandroneException("The description of a task cannot be empty!");
         }
-        
-        String[] timeParts = parts[1].split("/to");
-        checkFromToFields(timeParts);
 
-        String fromString = timeParts[0].trim();
-        String toString = timeParts[1].trim();
-        LocalDate from = parseDate(fromString);
-        LocalDate to = parseDate(toString);
+        return new String[] {desc, descTime[1]};
+    }
+
+    private static AddCommand parseAddEvent(String userInput) throws SandroneException {
+        String remainingCommand = removeCommandKeyword(userInput, EVENT_KEYWORD);
+
+        validateEventFormat(remainingCommand);
+
+        String[] components = extractEventComponents(remainingCommand);
+        String desc = components[0];
+        LocalDate from = parseDate(components[1]);
+        LocalDate to = parseDate(components[2]);
 
         Task newEvent = new Event(desc, from, to);
         return new AddCommand(newEvent);
     }
 
-    private static void checkEventCommand(String userInput) throws SandroneException {
+    private static void validateEventFormat(String userInput) throws SandroneException {
         boolean hasNoFrom = !userInput.contains(" /from ");
         boolean hasNoTo = !userInput.contains(" /to");
 
@@ -206,14 +215,27 @@ public class Pulonia {
         }
     }
 
-    private static void checkFromToFields(String[] timeParts) throws SandroneException {
+    private static String[] extractEventComponents(String remainingCommand) throws SandroneException {
+        String[] descTime = remainingCommand.split("/from");
+
+        String desc = descTime[0].trim();
+        if (desc.isEmpty()) {
+            throw new SandroneException("The description of a task cannot be empty!");
+        }
+
+        String[] timeParts = descTime[1].split("/to");
+        checkEventDates(timeParts);
+
+        return new String[] {desc, timeParts[0].trim(), timeParts[1].trim()};
+    }
+
+    private static void checkEventDates(String[] timeParts) throws SandroneException {
         if (timeParts.length < 2) {
             if (timeParts[0].trim().isEmpty()) {
                 throw new SandroneException("Both from and to fields are empty!");
             }
             throw new SandroneException("The to field is empty!");
         }
-
 
         if (timeParts[0].trim().isEmpty()) {
             throw new SandroneException("The from field is empty!");
