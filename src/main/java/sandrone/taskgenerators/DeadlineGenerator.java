@@ -37,7 +37,6 @@ public class DeadlineGenerator extends TaskGenerator {
     public Task createInstance() {
         Task newRecurringTask = new Deadline(taskDescription, nextDueDate);
         newRecurringTask.setRecurring(true);
-        advanceDueDate();
         return newRecurringTask;
     }
 
@@ -50,7 +49,19 @@ public class DeadlineGenerator extends TaskGenerator {
                 + this.nextDueDate;
     }
 
-    private void advanceDueDate() {
-        this.nextDueDate = this.nextDueDate.plus(this.frequency);
+    public static int extractIndex(String userInput) {
+        // "\\s+" handles one or more spaces
+        String[] parts = userInput.trim().split("\\s+");
+        if (parts.length < 2) {
+            throw new IllegalArgumentException("Please provide an index number.");
+        }
+        return Integer.parseInt(parts[1]) - 1;
     }
+
+    @Override
+    public void advance() {
+        this.nextInitDate = this.nextInitDate.plus(frequency);
+        this.nextDueDate = this.nextDueDate.plus(frequency);
+    }
+
 }

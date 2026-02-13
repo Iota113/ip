@@ -42,11 +42,12 @@ public class EventGenerator extends TaskGenerator{
     public Task createInstance() {
         Task newRecurringTask = new Event(taskDescription, nextStartDate, nextEndDate);
         newRecurringTask.setRecurring(true);
-        advanceDates();
         return newRecurringTask;
     }
 
-    private void advanceDates() {
+    @Override
+    public void advance() {
+        this.nextInitDate = this.nextInitDate.plus(this.frequency);
         this.nextStartDate = this.nextStartDate.plus(this.frequency);
         this.nextEndDate = this.nextEndDate.plus(this.frequency);
     }

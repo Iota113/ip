@@ -1,5 +1,9 @@
 package sandrone;
 
+import java.time.LocalDate;
+
+import sandrone.task.Task;
+import sandrone.taskgenerators.TaskGenerator;
 import sandrone.taskgenerators.TaskGeneratorList;
 import sandrone.task.TaskList;
 import sandrone.util.Storage;
@@ -21,21 +25,21 @@ public class AppState {
         return generatorList;
     }
 
-//    public void sync(TaskList tasks, TaskGeneratorList generators) {
-//        LocalDate today = LocalDate.now();
-//
-//        for (TaskGenerator gen : generators.getAllGenerators()) {
-//            // While loop handles "catch-up" (e.g., if you didn't open Sandrone for a week)
-//            while (!gen.getNextInitDate().isAfter(today)) {
-//                // 1. Generate the Task instance
-//                Task newTask = gen.createInstance();
-//
-//                // 2. Add to TaskList
-//                tasks.addTask(newTask);
-//
-//                // 3. Advance the generator state (crucial for duplicate prevention!)
-//                gen.advance();
-//            }
-//        }
-//    }
+    public void generateTasks() {
+        LocalDate today = LocalDate.now();
+
+        for (TaskGenerator gen : generatorList.getAllGenerators()) {
+            // While loop handles "catch-up" (e.g., if you didn't open Sandrone for a week)
+            while (!gen.getNextInitDate().isAfter(today)) {
+                // 1. Generate the Task instance
+                Task newTask = gen.createInstance();
+
+                // 2. Add to TaskList
+                taskList.addTask(newTask);
+
+                // 3. Advance the generator state (crucial for duplicate prevention!)
+                gen.advance();
+            }
+        }
+    }
 }

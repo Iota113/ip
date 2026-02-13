@@ -49,4 +49,10 @@ public abstract class TaskGenerator {
                 frequency,
                 nextInitDate);
     }
+
+    public LocalDate getNextInitDate() {
+        return nextInitDate;
+    }
+
+    public abstract void advance();
 }

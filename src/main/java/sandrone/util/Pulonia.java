@@ -14,6 +14,7 @@ import sandrone.command.ExitCommand;
 import sandrone.command.FindCommand;
 import sandrone.command.MarkCommand;
 import sandrone.command.PrintCommand;
+import sandrone.command.SyncCommand;
 import sandrone.command.UnmarkCommand;
 import sandrone.exception.SandroneException;
 import sandrone.task.Deadline;
@@ -88,7 +89,7 @@ public class Pulonia {
 
     private enum CommandType {
         LIST, TODO, DEADLINE, EVENT, MARK, UNMARK,
-        DELETE, FIND, BYE, RECUR, DRECUR, DEFAULT;
+        DELETE, FIND, BYE, RECUR, DRECUR, SYNC, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
             if (userInput == null) {
@@ -131,6 +132,8 @@ public class Pulonia {
             return parseGeneratorCommand(userInput);
         case DRECUR:
             return new DeleteGeneratorCommand(extractIndex(userInput));
+        case SYNC:
+            return new SyncCommand();
         case BYE:
             return new ExitCommand();
         default:

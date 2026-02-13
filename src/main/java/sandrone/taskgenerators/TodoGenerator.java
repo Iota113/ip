@@ -33,6 +33,11 @@ public class TodoGenerator extends TaskGenerator {
     }
 
     @Override
+    public void advance() {
+        this.nextInitDate = nextInitDate.plus(frequency);
+    }
+
+    @Override
     public String getTaskTypeIcon() {
         return "T";
     }
