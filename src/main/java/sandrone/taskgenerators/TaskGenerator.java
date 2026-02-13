@@ -14,18 +14,21 @@ import sandrone.task.Task;
  * @version 0.2
  */
 public abstract class TaskGenerator {
-    protected String description;
+    protected Task taskBlueprint;
+    protected String taskDescription;
     protected Period frequency;
     protected LocalDate nextInitDate;
 
     /**
      * Constructs a {@code TaskGenerator} task with a description and a frequency.
      *
-     * @param description The description of the task.
+     * @param taskBlueprint The blueprint of a task to be generated.
+     * @param nextInitDate The description of the task.
      * @param frequency The frequency at which a new task is generated.
      */
-    public TaskGenerator(String description, Period frequency, LocalDate nextInitDate) {
-        this.description = description;
+    public TaskGenerator(Task taskBlueprint, Period frequency, LocalDate nextInitDate) {
+        this.taskBlueprint = taskBlueprint;
+        this.taskDescription = this.taskBlueprint.getDescription();
         this.frequency = frequency;
         this.nextInitDate = nextInitDate;
     }
@@ -42,7 +45,7 @@ public abstract class TaskGenerator {
     public String toString() {
         return String.format("[%s] %s (Every %s, Next: %s)",
                 this.getClass().getSimpleName().replace("Generator", ""),
-                description,
+                taskBlueprint.getDescription(),
                 frequency,
                 nextInitDate);
     }

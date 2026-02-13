@@ -19,19 +19,18 @@ public class DeadlineGenerator extends TaskGenerator {
      * Constructs a {@code DeadlineGenerator} task with a description, a frequency
      * and an (updating) due date.
      *
-     * @param description  The description of the task.
+     * @param deadlineBlueprint  The blueprint of a deadline task to be generated.
      * @param frequency    The frequency at which a new task is generated.
      * @param nextInitDate The next date at which a new task is generated.
-     * @param nextDueDate  The due date for the latest Deadline Task generated.
      */
-    public DeadlineGenerator(String description, Period frequency, LocalDate nextInitDate, LocalDate nextDueDate) {
-        super(description, frequency, nextInitDate);
-        this.nextDueDate = nextDueDate;
+    public DeadlineGenerator(Deadline deadlineBlueprint, Period frequency, LocalDate nextInitDate) {
+        super(deadlineBlueprint, frequency, nextInitDate);
+        this.nextDueDate = deadlineBlueprint.getDueDate();
     }
 
     @Override
     public Task createInstance() {
-        Task newRecurringTask = new Deadline(description, nextDueDate);
+        Task newRecurringTask = new Deadline(taskDescription, nextDueDate);
         newRecurringTask.setRecurring(true);
         advanceDueDate();
         return newRecurringTask;
@@ -42,7 +41,7 @@ public class DeadlineGenerator extends TaskGenerator {
         return getTaskTypeIcon() + " | "
                 + "P1W" + " | "
                 + "NextInitDate:" + this.nextInitDate + " | "
-                + this.description + " | "
+                + this.taskDescription + " | "
                 + this.nextDueDate;
     }
 

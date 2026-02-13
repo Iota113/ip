@@ -14,15 +14,13 @@ public class EventGenerator extends TaskGenerator{
      * Constructs an {@code EventGenerator} task with a description, a frequency,
      * a start date and an end date (both that updates regularly).
      *
-     * @param description The description of the task.
-     * @param frequency   The frequency at which a new task is generated.
-     * @param nextStartDate   The start date for the latest generated event.
-     * @param nextEndDate     The end date for the latest generated event.
+     * @param eventBlueprint
+     * @param frequency      The frequency at which a new task is generated.
      */
-    public EventGenerator(String description, Period frequency, LocalDate nextInitDate, LocalDate nextStartDate, LocalDate nextEndDate) {
-        super(description, frequency, nextInitDate);
-        this.nextStartDate = nextStartDate;
-        this.nextEndDate = nextEndDate;
+    public EventGenerator(Event eventBlueprint, Period frequency, LocalDate nextInitDate) {
+        super(eventBlueprint, frequency, nextInitDate);
+        this.nextStartDate = eventBlueprint.getStartDate();
+        this.nextEndDate = eventBlueprint.getEndDate();
     }
 
     @Override
@@ -30,14 +28,14 @@ public class EventGenerator extends TaskGenerator{
         return getTaskTypeIcon() + " | "
                 + "P1W" + " | "
                 + "NextInitDate:" + this.nextInitDate + " | "
-                + this.description + " | "
+                + this.taskDescription + " | "
                 + this.nextStartDate + " | "
                 + this.nextEndDate;
     }
 
     @Override
     public Task createInstance() {
-        Task newRecurringTask = new Event(description, nextStartDate, nextEndDate);
+        Task newRecurringTask = new Event(taskDescription, nextStartDate, nextEndDate);
         newRecurringTask.setRecurring(true);
         advanceDates();
         return newRecurringTask;

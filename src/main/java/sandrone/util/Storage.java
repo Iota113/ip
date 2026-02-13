@@ -213,17 +213,21 @@ public class Storage {
         String type = components[0];
         java.time.Period freq = java.time.Period.parse(components[1]);
         java.time.LocalDate nextInitDate = java.time.LocalDate.parse(components[2].replace("NextInitDate:", "").trim());
-        String desc = components[3];
+        String taskDescription = components[3];
 
         switch (type) {
-        case "T": return new TodoGenerator(desc, freq, nextInitDate);
+        case "T":
+            Todo newTodo = new Todo(taskDescription);
+            return new TodoGenerator(newTodo, freq, nextInitDate);
         case "D":
             LocalDate nextDueDate = Pulonia.parseDate(components[4].trim());
-            return new DeadlineGenerator(desc, freq, nextInitDate, nextDueDate);
+            Deadline newDeadline = new Deadline(taskDescription, nextDueDate);
+            return new DeadlineGenerator(newDeadline, freq, nextInitDate);
         case "E":
             LocalDate nextStartDate = Pulonia.parseDate(components[4].trim());
             LocalDate nextEndDate = Pulonia.parseDate(components[5].trim());
-            return new EventGenerator(desc, freq, nextInitDate, nextStartDate, nextEndDate);
+            Event newEvent = new Event(taskDescription, nextStartDate, nextEndDate);
+            return new EventGenerator(newEvent, freq, nextInitDate);
         default: return null;
         }
     }

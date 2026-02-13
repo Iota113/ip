@@ -8,7 +8,7 @@ import sandrone.util.Storage;
 
 public class StorageStub extends Storage {
     public StorageStub() {
-        super("unused/path", );
+        super("unused/path", "unused/path");
     }
 
     @Override

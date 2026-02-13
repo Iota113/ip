@@ -36,6 +36,10 @@ public class Deadline extends Task {
         return this.desc + this.getDueDateString();
     }
 
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
     public String getDueDateString() {
         String formattedBy = Pulonia.formatDate(this.dueDate);
         return " (by: " + formattedBy + ")";
