@@ -1,5 +1,6 @@
 package sandrone.command;
 
+import sandrone.AppState;
 import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
@@ -18,11 +19,11 @@ public abstract class Command {
      * Subclasses must implement this method to perform actions such as
      * adding tasks, deleting tasks, or displaying the task list.
      *
-     * @param taskList The collection of tasks to be operated upon.
-     * @param ui The user interface used to interact with or provide feedback to the user.
-     * @param storage The file handler used to save or load task data.
+     * @param appState
+     * @param ui       The user interface used to interact with or provide feedback to the user.
+     * @param storage  The file handler used to save or load task data.
      */
-    public abstract String execute(TaskList taskList, SandroneUi ui, Storage storage);
+    public abstract String execute(AppState appState, SandroneUi ui, Storage storage);
 
     /**
      * Returns true if this command should terminate the application.

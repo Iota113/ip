@@ -1,6 +1,8 @@
 package sandrone.command;
 
+import sandrone.AppState;
 import sandrone.task.TaskList;
+import sandrone.taskgenerators.TaskGeneratorList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
 
@@ -13,7 +15,10 @@ import sandrone.util.Storage;
  */
 public class PrintCommand extends Command {
     @Override
-    public String execute(TaskList taskList, SandroneUi ui, Storage storage) {
-        return ui.getTasks(taskList.getAllTasks());
+    public String execute(AppState appState, SandroneUi ui, Storage storage) {
+        TaskList taskList = appState.getTaskList();
+        TaskGeneratorList taskGeneratorList = appState.getGeneratorList();
+        return ui.getDebugState(taskList.getAllTasks(), taskGeneratorList.getAllGenerators());
+        //        return ui.getTasks(taskList.getAllTasks());
     }
 }

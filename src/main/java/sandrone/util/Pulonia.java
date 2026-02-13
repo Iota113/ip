@@ -1,22 +1,30 @@
 package sandrone.util;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import sandrone.command.AddCommand;
+import sandrone.command.AddGeneratorCommand;
 import sandrone.command.Command;
 import sandrone.command.DeleteCommand;
+import sandrone.command.DeleteGeneratorCommand;
 import sandrone.command.ExitCommand;
 import sandrone.command.FindCommand;
 import sandrone.command.MarkCommand;
 import sandrone.command.PrintCommand;
+import sandrone.command.SyncCommand;
 import sandrone.command.UnmarkCommand;
 import sandrone.exception.SandroneException;
 import sandrone.task.Deadline;
 import sandrone.task.Event;
 import sandrone.task.Task;
 import sandrone.task.Todo;
+import sandrone.taskgenerators.DeadlineGenerator;
+import sandrone.taskgenerators.EventGenerator;
+import sandrone.taskgenerators.TaskGenerator;
+import sandrone.taskgenerators.TodoGenerator;
 
 /**
  * Handles the parsing of user input strings into executable commands and data types.
@@ -31,6 +39,8 @@ public class Pulonia {
     private static final String TODO_KEYWORD = "todo";
     private static final String DEADLINE_KEYWORD = "deadline";
     private static final String EVENT_KEYWORD = "event";
+    private static final String RECUR_KEYWORD = "recur";
+    private static final Period ONE_WEEK = Period.ofWeeks(1);
 
     /**
      * Parses a date string into a {@code LocalDate} object.
@@ -65,7 +75,12 @@ public class Pulonia {
      * @return The 0-based integer index.
      */
     public static int extractIndex(String userInput) {
-        return Integer.parseInt(userInput.split(" ")[1]) - 1;
+        String[] parts = userInput.trim().split("\\s+");
+        if (parts.length < 2) {
+            throw new IllegalArgumentException("Please provide an index number.");
+        }
+
+        return Integer.parseInt(parts[1]) - 1;
     }
 
     public static String extractFind(String userInput) {
@@ -73,7 +88,8 @@ public class Pulonia {
     }
 
     private enum CommandType {
-        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, BYE, DEFAULT;
+        LIST, TODO, DEADLINE, EVENT, MARK, UNMARK,
+        DELETE, FIND, BYE, RECUR, DRECUR, SYNC, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
             if (userInput == null) {
@@ -112,6 +128,12 @@ public class Pulonia {
         case DEADLINE:
         case EVENT:
             return parseAddCommand(userInput);
+        case RECUR:
+            return parseGeneratorCommand(userInput);
+        case DRECUR:
+            return new DeleteGeneratorCommand(extractIndex(userInput));
+        case SYNC:
+            return new SyncCommand();
         case BYE:
             return new ExitCommand();
         default:
@@ -128,6 +150,11 @@ public class Pulonia {
 
     }
 
+    private static String removeCommandKeyword(String userInput, String keyword) {
+        assert userInput.contains(keyword) : "remove command is used before checking the command is valid~" + userInput;
+        return userInput.substring(keyword.length()).trim();
+    }
+
     /**
      * Interprets user input specific to creating new tasks (Todo, Deadline, Event).
      *
@@ -137,38 +164,45 @@ public class Pulonia {
      */
     public static AddCommand parseAddCommand(String userInput) throws SandroneException {
         if (userInput.startsWith(TODO_KEYWORD)) {
-            return parseAddTodo(userInput);
+            return parseTodoCommand(userInput);
         } else if (userInput.startsWith(DEADLINE_KEYWORD)) {
-            return parseAddDeadline(userInput);
+            return parseDeadlineCommand(userInput);
         } else if (userInput.startsWith(EVENT_KEYWORD)) {
-            return parseAddEvent(userInput);
+            return parseEventCommand(userInput);
         } else {
             assert false : "Pulonia failed to properly identify add commands~";
             return null;
         }
     }
 
-    private static String removeCommandKeyword(String userInput, String keyword) {
-        assert userInput.contains(keyword) : "remove command is used before checking the command is valid~";
-        return userInput.substring(keyword.length());
-    }
 
-    private static AddCommand parseAddTodo(String userInput) {
-        String desc = removeCommandKeyword(userInput, TODO_KEYWORD);
-        Task newTodo = new Todo(desc);
+    private static AddCommand parseTodoCommand(String userInput) {
+        String taskDescription = removeCommandKeyword(userInput, TODO_KEYWORD);
+        Task newTodo = getNewTodo(taskDescription);
         return new AddCommand(newTodo);
     }
 
-    private static AddCommand parseAddDeadline(String userInput) throws SandroneException {
-        String remainingCommand = removeCommandKeyword(userInput, DEADLINE_KEYWORD);
+    private static Todo getNewTodo(String taskDescription) {
+        Todo newTodo = new Todo(taskDescription);
+        return newTodo;
+    }
 
-        validateDeadlineFormat(remainingCommand);
 
-        String[] components = extractDeadlineComponents(remainingCommand);
+    private static AddCommand parseDeadlineCommand(String userInput) throws SandroneException {
+        String deadlineContents = removeCommandKeyword(userInput, DEADLINE_KEYWORD);
+
+        validateDeadlineFormat(deadlineContents);
+
+        Task newDeadline = getNewDeadline(deadlineContents);
+        return new AddCommand(newDeadline);
+    }
+
+    private static Deadline getNewDeadline(String deadlineContents) throws SandroneException {
+        String[] components = extractDeadlineComponents(deadlineContents);
         String desc = components[0];
         LocalDate dueDate = parseDate(components[1].trim());
-        Task newDeadline = new Deadline(desc, dueDate);
-        return new AddCommand(newDeadline);
+        Deadline newDeadline = new Deadline(desc, dueDate);
+        return newDeadline;
     }
 
     private static void validateDeadlineFormat(String userInput) throws SandroneException {
@@ -191,18 +225,24 @@ public class Pulonia {
         return new String[] {desc, descTime[1]};
     }
 
-    private static AddCommand parseAddEvent(String userInput) throws SandroneException {
-        String remainingCommand = removeCommandKeyword(userInput, EVENT_KEYWORD);
 
-        validateEventFormat(remainingCommand);
+    private static AddCommand parseEventCommand(String userInput) throws SandroneException {
+        String eventContents = removeCommandKeyword(userInput, EVENT_KEYWORD);
 
-        String[] components = extractEventComponents(remainingCommand);
+        validateEventFormat(eventContents);
+
+        Task newEvent = getNewEvent(eventContents);
+        return new AddCommand(newEvent);
+    }
+
+    private static Event getNewEvent(String eventContents) throws SandroneException {
+        String[] components = extractEventComponents(eventContents);
         String desc = components[0];
         LocalDate from = parseDate(components[1]);
         LocalDate to = parseDate(components[2]);
 
-        Task newEvent = new Event(desc, from, to);
-        return new AddCommand(newEvent);
+        Event newEvent = new Event(desc, from, to);
+        return newEvent;
     }
 
     private static void validateEventFormat(String userInput) throws SandroneException {
@@ -224,12 +264,7 @@ public class Pulonia {
         }
 
         String[] timeParts = descTime[1].split("/to");
-        checkEventDates(timeParts);
 
-        return new String[] {desc, timeParts[0].trim(), timeParts[1].trim()};
-    }
-
-    private static void checkEventDates(String[] timeParts) throws SandroneException {
         if (timeParts.length < 2) {
             if (timeParts[0].trim().isEmpty()) {
                 throw new SandroneException("Both from and to fields are empty!");
@@ -240,6 +275,43 @@ public class Pulonia {
         if (timeParts[0].trim().isEmpty()) {
             throw new SandroneException("The from field is empty!");
         }
+
+        return new String[] {desc, timeParts[0].trim(), timeParts[1].trim()};
+    }
+
+    /**
+     * Parses the user input that attempts to add a recurring task (in the form of a task generator)
+     * Format of recurring task commnad: recur followed by [todo command / deadline command / event command]
+     * Period and nextInitDate defaulted to 1 week and today temporarily.
+     *
+     * @param userInput The full command string provided by the user.
+     * @return The executable {@code Command} corresponding to the user's request.
+     */
+    public static AddGeneratorCommand parseGeneratorCommand(String userInput) throws SandroneException {
+        String remainingCommand = removeCommandKeyword(userInput, RECUR_KEYWORD);
+
+        TaskGenerator newTaskGenerator = null;
+
+        if (remainingCommand.startsWith(TODO_KEYWORD)) {
+            String taskDescription = removeCommandKeyword(remainingCommand, TODO_KEYWORD);
+
+            Todo newTodo = getNewTodo(taskDescription);
+            newTaskGenerator = new TodoGenerator(newTodo, ONE_WEEK, LocalDate.now());
+        } else if (remainingCommand.startsWith(DEADLINE_KEYWORD)) {
+            String deadlineContents = removeCommandKeyword(remainingCommand, DEADLINE_KEYWORD);
+
+            Deadline newDeadline = getNewDeadline(deadlineContents);
+            newTaskGenerator = new DeadlineGenerator(newDeadline, ONE_WEEK, LocalDate.now());
+        } else if (remainingCommand.startsWith(EVENT_KEYWORD)) {
+            String eventContents = removeCommandKeyword(remainingCommand, EVENT_KEYWORD);
+
+            Event newEvent = getNewEvent(eventContents);
+            newTaskGenerator = new EventGenerator(newEvent, ONE_WEEK, LocalDate.now());
+        } else {
+            throw new SandroneException("You can only create recurring todo, deadline or events ~");
+        }
+
+        return new AddGeneratorCommand(newTaskGenerator);
     }
 
 }

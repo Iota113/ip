@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sandrone.task.Task;
+import sandrone.taskgenerators.TaskGenerator;
 
 /**
  * Handles the user interface and interactions for the Sandrone chatbot.
@@ -40,21 +41,43 @@ public class SandroneUi {
     }
 
     /**
+     * Converts a list of objects into a numbered, formatted string.
+     * @param items The list to display.
+     * @param header The title for the list (e.g., "Your list:").
+     * @param emptyMsg The message to return if the list is empty.
+     * @return A formatted string.
+     */
+    private <T> String listToString(List<T> items, String header, String emptyMsg) {
+        if (items.isEmpty()) {
+            return emptyMsg;
+        }
+
+        StringBuilder sb = new StringBuilder(header).append("\n");
+        for (int i = 0; i < items.size(); i++) {
+            sb.append(i + 1).append(". ").append(items.get(i)).append("\n");
+        }
+        return sb.toString();
+    }
+
+    /**
      * Prints a formatted list of tasks to the console.
      * Each task is displayed with its index, status icon, type, and description.
      *
      * @param tasks The list of tasks to be displayed.
      */
     public String getTasks(List<Task> tasks) {
-        if (tasks.isEmpty()) {
-            return "Your list is currently empty!";
-        }
+        return listToString(tasks, "Your list:", "Your list is currently empty!");
+    }
 
-        StringBuilder sb = new StringBuilder("Your list:\n");
-        for (int i = 0; i < tasks.size(); i++) {
-            sb.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
-        }
-        return sb.toString();
+    public String getRecurringTasks(List<TaskGenerator> taskGenerators) {
+        return listToString(taskGenerators, "Active Recurring Rules:", "No recurring tasks found!");
+    }
+
+    public String getDebugState(List<Task> tasks, List<TaskGenerator> generators) {
+        return "=== SYSTEM DEBUG SNAPSHOT ===\n"
+                + listToString(tasks, "[TASK INSTANCES]", "No tasks in memory.") +  "\n"
+                + listToString(generators, "[GENERATOR RULES]", "No generators active.")
+                + "==============================";
     }
 
     /**
@@ -65,9 +88,23 @@ public class SandroneUi {
      * @param task The task that has been added to the list.
      * @param totalCount The new total number of tasks in the list.
      */
-    public String getTaskAdded(Task task, int totalCount) {
+    public String showTaskAdded(Task task, int totalCount) {
         StringBuilder sb = new StringBuilder("Very well. You have " + totalCount + " task(s) now.");
         sb.append(task);
+        return sb.toString();
+    }
+
+    /**
+     * Displays a confirmation message when a task generator is successfully added.
+     * The message includes the current total task count and a stylized
+     * representation of the newly added task.
+     *
+     * @param taskGenerator The task gnerator that has been added to the list.
+     * @param totalCount The new total number of tasks in the list.
+     */
+    public String showTaskGeneratorAdded(TaskGenerator taskGenerator, int totalCount) {
+        StringBuilder sb = new StringBuilder("Very well. You have " + totalCount + " recurring task(s) now.");
+        sb.append(taskGenerator);
         return sb.toString();
     }
 

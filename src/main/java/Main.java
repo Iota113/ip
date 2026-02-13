@@ -12,8 +12,10 @@ import sandrone.Sandrone;
  * A GUI for Duke using FXML.
  */
 public class Main extends Application {
+    private String taskPath = "./data/sandrone_task_list.txt";
+    private String generatorPath = "./data/sandrone_task_generator_list.txt";
 
-    private Sandrone sandrone = new Sandrone("./data/sandrone_task_list.txt");
+    private Sandrone sandrone = new Sandrone(taskPath, generatorPath);
 
     @Override
     public void start(Stage stage) {

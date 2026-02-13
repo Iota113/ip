@@ -27,13 +27,12 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String getTaskType() {
+    public String getTaskTypeIcon() {
         return "D";
     }
 
-    @Override
-    public String getDescription() {
-        return this.desc + this.getDueDateString();
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
     public String getDueDateString() {
@@ -48,6 +47,10 @@ public class Deadline extends Task {
 
     @Override
     public String toFileFormat() {
-        return "D | " + getStatusIcon() + " | " + this.desc + " | " + this.dueDate;
+        return getTaskTypeIcon() + " | "
+                + getStatusIcon() + " | "
+                + getRecurrenceIcon() + " | "
+                + this.desc + " | "
+                + this.dueDate;
     }
 }

@@ -1,7 +1,6 @@
 package sandrone;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import sandrone.task.Task;
 import sandrone.task.TaskList;
@@ -9,11 +8,11 @@ import sandrone.util.Storage;
 
 public class StorageStub extends Storage {
     public StorageStub() {
-        super("unused/path");
+        super("unused/path", "unused/path");
     }
 
     @Override
-    public void prepareFile() {
+    public void prepareFile(String pathStr) {
         // do nothing
     }
 

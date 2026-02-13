@@ -20,10 +20,10 @@ public class TaskList {
     /**
      * Constructs a {@code TaskList} by loading existing tasks from storage.
      *
-     * @param listData The storage utility used to retrieve saved task data.
+     * @param storage The storage utility used to retrieve saved task data.
      */
-    public TaskList(Storage listData) {
-        this.tasks = listData.loadTasks();
+    public TaskList(Storage storage) {
+        this.tasks = storage.loadTasks();
     }
 
     /**
@@ -87,7 +87,7 @@ public class TaskList {
      */
     public List<Task> getMatchingTasks(String keyword) {
         return this.tasks.stream()
-                .filter(task -> task.getDescription().contains(keyword))
+                .filter(task -> task.getTaskDescription().contains(keyword))
                 .collect(Collectors.toList());
     }
 }

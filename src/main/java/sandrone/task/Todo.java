@@ -19,12 +19,15 @@ public class Todo extends Task {
     }
 
     @Override
-    public String getTaskType() {
+    public String getTaskTypeIcon() {
         return "T";
     }
 
     @Override
     public String toFileFormat() {
-        return "T | " + getStatusIcon() + " | " + this.desc;
+        return getTaskTypeIcon() + " | "
+                + getStatusIcon() + " | "
+                + getRecurrenceIcon() + " | "
+                + this.desc;
     }
 }

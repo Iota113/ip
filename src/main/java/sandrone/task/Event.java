@@ -12,35 +12,38 @@ import sandrone.util.Pulonia;
  * @version 0.1
  */
 public class Event extends Task {
-    private LocalDate from;
-    private LocalDate to;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     /**
      * Constructs an {@code Event} task with a description and a date range.
      *
      * @param desc The description of the event.
-     * @param from The starting date of the event.
-     * @param to The ending date of the event.
+     * @param startDate The starting date of the event.
+     * @param endDate The ending date of the event.
      */
-    public Event(String desc, LocalDate from, LocalDate to) {
+    public Event(String desc, LocalDate startDate, LocalDate endDate) {
         super(desc);
-        this.from = from;
-        this.to = to;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     @Override
-    public String getTaskType() {
+    public String getTaskTypeIcon() {
         return "E";
     }
 
-    @Override
-    public String getDescription() {
-        return this.desc + this.getDurationString();
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public String getDurationString() {
-        String formattedFrom = Pulonia.formatDate(this.from);
-        String formattedTo = Pulonia.formatDate(this.to);
+        String formattedFrom = Pulonia.formatDate(this.startDate);
+        String formattedTo = Pulonia.formatDate(this.endDate);
         return " (from: " + formattedFrom + " to: " + formattedTo + ")";
     }
 
@@ -51,6 +54,11 @@ public class Event extends Task {
 
     @Override
     public String toFileFormat() {
-        return "E | " + getStatusIcon() + " | " + this.desc + " | " + from + " | " + to;
+        return getTaskTypeIcon() + " | "
+                + getStatusIcon() + " | "
+                + getRecurrenceIcon() + " | "
+                + this.desc + " | "
+                + this.startDate + " | "
+                + this.endDate;
     }
 }
