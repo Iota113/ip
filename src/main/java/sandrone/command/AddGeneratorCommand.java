@@ -22,7 +22,10 @@ public class AddGeneratorCommand extends Command {
         taskGeneratorList.addTaskGenerator(newTaskGenerator);
         taskList.addTask(newTaskGenerator.createInstance());
 
+        storage.saveGenerators(taskGeneratorList);
+        int totalCount = taskGeneratorList.getGeneratorCount();
+
         // no logic for updating storage yet...
-        return "Recurring Task added as a generator!";
+        return ui.showTaskGeneratorAdded(newTaskGenerator, totalCount);
     }
 }

@@ -34,4 +34,8 @@ public class TaskGeneratorList {
         return this.taskGenerators;
     }
 
+    public int getGeneratorCount() {
+        return this.taskGenerators.size();
+    }
+
 }

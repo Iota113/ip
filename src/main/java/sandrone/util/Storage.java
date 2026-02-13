@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,8 +126,8 @@ public class Storage {
                 }
 
                 try {
-                    String[] data = parseCoreData(line);
-                    Task task = getTask(data);
+                    String[] data = splitCoreData(line);
+                    Task task = parseTask(data);
                     if (task != null) {
                         loadedTasks.add(task);
                     }
@@ -158,8 +157,8 @@ public class Storage {
                 }
 
                 try {
-                    String[] data = parseCoreData(line);
-                    TaskGenerator gen = getGenerator(data);
+                    String[] data = splitCoreData(line);
+                    TaskGenerator gen = parseGenerator(data);
                     if (gen != null) {
                         loadedGens.add(gen);
                     }
@@ -173,26 +172,16 @@ public class Storage {
         return loadedGens;
     }
 
-    private TaskGenerator getGenerator(String[] components) throws SandroneException {
-        String type = components[0];
-        java.time.Period freq = java.time.Period.parse(components[1]);
-        java.time.LocalDate nextInit = java.time.LocalDate.parse(components[2]);
-        String desc = components[3];
-
-        switch (type) {
-        case "T": return new TodoGenerator(desc, freq, nextInit);
-        case "D":
-            LocalDate nextDueDate = Pulonia.parseDate(components[4].trim());
-            return new DeadlineGenerator(desc, freq, nextInit, nextDueDate);
-        case "E":
-            LocalDate nextStartDate = Pulonia.parseDate(components[4].trim());
-            LocalDate nextEndDate = Pulonia.parseDate(components[5].trim());
-            return new EventGenerator(desc, freq, nextInit, nextStartDate, nextEndDate);
-        default: return null;
+    private String[] splitCoreData(String line) {
+        // Split once and trim all parts immediately to avoid alignment issues
+        String[] parts = line.split(" \\| ");
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
         }
+        return parts;
     }
 
-    private Task getTask(String[] dataComponents) throws SandroneException {
+    private Task parseTask(String[] dataComponents) throws SandroneException {
         String type = dataComponents[0];
         boolean isDone = dataComponents[1].equals("X");
         boolean isRecurring = dataComponents[2].equals("R");
@@ -220,12 +209,22 @@ public class Storage {
         return task;
     }
 
-    private String[] parseCoreData(String line) {
-        // Split once and trim all parts immediately to avoid alignment issues
-        String[] parts = line.split(" \\| ");
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
+    private TaskGenerator parseGenerator(String[] components) throws SandroneException {
+        String type = components[0];
+        java.time.Period freq = java.time.Period.parse(components[1]);
+        java.time.LocalDate nextInitDate = java.time.LocalDate.parse(components[2].replace("NextInitDate:", "").trim());
+        String desc = components[3];
+
+        switch (type) {
+        case "T": return new TodoGenerator(desc, freq, nextInitDate);
+        case "D":
+            LocalDate nextDueDate = Pulonia.parseDate(components[4].trim());
+            return new DeadlineGenerator(desc, freq, nextInitDate, nextDueDate);
+        case "E":
+            LocalDate nextStartDate = Pulonia.parseDate(components[4].trim());
+            LocalDate nextEndDate = Pulonia.parseDate(components[5].trim());
+            return new EventGenerator(desc, freq, nextInitDate, nextStartDate, nextEndDate);
+        default: return null;
         }
-        return parts;
     }
 }

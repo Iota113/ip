@@ -255,5 +255,4 @@ public class Pulonia {
         return new AddGeneratorCommand(newTaskGenerator);
     }
 
-
 }

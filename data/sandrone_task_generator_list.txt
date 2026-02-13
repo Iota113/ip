@@ -1,3 +1,4 @@
-D | P1W | 2026-02-14 | MA2202 Homework | 2026-02-18
-E | P2W | 2026-02-14 | CS2101 Meeting | 2026-02-16 | 2026-02-17
-T | P1D | 2026-02-14 | Terrace Dinner
+D | P1W | NextInitDate:2026-02-14 | MA2202 Homework | 2026-02-18
+E | P1W | NextInitDate:2026-02-14 | CS2101 Meeting | 2026-02-16 | 2026-02-17
+T | P1W | NextInitDate:2026-02-14 | Terrace Dinner
+T | P1W | NextInitDate:2026-02-13 | TestRecurCommand

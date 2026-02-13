@@ -88,9 +88,23 @@ public class SandroneUi {
      * @param task The task that has been added to the list.
      * @param totalCount The new total number of tasks in the list.
      */
-    public String getTaskAdded(Task task, int totalCount) {
+    public String showTaskAdded(Task task, int totalCount) {
         StringBuilder sb = new StringBuilder("Very well. You have " + totalCount + " task(s) now.");
         sb.append(task);
+        return sb.toString();
+    }
+
+    /**
+     * Displays a confirmation message when a task generator is successfully added.
+     * The message includes the current total task count and a stylized
+     * representation of the newly added task.
+     *
+     * @param taskGenerator The task gnerator that has been added to the list.
+     * @param totalCount The new total number of tasks in the list.
+     */
+    public String showTaskGeneratorAdded(TaskGenerator taskGenerator, int totalCount) {
+        StringBuilder sb = new StringBuilder("Very well. You have " + totalCount + " recurring task(s) now.");
+        sb.append(taskGenerator);
         return sb.toString();
     }
 

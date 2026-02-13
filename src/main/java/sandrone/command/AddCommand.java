@@ -38,6 +38,6 @@ public class AddCommand extends Command {
         assert newTasksCount == oldTasksCount + 1 : "The size of the Tasks ArrayList is not updated properly~";
       
         storage.saveTasks(taskList);
-        return ui.getTaskAdded(newTask, newTasksCount);
+        return ui.showTaskAdded(newTask, newTasksCount);
     }
 }
