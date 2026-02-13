@@ -2,4 +2,3 @@ T | – | R | Terrace Dinner
 D | X | – | MA2202 Homework 1 | 2026-01-29
 E | – | R | CS2101 Meeting | 2026-01-28 | 2026-01-29
 D | – | R | CS2103T ip | 2026-01-30
-T | X | – | CS2109S Midterm

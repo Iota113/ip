@@ -87,7 +87,7 @@ public class TaskList {
      */
     public List<Task> getMatchingTasks(String keyword) {
         return this.tasks.stream()
-                .filter(task -> task.getDescription().contains(keyword))
+                .filter(task -> task.getTaskDescription().contains(keyword))
                 .collect(Collectors.toList());
     }
 }

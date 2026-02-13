@@ -34,6 +34,10 @@ public class TaskGeneratorList {
         return this.taskGenerators;
     }
 
+    public void deleteTaskGenerator(int taskGeneratorIndex) {
+        this.taskGenerators.remove(taskGeneratorIndex);
+    }
+
     public int getGeneratorCount() {
         return this.taskGenerators.size();
     }

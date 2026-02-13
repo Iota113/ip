@@ -33,7 +33,7 @@ public abstract class Task {
         return (isRecurring ? "R" : "–");
     }
 
-    public String getDescription() {
+    public String getTaskDescription() {
         return this.desc;
     }
 

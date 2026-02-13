@@ -29,6 +29,11 @@ public class DeadlineGenerator extends TaskGenerator {
     }
 
     @Override
+    public String getTaskTypeIcon() {
+        return "D";
+    }
+
+    @Override
     public Task createInstance() {
         Task newRecurringTask = new Deadline(taskDescription, nextDueDate);
         newRecurringTask.setRecurring(true);

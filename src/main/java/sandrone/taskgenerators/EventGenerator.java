@@ -24,6 +24,11 @@ public class EventGenerator extends TaskGenerator{
     }
 
     @Override
+    public String getTaskTypeIcon() {
+        return "E";
+    }
+
+    @Override
     public String toFileFormat() {
         return getTaskTypeIcon() + " | "
                 + "P1W" + " | "

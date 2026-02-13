@@ -9,6 +9,7 @@ import sandrone.command.AddCommand;
 import sandrone.command.AddGeneratorCommand;
 import sandrone.command.Command;
 import sandrone.command.DeleteCommand;
+import sandrone.command.DeleteGeneratorCommand;
 import sandrone.command.ExitCommand;
 import sandrone.command.FindCommand;
 import sandrone.command.MarkCommand;
@@ -73,7 +74,12 @@ public class Pulonia {
      * @return The 0-based integer index.
      */
     public static int extractIndex(String userInput) {
-        return Integer.parseInt(userInput.split(" ")[1]) - 1;
+        String[] parts = userInput.trim().split("\\s+");
+        if (parts.length < 2) {
+            throw new IllegalArgumentException("Please provide an index number.");
+        }
+
+        return Integer.parseInt(parts[1]) - 1;
     }
 
     public static String extractFind(String userInput) {
@@ -82,7 +88,7 @@ public class Pulonia {
 
     private enum CommandType {
         LIST, TODO, DEADLINE, EVENT, MARK, UNMARK,
-        DELETE, FIND, BYE, RECUR, DEFAULT;
+        DELETE, FIND, BYE, RECUR, DRECUR, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
             if (userInput == null) {
@@ -117,12 +123,14 @@ public class Pulonia {
             return new DeleteCommand(extractIndex(userInput));
         case FIND:
             return new FindCommand(extractFind(userInput));
-        case RECUR:
-            return parseGeneratorCommand(userInput);
         case TODO:
         case DEADLINE:
         case EVENT:
             return parseAddCommand(userInput);
+        case RECUR:
+            return parseGeneratorCommand(userInput);
+        case DRECUR:
+            return new DeleteGeneratorCommand(extractIndex(userInput));
         case BYE:
             return new ExitCommand();
         default:

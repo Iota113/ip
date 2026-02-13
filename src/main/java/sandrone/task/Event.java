@@ -33,11 +33,6 @@ public class Event extends Task {
         return "E";
     }
 
-    @Override
-    public String getDescription() {
-        return this.desc + this.getDurationString();
-    }
-
     public LocalDate getStartDate() {
         return startDate;
     }

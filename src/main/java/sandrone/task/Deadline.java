@@ -31,11 +31,6 @@ public class Deadline extends Task {
         return "D";
     }
 
-    @Override
-    public String getDescription() {
-        return this.desc + this.getDueDateString();
-    }
-
     public LocalDate getDueDate() {
         return dueDate;
     }

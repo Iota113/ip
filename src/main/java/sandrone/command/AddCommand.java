@@ -31,11 +31,8 @@ public class AddCommand extends Command {
     public String execute(AppState appState, SandroneUi ui, Storage storage) {
         TaskList taskList = appState.getTaskList();
 
-        int oldTasksCount = taskList.getTasksCount();
         taskList.addTask(this.newTask);
-      
         int newTasksCount = taskList.getTasksCount();
-        assert newTasksCount == oldTasksCount + 1 : "The size of the Tasks ArrayList is not updated properly~";
       
         storage.saveTasks(taskList);
         return ui.showTaskAdded(newTask, newTasksCount);

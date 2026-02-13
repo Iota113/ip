@@ -28,7 +28,7 @@ public abstract class TaskGenerator {
      */
     public TaskGenerator(Task taskBlueprint, Period frequency, LocalDate nextInitDate) {
         this.taskBlueprint = taskBlueprint;
-        this.taskDescription = this.taskBlueprint.getDescription();
+        this.taskDescription = this.taskBlueprint.getTaskDescription();
         this.frequency = frequency;
         this.nextInitDate = nextInitDate;
     }
@@ -45,7 +45,7 @@ public abstract class TaskGenerator {
     public String toString() {
         return String.format("[%s] %s (Every %s, Next: %s)",
                 this.getClass().getSimpleName().replace("Generator", ""),
-                taskBlueprint.getDescription(),
+                taskBlueprint.getTaskDescription(),
                 frequency,
                 nextInitDate);
     }
