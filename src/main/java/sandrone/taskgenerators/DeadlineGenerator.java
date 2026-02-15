@@ -7,7 +7,7 @@ import sandrone.task.Deadline;
 import sandrone.task.Task;
 
 /**
- * Represents a Deadline generator for the Sandrone chatbot
+ * Represents a generator for recurring {@code Deadline} tasks.
  *
  * @author Henry Tse
  * @version 0.2
@@ -47,15 +47,6 @@ public class DeadlineGenerator extends TaskGenerator {
                 + "NextInitDate:" + this.nextInitDate + " | "
                 + this.taskDescription + " | "
                 + this.nextDueDate;
-    }
-
-    public static int extractIndex(String userInput) {
-        // "\\s+" handles one or more spaces
-        String[] parts = userInput.trim().split("\\s+");
-        if (parts.length < 2) {
-            throw new IllegalArgumentException("Please provide an index number.");
-        }
-        return Integer.parseInt(parts[1]) - 1;
     }
 
     @Override

@@ -30,10 +30,8 @@ public class AddCommand extends Command {
     @Override
     public String execute(AppState appState, SandroneUi ui, Storage storage) {
         TaskList taskList = appState.getTaskList();
-
         taskList.addTask(this.newTask);
         int newTasksCount = taskList.getTasksCount();
-      
         storage.saveTasks(taskList);
         return ui.showTaskAdded(newTask, newTasksCount);
     }

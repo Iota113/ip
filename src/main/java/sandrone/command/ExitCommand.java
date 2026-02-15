@@ -4,6 +4,12 @@ import sandrone.AppState;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
 
+/**
+ * Represents a command to exit the Sandrone application.
+ *
+ * @author Henry Tse
+ * @version 0.1
+ */
 public class ExitCommand extends Command {
 
     @Override

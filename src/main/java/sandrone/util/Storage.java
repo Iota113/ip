@@ -85,7 +85,7 @@ public class Storage {
 
     /**
      * Generic helper to save any list of objects that can be converted to file format.
-     * * @param filePath The destination file.
+     * @param filePath The destination file.
      * @param items    A list of objects (Tasks or Generators).
      * @param errorMsg The context-specific error message.
      */
@@ -141,6 +141,13 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Reads recurring task data from the local file and reconstructs the task generator list.
+     * Parses each line of the file into specific {@code TodoGenerator}, {@code DeadlineGenerator},
+     * or {@code EventGenerator} objects.
+     *
+     * @return An {@code ArrayList} of tasks retrieved from the file.
+     */
     public ArrayList<TaskGenerator> loadGenerators() {
         ArrayList<TaskGenerator> loadedGens = new ArrayList<>();
         Path path = Path.of(generatorFilePath);

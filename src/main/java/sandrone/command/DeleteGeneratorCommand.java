@@ -1,11 +1,15 @@
 package sandrone.command;
 
 import sandrone.AppState;
-import sandrone.task.TaskList;
 import sandrone.taskgenerators.TaskGeneratorList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
 
+/**
+ * Represents a command to remove an existing task generator from the application.
+ * This command deletes a recurring task rule based on its index in the list,
+ * updates the persistent storage to reflect the change, and provides feedback to the user.
+ */
 public class DeleteGeneratorCommand extends Command {
     private int taskGeneratorIndex;
 

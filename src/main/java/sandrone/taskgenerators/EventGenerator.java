@@ -6,7 +6,13 @@ import java.time.Period;
 import sandrone.task.Event;
 import sandrone.task.Task;
 
-public class EventGenerator extends TaskGenerator{
+/**
+ * Represents a generator for recurring {@code Event} tasks.
+ * This class manages the automated creation of tasks that span a duration,
+ * advancing both the initialization date and the event's start and end dates
+ * according to a specified frequency.
+ */
+public class EventGenerator extends TaskGenerator {
     private LocalDate nextStartDate;
     private LocalDate nextEndDate;
 
@@ -14,8 +20,9 @@ public class EventGenerator extends TaskGenerator{
      * Constructs an {@code EventGenerator} task with a description, a frequency,
      * a start date and an end date (both that updates regularly).
      *
-     * @param eventBlueprint
+     * @param eventBlueprint The blueprint of an event task to be generated.
      * @param frequency      The frequency at which a new task is generated.
+     * @param nextInitDate The next date at which a new task is generated.
      */
     public EventGenerator(Event eventBlueprint, Period frequency, LocalDate nextInitDate) {
         super(eventBlueprint, frequency, nextInitDate);

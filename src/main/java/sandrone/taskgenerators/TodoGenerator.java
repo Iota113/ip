@@ -7,7 +7,7 @@ import sandrone.task.Task;
 import sandrone.task.Todo;
 
 /**
- * Represents a Todo generator for the Sandrone chatbot
+ * Represents a generator for recurring {@code Todo} tasks.
  *
  * @author Henry Tse
  * @version 0.2

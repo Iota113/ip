@@ -1,6 +1,5 @@
 package sandrone.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sandrone.task.Task;
@@ -75,7 +74,7 @@ public class SandroneUi {
 
     public String getDebugState(List<Task> tasks, List<TaskGenerator> generators) {
         return "=== SYSTEM DEBUG SNAPSHOT ===\n"
-                + listToString(tasks, "[TASK INSTANCES]", "No tasks in memory.") +  "\n"
+                + listToString(tasks, "[TASK INSTANCES]", "No tasks in memory.") + "\n"
                 + listToString(generators, "[GENERATOR RULES]", "No generators active.")
                 + "==============================";
     }
