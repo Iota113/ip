@@ -1,14 +1,17 @@
 package sandrone.util;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
+
 import sandrone.command.AddCommand;
 import sandrone.command.Command;
 import sandrone.command.PrintCommand;
 import sandrone.exception.SandroneException;
-
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class PuloniaTest {
     @Test
