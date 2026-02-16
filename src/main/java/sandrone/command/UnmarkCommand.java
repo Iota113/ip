@@ -1,6 +1,7 @@
 package sandrone.command;
 
 import sandrone.AppState;
+import sandrone.exception.SandroneException;
 import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
@@ -26,9 +27,8 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public String execute(AppState appState, SandroneUi ui, Storage storage) {
+    public String execute(AppState appState, SandroneUi ui, Storage storage) throws SandroneException {
         TaskList taskList = appState.getTaskList();
-
         taskList.setTaskStatus(taskIndex, false);
         boolean isMarked = taskList.getTask(taskIndex).isMarked();
         assert !isMarked : "Task List did not unmark the task properly~";

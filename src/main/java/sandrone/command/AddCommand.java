@@ -1,6 +1,7 @@
 package sandrone.command;
 
 import sandrone.AppState;
+import sandrone.exception.SandroneException;
 import sandrone.task.Task;
 import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
@@ -28,7 +29,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public String execute(AppState appState, SandroneUi ui, Storage storage) {
+    public String execute(AppState appState, SandroneUi ui, Storage storage) throws SandroneException {
         TaskList taskList = appState.getTaskList();
         taskList.addTask(this.newTask);
         int newTasksCount = taskList.getTasksCount();

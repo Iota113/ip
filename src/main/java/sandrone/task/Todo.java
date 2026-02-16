@@ -1,5 +1,7 @@
 package sandrone.task;
 
+import java.util.Objects;
+
 /**
  * Represents a simple task without any date or time constraints.
  * A {@code Todo} task only contains a description and a completion status.
@@ -12,10 +14,10 @@ public class Todo extends Task {
     /**
      * Constructs a {@code Todo} task with the specified description.
      *
-     * @param desc The description of the task.
+     * @param description The description of the task.
      */
-    public Todo(String desc) {
-        super(desc);
+    public Todo(String description) {
+        super(description);
     }
 
     @Override
@@ -28,6 +30,6 @@ public class Todo extends Task {
         return getTaskTypeIcon() + " | "
                 + getStatusIcon() + " | "
                 + getRecurrenceIcon() + " | "
-                + this.desc;
+                + this.description;
     }
 }

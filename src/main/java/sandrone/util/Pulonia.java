@@ -90,7 +90,16 @@ public class Pulonia {
             throw new SandroneException(Messages.ERROR_EMPTY_INDEX);
         }
 
-        return Integer.parseInt(parts[1]) - 1;
+        try {
+            int index = Integer.parseInt(parts[1]) - 1;
+            if (index < 0) {
+                throw new SandroneException(Messages.ERROR_NONPOSITVE_INDEX);
+            }
+            return index;
+        } catch (NumberFormatException e) {
+            throw new SandroneException(Messages.ERROR_NONINTEGER_INDEX);
+        }
+
     }
 
     public static String extractFind(String userInput) {

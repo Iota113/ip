@@ -2,6 +2,7 @@ package sandrone.command;
 
 
 import sandrone.AppState;
+import sandrone.exception.SandroneException;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
 
@@ -12,7 +13,7 @@ import sandrone.util.Storage;
  */
 public class SyncCommand extends Command {
     @Override
-    public String execute(AppState appState, SandroneUi ui, Storage storage) {
+    public String execute(AppState appState, SandroneUi ui, Storage storage) throws SandroneException {
         appState.generateTasks();
         return "Recurring Tasks added!";
     }

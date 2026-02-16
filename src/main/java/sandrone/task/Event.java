@@ -57,7 +57,7 @@ public class Event extends Task {
         return getTaskTypeIcon() + " | "
                 + getStatusIcon() + " | "
                 + getRecurrenceIcon() + " | "
-                + this.desc + " | "
+                + this.description + " | "
                 + this.startDate + " | "
                 + this.endDate;
     }

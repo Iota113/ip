@@ -50,7 +50,7 @@ public class Deadline extends Task {
         return getTaskTypeIcon() + " | "
                 + getStatusIcon() + " | "
                 + getRecurrenceIcon() + " | "
-                + this.desc + " | "
+                + this.description + " | "
                 + this.dueDate;
     }
 }
