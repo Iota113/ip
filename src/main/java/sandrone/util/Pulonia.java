@@ -238,10 +238,13 @@ public class Pulonia {
     private static Event getNewEvent(String eventContents) throws SandroneException {
         String[] components = extractEventComponents(eventContents);
         String desc = components[0];
-        LocalDate from = parseDate(components[1]);
-        LocalDate to = parseDate(components[2]);
+        LocalDate startDate = parseDate(components[1]);
+        LocalDate endDate = parseDate(components[2]);
+        if (startDate.isAfter(endDate)) {
+            throw new SandroneException("The start date of an event cannot be after the end date!");
+        }
 
-        Event newEvent = new Event(desc, from, to);
+        Event newEvent = new Event(desc, startDate, endDate);
         return newEvent;
     }
 
