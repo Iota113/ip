@@ -1,7 +1,5 @@
 package sandrone.task;
 
-import java.util.Objects;
-
 /**
  * Represents a simple task without any date or time constraints.
  * A {@code Todo} task only contains a description and a completion status.

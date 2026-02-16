@@ -34,10 +34,13 @@ public class Messages {
     public static final String ERROR_INVALID_DEADLINE = "Incomplete command! A by needs a ' /by ' component.";
     public static final String ERROR_EMPTY_BY = "The by cannot be empty.";
     public static final String ERROR_EMPTY_DESCRIPTION = "The description of a task cannot be empty!";
-    public static final String ERROR_INVALID_EVENT_FORMAT = "Incomplete command! An Event needs a ' /from ' and ' /to ' component.";
+    public static final String ERROR_INVALID_EVENT_FORMAT =
+            "Incomplete command! An Event needs a ' /from ' and ' /to ' component.";
     public static final String ERROR_DATE_ORDER = "The start date of an event cannot be after the end date!";
     public static final String ERROR_RECUR_TYPE = "You can only create recurring todo, deadline or events ~";
-    public static final String ERROR_DUPLCIATE_DESCRIPTION = "Excuse me. You already have a task with the same description. I am not adding this.";
+    public static final String ERROR_DUPLCIATE_DESCRIPTION =
+            "Excuse me. You already have a task with the same description."
+            + " I am not adding this.";
     public static final String ERROR_NONINTEGER_INDEX = "Please provide a valid number for the index!";
     public static final String ERROR_NONPOSITVE_INDEX = "Indices must be 1 or greater!";
     public static final String ERROR_INDEX_OUT_OF_RANGE = "You do not have that many tasks!";
