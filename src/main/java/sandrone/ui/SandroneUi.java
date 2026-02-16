@@ -21,20 +21,10 @@ public class SandroneUi {
     private static final String pleasedResponse = "Very well.";
     private static final String unhappyResponse = "Utterly risible.";
 
-    public void printLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * Displays the initial greeting message to the user.
-     */
     public String getGreetings() {
         return greetings;
     }
 
-    /**
-     * Displays the farewell message when the user exits the application.
-     */
     public String getFarewell() {
         return farewell;
     }
@@ -69,14 +59,12 @@ public class SandroneUi {
     }
 
     public String getRecurringTasks(List<TaskGenerator> taskGenerators) {
-        return listToString(taskGenerators, "Active Recurring Rules:", "No recurring tasks found!");
+        return listToString(taskGenerators, "Active Recurring Tasks:", "No recurring tasks found!");
     }
 
     public String getDebugState(List<Task> tasks, List<TaskGenerator> generators) {
-        return "=== SYSTEM DEBUG SNAPSHOT ===\n"
-                + listToString(tasks, "[TASK INSTANCES]", "No tasks in memory.") + "\n"
-                + listToString(generators, "[GENERATOR RULES]", "No generators active.")
-                + "==============================";
+        return listToString(tasks, "[Your Tasks]", "No tasks in memory.") + "\n"
+                + listToString(generators, "[Recurring Tasks]", "No generators active.");
     }
 
     /**

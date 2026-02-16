@@ -53,7 +53,7 @@ public class Pulonia {
         try {
             return LocalDate.parse(input, FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new SandroneException("Use the format yyyy-MM-dd (e.g., 2026-01-28) for dates.");
+            throw new SandroneException(Messages.ERROR_INVALID_DATE);
         }
     }
 
@@ -74,10 +74,10 @@ public class Pulonia {
      * @param userInput The command string containing an index.
      * @return The 0-based integer index.
      */
-    public static int extractIndex(String userInput) {
+    public static int extractIndex(String userInput) throws SandroneException {
         String[] parts = userInput.trim().split("\\s+");
         if (parts.length < 2) {
-            throw new IllegalArgumentException("Please provide an index number.");
+            throw new SandroneException(Messages.ERROR_EMPTY_INDEX);
         }
 
         return Integer.parseInt(parts[1]) - 1;
@@ -137,15 +137,7 @@ public class Pulonia {
         case BYE:
             return new ExitCommand();
         default:
-            String message =
-                    "You Fool. What are you saying.\n"
-                            + "Here are the valid commands:\n"
-                            + "1. todo [insert desc] \n"
-                            + "2. deadline [insert desc] /by [insert time]\n"
-                            + "3. event [insert desc] /from [insert time] /to [insert time]\n"
-                            + "4. mark/unmark [insert index]\n"
-                            + "5. list";
-            throw new SandroneException(message);
+            throw new SandroneException(Messages.ERROR_INVALID_COMMAND);
         }
 
     }
@@ -176,8 +168,11 @@ public class Pulonia {
     }
 
 
-    private static AddCommand parseTodoCommand(String userInput) {
+    private static AddCommand parseTodoCommand(String userInput) throws SandroneException {
         String taskDescription = removeCommandKeyword(userInput, TODO_KEYWORD);
+        if (taskDescription.isEmpty()) {
+            throw new SandroneException(Messages.ERROR_EMPTY_DESCRIPTION);
+        }
         Task newTodo = getNewTodo(taskDescription);
         return new AddCommand(newTodo);
     }
@@ -207,19 +202,19 @@ public class Pulonia {
 
     private static void validateDeadlineFormat(String userInput) throws SandroneException {
         if (!userInput.contains(" /by ")) {
-            throw new SandroneException("Incomplete command! A by needs a ' /by ' component.");
+            throw new SandroneException(Messages.ERROR_INVALID_DEADLINE);
         }
     }
 
     private static String[] extractDeadlineComponents(String remainingCommand) throws SandroneException {
         String[] descTime = remainingCommand.split(" /by ");
         if (descTime.length < 2 || descTime[1].trim().isEmpty()) {
-            throw new SandroneException("The by cannot be empty.");
+            throw new SandroneException(Messages.ERROR_EMPTY_BY);
         }
 
         String desc = descTime[0];
         if (desc.isEmpty()) {
-            throw new SandroneException("The description of a task cannot be empty!");
+            throw new SandroneException(Messages.ERROR_EMPTY_DESCRIPTION);
         }
 
         return new String[] {desc, descTime[1]};
@@ -241,7 +236,7 @@ public class Pulonia {
         LocalDate startDate = parseDate(components[1]);
         LocalDate endDate = parseDate(components[2]);
         if (startDate.isAfter(endDate)) {
-            throw new SandroneException("The start date of an event cannot be after the end date!");
+            throw new SandroneException(Messages.ERROR_DATE_ORDER);
         }
 
         Event newEvent = new Event(desc, startDate, endDate);
@@ -253,8 +248,7 @@ public class Pulonia {
         boolean hasNoTo = !userInput.contains(" /to");
 
         if (hasNoFrom || hasNoTo) {
-            throw new SandroneException("Incomplete command! An sandrone.task.Event needs "
-                    + "a ' /from ' and ' /to ' component.");
+            throw new SandroneException(Messages.ERROR_INVALID_EVENT_FORMAT);
         }
     }
 
@@ -311,7 +305,7 @@ public class Pulonia {
             Event newEvent = getNewEvent(eventContents);
             newTaskGenerator = new EventGenerator(newEvent, ONE_WEEK, LocalDate.now());
         } else {
-            throw new SandroneException("You can only create recurring todo, deadline or events ~");
+            throw new SandroneException(Messages.ERROR_RECUR_TYPE);
         }
 
         return new AddGeneratorCommand(newTaskGenerator);
