@@ -1,29 +1,46 @@
 # Sandrone User Guide
 
-<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/488be4ac-40be-4857-93ca-0f64c610aa7e" />
-
 Sandrone is a modified version of Duke Chatbot as part of CS2103T's individual project. 
-Inspired by the character Sandrone from Genshin Impact, the chatbot has a mean but loveable personality, and supports the following functions:
+Inspired by the character Sandrone from Genshin Impact, the chatbot has a mean but loveable personality, and supports the following features:
 
 1. Adding and deleting a task (todo, deadline and events);
 2. Marking and unmarking tasks;
 3. Storing / loading tasks in / from a text file;
 4. Finding a specific task;
-5. Adding and deleting recurring tasks. 
+5. Adding and deleting recurring tasks.
 
-## Quick start
-* [`help`](#help) -- returns the list of commands and their format
-* [`bye`](#bye) -- to exit the application
-* [`list`](#list) -- print out the list of tasks and recurring tasks
-* [`todo`](#todo) -- add a todo task
-* [`deadline`](#deadline) -- add a deadline task
-* [`event`](#event) -- add an event task
-* [`delete`](#delete) -- deletes a task
-* [`mark`](#mark) -- marks a task
-* [`unmark`](#unmark) -- unmarks a task
-* [`find`](#find) -- print out the list of tasks that contain a specific keyword
-* [`recur`](#recur) -- to be combined with todo / deadline / event to add a recurring task
-* [`drecur`](#drecur) -- deletes a recurring task
+**Getting Started**
+
+Upon bootup, Sandrone will send a greeting message. The user may then interact with the chatbot via some specific commands.
+<p align="center">
+<img width="400" alt="Sandrone Greeting" src="https://github.com/user-attachments/assets/7bfc2be1-366a-4217-815e-c5d1f79cd916" />
+</p>
+
+**Command Validation**
+
+Texts that do not fall under the list of commands will be rejected.
+<p align="center">
+<img width="400" alt="Invalid Command Error" src="https://github.com/user-attachments/assets/fff157e7-32b7-48d4-9caf-4ea6049a9016" />
+</p>
+
+
+## Detailed Guide
+* Features
+  * [`help`](#help) -- returns the list of commands and their format
+  * [`bye`](#bye) -- to exit the application
+  * [`list`](#list) -- print out the list of tasks and recurring tasks
+  * [`todo`](#todo) -- add a todo task
+  * [`deadline`](#deadline) -- add a deadline task
+  * [`event`](#event) -- add an event task
+  * [`delete`](#delete) -- deletes a task
+  * [`mark`](#mark) -- marks a task
+  * [`unmark`](#unmark) -- unmarks a task
+  * [`find`](#find) -- print out the list of tasks that contain a specific keyword
+  * [`recur`](#recur) -- to be combined with todo / deadline / event to add a recurring task
+  * [`drecur`](#drecur) -- deletes a recurring task
+  * [`sync`](#sync) -- adds recurring tasks to active task list.
+* [Saving and loading data](#storage)
+* [Recurring Tasks](#recurring_tasks)
 
 ---
 
@@ -36,7 +53,7 @@ Shows a list of all available commands and their usage formats.
 
 <a name="bye"></a>
 ### bye
-Closes the application.
+Sandrone will send a farewell message before closeing the application in a promptly.
 * **Format:** `bye`
 
 <a name="list"></a>
@@ -98,8 +115,27 @@ Stops a task from recurring by deleting the recurring task.
 * **Format:** `drecur <index>`
 * **Example:** `drecur 1`
 
-## Recurring Tasks
-Recurring tasks are implemented using a corresponding generator for each type of task. These generators store a LocalDate that indicates
-the next date a task is to be added to the list of tasks; and advances said date when such a task is added.
+<a name="sync"></a>
+### sync
+calls on task generators to create an instance of the task. Read more on how this works under the [**Recurring Tasks**](#recurring_tasks) section.
+* **Format:** `sync`
 
-Every generator stores a blueprint of the task which it uses to generate instances of it as a recurring task.
+<a name="storage"></a>
+## Saving and Loading Data
+Data is saved automatically every time a task or recurring task is added, deleted, marked or unmarked.
+
+Tasks and Recurring Tasks are stored in text files: _sandrone_tesk_list.txt_ and _sandrone_task_generator_list.txt_ respectively. 
+
+Both files are kept in a _data_ folder that is created in the same folder as the .jar file.
+
+The two text files are loaded from the folder upon initialization of the app.
+
+<a name="recurring_tasks"></a>
+## Recurring Tasks
+Recurring tasks are implemented using a corresponding generator for each type of task. These generators store a LocalDate called nextInitDate that indicates
+the next date a task is to be added to the list of tasks.
+
+Every Recurring Task (generator) stores a blueprint of the task which it uses to generate instances of it as a recurring task.
+
+There are plans for automating this process in the future, but it is done manually now by the user -- The generator creates an instance of this task with the `sync` command, which generates an instance of the task for all tasks with their next initialization date not set to some date after today, and advances the nextInitDate.
+
