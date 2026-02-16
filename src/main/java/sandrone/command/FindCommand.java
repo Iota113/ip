@@ -36,7 +36,7 @@ public class FindCommand extends Command {
         TaskList taskList = appState.getTaskList();
 
         List<Task> matchingTasks = taskList.getMatchingTasks(userInput);
-        return ui.getTasks(matchingTasks);
+        return ui.getMatchingTasks(matchingTasks);
     }
 
 }

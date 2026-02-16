@@ -13,6 +13,7 @@ import sandrone.command.DeleteCommand;
 import sandrone.command.DeleteGeneratorCommand;
 import sandrone.command.ExitCommand;
 import sandrone.command.FindCommand;
+import sandrone.command.HelpCommand;
 import sandrone.command.MarkCommand;
 import sandrone.command.PrintCommand;
 import sandrone.command.SyncCommand;
@@ -44,6 +45,7 @@ public class Pulonia {
     private static final String DEADLINE_KEYWORD = "deadline";
     private static final String EVENT_KEYWORD = "event";
     private static final String RECUR_KEYWORD = "recur";
+    private static final String FIND_KEYWORD = "find";
     private static final Period ONE_WEEK = Period.ofWeeks(1);
 
     /**
@@ -92,12 +94,12 @@ public class Pulonia {
     }
 
     public static String extractFind(String userInput) {
-        return userInput.substring(4).trim();
+        return removeCommandKeyword(userInput, FIND_KEYWORD);
     }
 
     private enum CommandType {
         LIST, TODO, DEADLINE, EVENT, MARK, UNMARK,
-        DELETE, FIND, BYE, RECUR, DRECUR, SYNC, DEFAULT;
+        DELETE, FIND, BYE, RECUR, DRECUR, SYNC, HELP, DEFAULT;
 
         public static CommandType getCommandType(String userInput) {
             if (userInput == null) {
@@ -142,6 +144,8 @@ public class Pulonia {
             return new DeleteGeneratorCommand(extractIndex(userInput));
         case SYNC:
             return new SyncCommand();
+        case HELP:
+            return new HelpCommand();
         case BYE:
             return new ExitCommand();
         default:
@@ -186,8 +190,7 @@ public class Pulonia {
     }
 
     private static Todo getNewTodo(String taskDescription) {
-        Todo newTodo = new Todo(taskDescription);
-        return newTodo;
+        return new Todo(taskDescription);
     }
 
 
@@ -204,8 +207,7 @@ public class Pulonia {
         String[] components = extractDeadlineComponents(deadlineContents);
         String desc = components[0];
         LocalDate dueDate = parseDate(components[1].trim());
-        Deadline newDeadline = new Deadline(desc, dueDate);
-        return newDeadline;
+        return new Deadline(desc, dueDate);
     }
 
     private static void validateDeadlineFormat(String userInput) throws SandroneException {
@@ -220,7 +222,7 @@ public class Pulonia {
             throw new SandroneException(Messages.ERROR_EMPTY_BY);
         }
 
-        String desc = descTime[0];
+        String desc = descTime[0].trim();
         if (desc.isEmpty()) {
             throw new SandroneException(Messages.ERROR_EMPTY_DESCRIPTION);
         }
@@ -240,15 +242,14 @@ public class Pulonia {
 
     private static Event getNewEvent(String eventContents) throws SandroneException {
         String[] components = extractEventComponents(eventContents);
-        String desc = components[0];
+        String desc = components[0].trim();
         LocalDate startDate = parseDate(components[1]);
         LocalDate endDate = parseDate(components[2]);
         if (startDate.isAfter(endDate)) {
             throw new SandroneException(Messages.ERROR_DATE_ORDER);
         }
 
-        Event newEvent = new Event(desc, startDate, endDate);
-        return newEvent;
+        return new Event(desc, startDate, endDate);
     }
 
     private static void validateEventFormat(String userInput) throws SandroneException {

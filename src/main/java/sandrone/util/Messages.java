@@ -12,20 +12,22 @@ package sandrone.util;
  * @version 0.1
  */
 public class Messages {
-    // Error Messages
-    public static final String ERROR_INVALID_COMMAND = "You fool. What are you saying.\n"
-            + "Here are the valid commands:\n"
-            + "1. todo [description] \n"
-            + "2. deadline [description] /by [date]\n"
-            + "3. event [description] /from [date] /to [date]\n"
-            + "4. delete [index]\n"
-            + "5. mark/unmark [index]\n"
+    public static final String MESSAGE_VALID_COMMANDS = "Here are the valid commands:\n"
+            + "1. todo <description> \n"
+            + "2. deadline <description> /by <date>\n"
+            + "3. event <description> /from <date> /to <date>\n"
+            + "4. delete <index>\n"
+            + "5. mark / unmark <index>\n"
             + "6. list\n"
-            + "7. find [description]\n"
-            + "8. recur [todo / deadline / event command]\n"
-            + "9. drecur [index]\n"
+            + "7. find <description>\n"
+            + "8. recur <todo / deadline / event command>\n"
+            + "9. drecur <index>\n"
             + "10. sync\n"
             + "11. bye";
+
+    // Error Messages
+    public static final String ERROR_INVALID_COMMAND = "You fool. What are you saying\n"
+            + "Use \"help\" if you need to see the list of valid commands.";
     public static final String ERROR_INVALID_DATE_FORMAT = "Use the format yyyy-MM-dd (e.g., 2026-01-28) for dates.";
     public static final String ERROR_DATE_DOES_NOT_EXIST = "That date doesn't exist. Please check your calendar!";
     public static final String ERROR_EMPTY_INDEX = "Please provide an index number.";

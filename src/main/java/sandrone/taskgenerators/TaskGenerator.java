@@ -44,7 +44,7 @@ public abstract class TaskGenerator {
     @Override
     public String toString() {
         return String.format("[%s] %s (Every %s, Next: %s)",
-                this.getClass().getSimpleName().replace("Generator", ""),
+                getTaskTypeIcon(),
                 taskBlueprint.getTaskDescription(),
                 frequency,
                 nextInitDate);

@@ -49,21 +49,22 @@ public class SandroneUi {
     }
 
     /**
-     * Prints a formatted list of tasks to the console.
-     * Each task is displayed with its index, status icon, type, and description.
+     * Prints a formatted list of matching tasks
      *
-     * @param tasks The list of tasks to be displayed.
+     * @param tasks   The list of tasks to be displayed.
      */
-    public String getTasks(List<Task> tasks) {
-        return listToString(tasks, "Your list:", "Your list is currently empty!");
+    public String getMatchingTasks(List<Task> tasks) {
+        return listToString(tasks, "Here are the tasks that contain the keyword:", "No such task exists!");
     }
 
-    public String getRecurringTasks(List<TaskGenerator> taskGenerators) {
-        return listToString(taskGenerators, "Active Recurring Tasks:", "No recurring tasks found!");
-    }
-
-    public String getDebugState(List<Task> tasks, List<TaskGenerator> generators) {
-        return listToString(tasks, "[Your Tasks]", "No tasks in memory.") + "\n"
+    /**
+     * Prints all active tasks and recurring tasks.
+     *
+     * @param tasks The list of active tasks to be displayed.
+     * @param generators The list of recurring tasks to be displayed.
+     */
+    public String getAll(List<Task> tasks, List<TaskGenerator> generators) {
+        return listToString(tasks, "[Your Active Tasks]", "No tasks in memory.") + "\n"
                 + listToString(generators, "[Recurring Tasks]", "No generators active.");
     }
 
