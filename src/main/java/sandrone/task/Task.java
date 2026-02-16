@@ -71,16 +71,17 @@ public abstract class Task {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Todo)) {
+
+        if (!(o instanceof Task)) {
             return false;
         }
-        Task other = (Task) o;
 
-        return Objects.equals(this.description, other.description);
+        Task other = (Task) o;
+        return this.description.trim().equalsIgnoreCase(other.description.trim());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description);
+        return Objects.hash(description.toLowerCase().trim());
     }
 }

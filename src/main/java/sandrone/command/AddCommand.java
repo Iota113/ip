@@ -32,8 +32,7 @@ public class AddCommand extends Command {
     public String execute(AppState appState, SandroneUi ui, Storage storage) throws SandroneException {
         TaskList taskList = appState.getTaskList();
         taskList.addTask(this.newTask);
-        int newTasksCount = taskList.getTasksCount();
         storage.saveTasks(taskList);
-        return ui.showTaskAdded(newTask, newTasksCount);
+        return ui.showTaskAdded(newTask, taskList.getTasksCount());
     }
 }

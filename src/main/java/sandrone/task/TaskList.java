@@ -37,7 +37,7 @@ public class TaskList {
         if (tasks.contains(newTask)) {
             throw new SandroneException(Messages.ERROR_DUPLCIATE_DESCRIPTION);
         }
-        this.tasks.add(newTask);
+        tasks.add(newTask);
     }
 
     /**

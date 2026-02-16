@@ -34,7 +34,6 @@ public class FindCommand extends Command {
     @Override
     public String execute(AppState appState, SandroneUi ui, Storage storage) {
         TaskList taskList = appState.getTaskList();
-
         List<Task> matchingTasks = taskList.getMatchingTasks(userInput);
         return ui.getMatchingTasks(matchingTasks);
     }
