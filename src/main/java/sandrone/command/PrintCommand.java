@@ -18,7 +18,6 @@ public class PrintCommand extends Command {
     public String execute(AppState appState, SandroneUi ui, Storage storage) {
         TaskList taskList = appState.getTaskList();
         TaskGeneratorList taskGeneratorList = appState.getGeneratorList();
-        return ui.getDebugState(taskList.getAllTasks(), taskGeneratorList.getAllGenerators());
-        //        return ui.getTasks(taskList.getAllTasks());
+        return ui.getAll(taskList.getAllTasks(), taskGeneratorList.getAllGenerators());
     }
 }

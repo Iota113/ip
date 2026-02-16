@@ -2,6 +2,7 @@ package sandrone;
 
 import java.time.LocalDate;
 
+import sandrone.exception.SandroneException;
 import sandrone.task.Task;
 import sandrone.task.TaskList;
 import sandrone.taskgenerators.TaskGenerator;
@@ -51,7 +52,7 @@ public class AppState {
      * missed or current initialization dates, advancing the generator state to prevent
      * duplicate task creation.
      */
-    public void generateTasks() {
+    public void generateTasks() throws SandroneException {
         LocalDate today = LocalDate.now();
 
         for (TaskGenerator gen : generatorList.getAllGenerators()) {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import sandrone.exception.SandroneException;
+import sandrone.util.Messages;
 import sandrone.util.Storage;
 
 /**
@@ -31,8 +33,11 @@ public class TaskList {
      *
      * @param newTask The task to be added.
      */
-    public void addTask(Task newTask) {
-        this.tasks.add(newTask);
+    public void addTask(Task newTask) throws SandroneException {
+        if (tasks.contains(newTask)) {
+            throw new SandroneException(Messages.ERROR_DUPLCIATE_DESCRIPTION);
+        }
+        tasks.add(newTask);
     }
 
     /**
@@ -41,7 +46,7 @@ public class TaskList {
      * @param taskIndex The 0-based index of the task in the list.
      * @param isMark {@code true} to mark as completed, {@code false} to unmark.
      */
-    public void setTaskStatus(int taskIndex, boolean isMark) {
+    public void setTaskStatus(int taskIndex, boolean isMark) throws SandroneException {
         checkValidTaskIndex(taskIndex);
 
         if (isMark) {
@@ -51,9 +56,9 @@ public class TaskList {
         }
     }
 
-    private void checkValidTaskIndex(int taskIndex) {
+    private void checkValidTaskIndex(int taskIndex) throws SandroneException {
         if (taskIndex > tasks.size()) {
-            System.out.println("You do not have that many tasks.");
+            throw new SandroneException(Messages.ERROR_INDEX_OUT_OF_RANGE);
         }
     }
 
@@ -62,7 +67,7 @@ public class TaskList {
      *
      * @param taskIndex The 0-based index of the task to be removed.
      */
-    public void deleteTask(int taskIndex) {
+    public void deleteTask(int taskIndex) throws SandroneException {
         checkValidTaskIndex(taskIndex);
         tasks.remove(taskIndex);
     }

@@ -47,7 +47,7 @@ public class PuloniaTest {
     }
 
     @Test
-    public void extractIndex_inputTwo_returnsIndexOne() {
+    public void extractIndex_inputTwo_returnsIndexOne() throws SandroneException {
         // Input "mark 2" should return index 1 (0-index used)
         assertEquals(1, Pulonia.extractIndex("mark 2"));
     }

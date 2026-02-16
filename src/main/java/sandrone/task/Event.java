@@ -18,12 +18,12 @@ public class Event extends Task {
     /**
      * Constructs an {@code Event} task with a description and a date range.
      *
-     * @param desc The description of the event.
+     * @param description The description of the event.
      * @param startDate The starting date of the event.
      * @param endDate The ending date of the event.
      */
-    public Event(String desc, LocalDate startDate, LocalDate endDate) {
-        super(desc);
+    public Event(String description, LocalDate startDate, LocalDate endDate) {
+        super(description);
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -57,7 +57,7 @@ public class Event extends Task {
         return getTaskTypeIcon() + " | "
                 + getStatusIcon() + " | "
                 + getRecurrenceIcon() + " | "
-                + this.desc + " | "
+                + this.description + " | "
                 + this.startDate + " | "
                 + this.endDate;
     }

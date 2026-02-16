@@ -10,7 +10,7 @@ import sandrone.taskgenerators.TaskGenerator;
  * This class is responsible for displaying messages, formatting output,
  * and presenting task information to the user in a stylized manner.
  *
- * @author Henry Tse
+ * @author HenryTse
  * @version 0.1
  */
 public class SandroneUi {
@@ -21,20 +21,10 @@ public class SandroneUi {
     private static final String pleasedResponse = "Very well.";
     private static final String unhappyResponse = "Utterly risible.";
 
-    public void printLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * Displays the initial greeting message to the user.
-     */
     public String getGreetings() {
         return greetings;
     }
 
-    /**
-     * Displays the farewell message when the user exits the application.
-     */
     public String getFarewell() {
         return farewell;
     }
@@ -59,24 +49,23 @@ public class SandroneUi {
     }
 
     /**
-     * Prints a formatted list of tasks to the console.
-     * Each task is displayed with its index, status icon, type, and description.
+     * Prints a formatted list of matching tasks
      *
-     * @param tasks The list of tasks to be displayed.
+     * @param tasks   The list of tasks to be displayed.
      */
-    public String getTasks(List<Task> tasks) {
-        return listToString(tasks, "Your list:", "Your list is currently empty!");
+    public String getMatchingTasks(List<Task> tasks) {
+        return listToString(tasks, "Here are the tasks that contain the keyword:", "No such task exists!");
     }
 
-    public String getRecurringTasks(List<TaskGenerator> taskGenerators) {
-        return listToString(taskGenerators, "Active Recurring Rules:", "No recurring tasks found!");
-    }
-
-    public String getDebugState(List<Task> tasks, List<TaskGenerator> generators) {
-        return "=== SYSTEM DEBUG SNAPSHOT ===\n"
-                + listToString(tasks, "[TASK INSTANCES]", "No tasks in memory.") + "\n"
-                + listToString(generators, "[GENERATOR RULES]", "No generators active.")
-                + "==============================";
+    /**
+     * Prints all active tasks and recurring tasks.
+     *
+     * @param tasks The list of active tasks to be displayed.
+     * @param generators The list of recurring tasks to be displayed.
+     */
+    public String getAll(List<Task> tasks, List<TaskGenerator> generators) {
+        return listToString(tasks, "[Your Active Tasks]", "No tasks in memory.") + "\n"
+                + listToString(generators, "[Recurring Tasks]", "No generators active.");
     }
 
     /**
