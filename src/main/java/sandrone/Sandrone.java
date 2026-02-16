@@ -36,14 +36,10 @@ public class Sandrone {
     /**
      * Processes user input and returns the chatbot's response.
      */
-    public String getResponse(String input) {
-        try {
-            Command c = Pulonia.parseCommand(input);
-            this.isExit = c.isExit();
-            return c.execute(this.appState, this.ui, this.storage);
-        } catch (SandroneException e) {
-            return e.getMessage();
-        }
+    public String getResponse(String input) throws SandroneException {
+        Command c = Pulonia.parseCommand(input);
+        this.isExit = c.isExit();
+        return c.execute(this.appState, this.ui, this.storage);
     }
 
     public String getGreetings() {
