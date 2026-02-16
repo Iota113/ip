@@ -26,7 +26,8 @@ public class Messages {
             + "9. drecur [index]\n"
             + "10. sync\n"
             + "11. bye";
-    public static final String ERROR_INVALID_DATE = "Use the format yyyy-MM-dd (e.g., 2026-01-28) for dates.";
+    public static final String ERROR_INVALID_DATE_FORMAT = "Use the format yyyy-MM-dd (e.g., 2026-01-28) for dates.";
+    public static final String ERROR_DATE_DOES_NOT_EXIST = "That date doesn't exist. Please check your calendar!";
     public static final String ERROR_EMPTY_INDEX = "Please provide an index number.";
     public static final String ERROR_INVALID_DEADLINE = "Incomplete command! A by needs a ' /by ' component.";
     public static final String ERROR_EMPTY_BY = "The by cannot be empty.";

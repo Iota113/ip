@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import sandrone.command.AddCommand;
 import sandrone.command.AddGeneratorCommand;
@@ -35,7 +36,10 @@ import sandrone.taskgenerators.TodoGenerator;
  * @version 0.1
  */
 public class Pulonia {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    // Note: We use 'uuuu' instead of 'yyyy' because STRICT mode is
+    // very picky about eras (BC/AD) when using 'y'.
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("uuuu-MM-dd")
+            .withResolverStyle(ResolverStyle.STRICT);
     private static final String TODO_KEYWORD = "todo";
     private static final String DEADLINE_KEYWORD = "deadline";
     private static final String EVENT_KEYWORD = "event";
@@ -50,10 +54,14 @@ public class Pulonia {
      * @throws SandroneException If the input does not match the expected format.
      */
     public static LocalDate parseDate(String input) throws SandroneException {
+        if (!input.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            throw new SandroneException(Messages.ERROR_INVALID_DATE_FORMAT);
+        }
+
         try {
             return LocalDate.parse(input, FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new SandroneException(Messages.ERROR_INVALID_DATE);
+            throw new SandroneException(Messages.ERROR_DATE_DOES_NOT_EXIST);
         }
     }
 

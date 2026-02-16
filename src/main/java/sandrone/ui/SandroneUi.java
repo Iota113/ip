@@ -10,7 +10,7 @@ import sandrone.taskgenerators.TaskGenerator;
  * This class is responsible for displaying messages, formatting output,
  * and presenting task information to the user in a stylized manner.
  *
- * @author Henry Tse
+ * @author HenryTse
  * @version 0.1
  */
 public class SandroneUi {
