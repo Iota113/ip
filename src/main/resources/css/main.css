@@ -1,0 +1,51 @@
+.text-field {
+    -fx-background-color: #1A1A1D, #FDF5E6; /* Antique Lace */
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5;
+    -fx-padding: 8;
+    -fx-text-fill: black;
+}
+
+.text-field:focused {
+    -fx-background-color: #7B1113, #FDF5E6; /* Changes border to Crimson when typing */
+}
+
+.button {
+    -fx-font: bold 12px "Arial";
+    -fx-background-color: #5D4037; /* Dark Bronze/Brown */
+    -fx-text-fill: #E0E0E0; /* Light grey text for readability */
+}
+
+.button:hover {
+    -fx-background-color: gold;
+    -fx-font-size: 14px;
+}
+
+.button:pressed {
+    -fx-background-color:orangeW;
+    -fx-font-size: 20px;
+}
+
+.scroll-pane,
+.scroll-pane > .viewport, /* Added the '>' and '.' */
+#dialogContainer {       /* Ensure your VBox ID is included */
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-bar {
+    -fx-font-size: 10px;  /* Change width of scroll bar. */
+    -fx-background-color: main-color;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #ff9cb4;
+    -fx-background-radius: 1em;
+}
+
+/* Hides the increment and decrement buttons. */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}

@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import sandrone.Sandrone;
+import sandrone.exception.SandroneException;
 
 /**
  * Controller for the main GUI.
@@ -42,7 +43,7 @@ public class MainWindow extends AnchorPane {
     private void showWelcomeMessage() {
         String greeting = sandrone.getGreetings();
         dialogContainer.getChildren().add(
-                DialogBox.getSandroneDialog(greeting, sandroneImage)
+                DialogBox.getSandroneDialog(greeting, sandroneImage, false)
         );
     }
 
@@ -53,10 +54,19 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = sandrone.getResponse(input);
+        String response;
+        boolean isError = false;
+
+        try {
+            response = sandrone.getResponse(input);
+        } catch (SandroneException e) {
+            response = e.getMessage();
+            isError = true; // Flag this as an error
+        }
+
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getSandroneDialog(response, sandroneImage)
+                DialogBox.getSandroneDialog(response, sandroneImage, isError)
         );
         userInput.clear();
 
