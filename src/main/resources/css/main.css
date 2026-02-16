@@ -1,3 +1,18 @@
+.main-background {
+    /* Path is relative to the CSS file */
+    -fx-background-image: url("../images/nasha-town.png");
+
+    /* Reveal more of the image as window grows without stretching pixels */
+    -fx-background-repeat: no-repeat;
+
+    /* 'cover' scales the image to fill the area, cropping edges if needed */
+    /* Use '100% 100%' if you want it to stretch (distort) to fit exactly */
+    -fx-background-size: cover;
+
+    /* Keeps the center of Nasha Town in view when resizing */
+    -fx-background-position: center center;
+}
+
 .text-field {
     -fx-background-color: #1A1A1D, #FDF5E6; /* Antique Lace */
     -fx-background-insets: 0, 2;

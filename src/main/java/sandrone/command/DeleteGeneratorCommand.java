@@ -25,11 +25,8 @@ public class DeleteGeneratorCommand extends Command {
     @Override
     public String execute(AppState appState, SandroneUi ui, Storage storage) {
         TaskGeneratorList taskGeneratorList = appState.getGeneratorList();
-
         taskGeneratorList.deleteTaskGenerator(taskGeneratorIndex);
-
         storage.saveGenerators(taskGeneratorList);
-
         return ui.getPleasedResponse();
     }
 }
