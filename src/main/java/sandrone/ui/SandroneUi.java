@@ -38,7 +38,7 @@ public class SandroneUi {
         }
 
         String listBody = IntStream.range(0, items.size())
-                .mapToObj(i -> String.format("%d. %s", i + 1, items.get(i)))
+                .mapToObj(i -> String.format("(%d) %s", i + 1, items.get(i)))
                 .collect(Collectors.joining("\n"));
 
         return header + "\n" + listBody;
@@ -63,8 +63,8 @@ public class SandroneUi {
         // Two newlines create a clear "invisible" gap between sections
         StringJoiner sj = new StringJoiner("\n\n");
 
-        sj.add(listToString(tasks, "[Your Active Tasks]", "No tasks."));
-        sj.add(listToString(generators, "[Your Recurring Tasks]", "No recurring tasks~"));
+        sj.add(listToString(tasks, "Your Active Tasks:", "No tasks."));
+        sj.add(listToString(generators, "Your Recurring Tasks:", "No recurring tasks~"));
 
         return sj.toString();
     }

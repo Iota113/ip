@@ -28,11 +28,11 @@ public abstract class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : "–"); // mark done task with X
+        return (isDone ? "X" : "·"); // mark done task with X
     }
 
     public String getRecurrenceIcon() {
-        return (isRecurring ? "R" : "–");
+        return (isRecurring ? "R" : "·");
     }
 
     public String getTaskDescription() {
@@ -40,7 +40,7 @@ public abstract class Task {
     }
 
     public String getTaskTypeIcon() {
-        return "–";
+        return "·";
     }
 
     public void mark() {
