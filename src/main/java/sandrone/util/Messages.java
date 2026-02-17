@@ -55,7 +55,8 @@ public class Messages {
 
     public static final String ERROR_EMPTY_DESCRIPTION = "A task without a description? What do you expect me to do with it? "
             + "Give a proper description.";
-    public static final String ERROR_INVALID_DEADLINE = "Your deadline command is incomplete. It requires a ' /by ' tag.";
+    public static final String ERROR_INVALID_DEADLINE_FORMAT = "Your deadline command is incomplete. It requires a ' /by ' tag.";
+    public static final String ERROR_EMPTY_DESCRIPTION_AND_DUEDATE = "You provided me with neither a description nor the due date?";
     public static final String ERROR_EMPTY_DUEDATE = "You provided a deadline without a duedate.";
     public static final String ERROR_INVALID_EVENT_FORMAT = "Your event syntax is a mess. "
             + "It requires both ' /from ' and ' /to '. Try to keep up.";

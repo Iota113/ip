@@ -33,8 +33,8 @@ public class EventParser extends Parser {
     }
 
     private static void validateEventFormat(String userInput) throws SandroneException {
-        boolean hasNoFrom = !userInput.contains(" /from ");
-        boolean hasNoTo = !userInput.contains(" /to");
+        boolean hasNoFrom = !userInput.contains("/from");
+        boolean hasNoTo = !userInput.contains("/to");
 
         if (hasNoFrom || hasNoTo) {
             throw new SandroneException(Messages.ERROR_INVALID_EVENT_FORMAT);
@@ -53,7 +53,7 @@ public class EventParser extends Parser {
 
         String desc = descTime[0].trim();
         if (desc.isEmpty()) {
-            throw new SandroneException("The description of a task cannot be empty!");
+            throw new SandroneException(Messages.ERROR_EMPTY_DESCRIPTION);
         }
 
         String[] timeParts = descTime[1].split("/to");
