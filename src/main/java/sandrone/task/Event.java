@@ -2,7 +2,7 @@ package sandrone.task;
 
 import java.time.LocalDate;
 
-import sandrone.util.Pulonia;
+import sandrone.parser.Pulonia;
 
 /**
  * Represents a task that occurs within a specific time range.
