@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,11 +202,11 @@ public class Storage {
             task = new Todo(description);
             break;
         case "D":
-            task = new Deadline(description, DateParser.parse(dataComponents[4]));
+            task = new Deadline(description, DateParser.parseDate(dataComponents[4]));
             break;
         case "E":
-            task = new Event(description, DateParser.parse(dataComponents[4]),
-                    DateParser.parse(dataComponents[5]));
+            task = new Event(description, DateParser.parseDateTime(dataComponents[4]),
+                    DateParser.parseDateTime(dataComponents[5]));
             break;
         default: return null;
         }
@@ -228,13 +229,13 @@ public class Storage {
             Todo newTodo = new Todo(taskDescription);
             return new TodoGenerator(newTodo, freq, nextInitDate);
         case "D":
-            LocalDate nextDueDate = DateParser.parse(components[4].trim());
+            LocalDate nextDueDate = DateParser.parseDate(components[4].trim());
             Deadline newDeadline = new Deadline(taskDescription, nextDueDate);
             return new DeadlineGenerator(newDeadline, freq, nextInitDate);
         case "E":
-            LocalDate nextStartDate = DateParser.parse(components[4].trim());
-            LocalDate nextEndDate = DateParser.parse(components[5].trim());
-            Event newEvent = new Event(taskDescription, nextStartDate, nextEndDate);
+            LocalDateTime nextStartDateTime = DateParser.parseDateTime(components[4].trim());
+            LocalDateTime nextEndDateTime = DateParser.parseDateTime(components[5].trim());
+            Event newEvent = new Event(taskDescription, nextStartDateTime, nextEndDateTime);
             return new EventGenerator(newEvent, freq, nextInitDate);
         default: return null;
         }

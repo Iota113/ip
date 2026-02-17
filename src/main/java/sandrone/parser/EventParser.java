@@ -1,6 +1,6 @@
 package sandrone.parser;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import sandrone.command.AddCommand;
 import sandrone.exception.SandroneException;
@@ -84,8 +84,8 @@ public class EventParser extends Parser {
     public static Event createNewEvent(String eventContents) throws SandroneException {
         String[] components = extractEventComponents(eventContents);
         String desc = components[0].trim();
-        LocalDate startDate = DateParser.parse(components[1]);
-        LocalDate endDate = DateParser.parse(components[2]);
+        LocalDateTime startDate = DateParser.parseDateTime(components[1]);
+        LocalDateTime endDate = DateParser.parseDateTime(components[2]);
         if (startDate.isAfter(endDate)) {
             throw new SandroneException(Messages.ERROR_EVENT_DATE_ORDER);
         }

@@ -12,15 +12,15 @@ import sandrone.exception.SandroneException;
 public class DateParserTest {
 
     @Test
-    public void parseDate_validDate_returnsCorrectLocalDate() throws SandroneException {
+    public void parseDateDate_validDate_returnsCorrectLocalDate() throws SandroneException {
         LocalDate expected = LocalDate.of(2026, 1, 28);
-        assertEquals(expected, DateParser.parse("2026-01-28"));
+        assertEquals(expected, DateParser.parseDate("2026-01-28"));
     }
 
     @Test
-    public void parseDate_invalidFormat_throwsSandroneException() {
+    public void parseDateDate_invalidFormat_throwsSandroneException() {
         assertThrows(SandroneException.class, () -> {
-            DateParser.parse("28-01-2026");
+            DateParser.parseDate("28-01-2026");
         });
     }
 }

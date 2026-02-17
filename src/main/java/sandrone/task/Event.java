@@ -1,8 +1,9 @@
 package sandrone.task;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import sandrone.parser.Pulonia;
+import sandrone.parser.DateParser;
+import sandrone.util.DateUtils;
 
 /**
  * Represents a task that occurs within a specific time range.
@@ -12,20 +13,20 @@ import sandrone.parser.Pulonia;
  * @version 0.1
  */
 public class Event extends Task {
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
 
     /**
      * Constructs an {@code Event} task with a description and a date range.
      *
-     * @param description The description of the event.
-     * @param startDate The starting date of the event.
-     * @param endDate The ending date of the event.
+     * @param description   The description of the event.
+     * @param startDateTime The starting date and time of the event.
+     * @param endDateTime   The ending date and time of the event.
      */
-    public Event(String description, LocalDate startDate, LocalDate endDate) {
+    public Event(String description, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         super(description);
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
     }
 
     @Override
@@ -33,18 +34,18 @@ public class Event extends Task {
         return "E";
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
     }
 
     public String getDurationString() {
-        String formattedFrom = Pulonia.formatDate(this.startDate);
-        String formattedTo = Pulonia.formatDate(this.endDate);
-        return " (from: " + formattedFrom + " to: " + formattedTo + ")";
+        String formattedStart = DateParser.formatDisplayDateTime(this.startDateTime);
+        String formattedEnd = DateParser.formatDisplayDateTime(this.endDateTime);
+        return " (from: " + formattedStart + " to: " + formattedEnd + ")";
     }
 
     @Override
@@ -54,11 +55,14 @@ public class Event extends Task {
 
     @Override
     public String toFileFormat() {
+        String startStr = this.startDateTime.format(DateUtils.DATE_TIME_FORMATTER);
+        String endStr = this.endDateTime.format(DateUtils.DATE_TIME_FORMATTER);
+
         return getTaskTypeIcon() + " | "
                 + getStatusIcon() + " | "
                 + getRecurrenceIcon() + " | "
                 + this.description + " | "
-                + this.startDate + " | "
-                + this.endDate;
+                + startStr + " | "
+                + endStr;
     }
 }

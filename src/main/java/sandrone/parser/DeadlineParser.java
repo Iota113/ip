@@ -50,7 +50,7 @@ public class DeadlineParser extends Parser {
     public static Deadline createNewDeadline(String deadlineContents) throws SandroneException {
         String[] components = extractDeadlineComponents(deadlineContents);
         String desc = components[0];
-        LocalDate dueDate = DateParser.parse(components[1].trim());
+        LocalDate dueDate = DateParser.parseDate(components[1].trim());
         return new Deadline(desc, dueDate);
     }
 

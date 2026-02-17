@@ -1,9 +1,5 @@
 package sandrone.parser;
 
-import static sandrone.util.DateUtils.FORMATTER;
-
-import java.time.LocalDate;
-
 import sandrone.command.Command;
 import sandrone.command.DeleteCommand;
 import sandrone.command.DeleteGeneratorCommand;
@@ -26,16 +22,6 @@ import sandrone.util.Messages;
  * @version 0.1
  */
 public class Pulonia {
-    /**
-     * Converts a {@code LocalDate} object into its standard string representation.
-     *
-     * @param date The date to format.
-     * @return A string formatted as yyyy-MM-dd.
-     */
-    public static String formatDate(LocalDate date) {
-        return date.format(FORMATTER);
-    }
-
     /**
      * Core parsing method that determines the command type and returns the appropriate
      * {@code Command} object.

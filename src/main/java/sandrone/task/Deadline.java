@@ -2,7 +2,8 @@ package sandrone.task;
 
 import java.time.LocalDate;
 
-import sandrone.parser.Pulonia;
+import sandrone.parser.DateParser;
+import sandrone.util.DateUtils;
 
 /**
  * Represents a task with a specific deadline.
@@ -36,8 +37,8 @@ public class Deadline extends Task {
     }
 
     public String getDueDateString() {
-        String formattedBy = Pulonia.formatDate(this.dueDate);
-        return " (by: " + formattedBy + ")";
+        String formattedDueDate = DateParser.formatDisplayDate(this.dueDate);
+        return " (by: " + formattedDueDate + ")";
     }
 
     @Override
@@ -47,10 +48,12 @@ public class Deadline extends Task {
 
     @Override
     public String toFileFormat() {
+        String dueStr = this.dueDate.format(DateUtils.DATE_FORMATTER);
+
         return getTaskTypeIcon() + " | "
                 + getStatusIcon() + " | "
                 + getRecurrenceIcon() + " | "
                 + this.description + " | "
-                + this.dueDate;
+                + dueStr;
     }
 }
