@@ -1,6 +1,9 @@
 package sandrone.ui;
 
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import sandrone.task.Task;
 import sandrone.taskgenerators.TaskGenerator;
@@ -16,9 +19,8 @@ import sandrone.util.Messages;
  */
 public class SandroneUi {
     public String getGreetings() {
-        return Messages.greetings;
+        return Messages.GREETINGS;
     }
-
     public String getFarewell() {
         return Messages.FAREWELL;
     }
@@ -35,11 +37,11 @@ public class SandroneUi {
             return emptyMsg;
         }
 
-        StringBuilder sb = new StringBuilder(header).append("\n");
-        for (int i = 0; i < items.size(); i++) {
-            sb.append(i + 1).append(". ").append(items.get(i)).append("\n");
-        }
-        return sb.toString();
+        String listBody = IntStream.range(0, items.size())
+                .mapToObj(i -> String.format("%d. %s", i + 1, items.get(i)))
+                .collect(Collectors.joining("\n"));
+
+        return header + "\n" + listBody;
     }
 
     /**
@@ -58,46 +60,52 @@ public class SandroneUi {
      * @param generators The list of recurring tasks to be displayed.
      */
     public String getAll(List<Task> tasks, List<TaskGenerator> generators) {
-        return listToString(tasks, "[Your Active Tasks]", "No tasks in memory.") + "\n"
-                + listToString(generators, "[Recurring Tasks]", "No generators active.");
+        // Two newlines create a clear "invisible" gap between sections
+        StringJoiner sj = new StringJoiner("\n\n");
+
+        sj.add(listToString(tasks, "[Your Active Tasks]", "No tasks."));
+        sj.add(listToString(generators, "[Your Recurring Tasks]", "No recurring tasks~"));
+
+        return sj.toString();
+    }
+
+    /** 1. Base level: Just the action and the item (e.g., for Marking/Unmarking) */
+    private String formatAction(String message, Object item) {
+        return message + item + "\n";
+    }
+
+    /** 2. Middle level: Action, item, and a general count (e.g., for Tasks) */
+    private String formatAction(String message, Object item, int count) {
+        return formatAction(message, item) + String.format("You have %d task(s) now.", count);
+    }
+
+    /** 3. Specific level: Action, item, count, and a specific qualifier (e.g., for Recurring) */
+    private String formatAction(String message, Object item, int count, String qualifier) {
+        return formatAction(message, item) + String.format("You have %d %s task(s) now.", count, qualifier);
     }
 
     /**
-     * Displays a confirmation message when a task is successfully added.
-     * The message includes the current total task count and a stylized
-     * representation of the newly added task.
+     * Displays a confirmation message when a t is successfully added.
+     * The message includes the current total t count and a stylized
+     * representation of the newly added t.
      *
-     * @param task The task that has been added to the list.
-     * @param totalCount The new total number of tasks in the list.
+     * @param t The t that has been added to the list.
+     * @param count The new total number of tasks in the list.
      */
-    public String showTaskAdded(Task task, int totalCount) {
-        StringBuilder sb = new StringBuilder(Messages.MESSAGE_TASK_ADDED);
-        sb.append(task);
-        sb.append("\n");
-        sb.append("You have " + totalCount + " task(s) now.");
-        return sb.toString();
+    public String showTaskAdded(Task t, int count) {
+        return formatAction(Messages.MESSAGE_TASK_ADDED, t, count);
     }
 
-    public String showTaskDeleted(Task task, int totalCount) {
-        StringBuilder sb = new StringBuilder(Messages.MESSAGE_TASK_DELETED);
-        sb.append(task);
-        sb.append("\n");
-        sb.append("You have " + totalCount + " task(s) now. ");
-        return sb.toString();
+    public String showTaskDeleted(Task t, int count) {
+        return formatAction(Messages.MESSAGE_TASK_DELETED, t, count);
     }
 
-    public String showTaskMarked(Task task) {
-        StringBuilder sb = new StringBuilder(Messages.MESSAGE_TASK_MARKED);
-        sb.append(task);
-        sb.append("\n");
-        return sb.toString();
+    public String showTaskMarked(Task t) {
+        return formatAction(Messages.MESSAGE_TASK_MARKED, t);
     }
 
-    public String showTaskUnmarked(Task task) {
-        StringBuilder sb = new StringBuilder(Messages.MESSAGE_TASK_UNMARKED);
-        sb.append(task);
-        sb.append("\n");
-        return sb.toString();
+    public String showTaskUnmarked(Task t) {
+        return formatAction(Messages.MESSAGE_TASK_UNMARKED, t);
     }
 
     /**
@@ -105,23 +113,15 @@ public class SandroneUi {
      * The message includes the current total task count and a stylized
      * representation of the newly added task.
      *
-     * @param taskGenerator The task gnerator that has been added to the list.
-     * @param totalCount The new total number of tasks in the list.
+     * @param tg The task gnerator that has been added to the list.
+     * @param count The new total number of tasks in the list.
      */
-    public String showTaskGeneratorAdded(TaskGenerator taskGenerator, int totalCount) {
-        StringBuilder sb = new StringBuilder(Messages.MESSAGE_RECURRING_TASK_ADDED);
-        sb.append(taskGenerator);
-        sb.append("\n");
-        sb.append("Very well. You have " + totalCount + " recurring task(s) now.");
-        return sb.toString();
+    public String showTaskGeneratorAdded(TaskGenerator tg, int count) {
+        return formatAction(Messages.MESSAGE_RECURRING_TASK_ADDED, tg, count, "recurring");
     }
 
-    public String showTaskGeneratorDeleted(TaskGenerator taskGenerator, int totalCount) {
-        StringBuilder sb = new StringBuilder(Messages.MESSAGE_RECURRING_TASK_DELETED);
-        sb.append(taskGenerator);
-        sb.append("\n");
-        sb.append("Deleted! You have " + totalCount + " recurring task(s) now.");
-        return sb.toString();
+    public String showTaskGeneratorDeleted(TaskGenerator tg, int count) {
+        return formatAction(Messages.MESSAGE_RECURRING_TASK_DELETED, tg, count, "recurring");
     }
 
 }

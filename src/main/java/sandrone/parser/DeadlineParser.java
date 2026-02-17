@@ -42,7 +42,7 @@ public class DeadlineParser extends Parser {
     private static String[] extractDeadlineComponents(String remainingCommand) throws SandroneException {
         String[] descTime = remainingCommand.split(" /by ");
         if (descTime.length < 2 || descTime[1].trim().isEmpty()) {
-            throw new SandroneException(Messages.ERROR_EMPTY_BY);
+            throw new SandroneException(Messages.ERROR_EMPTY_DUEDATE);
         }
 
         String desc = descTime[0].trim();

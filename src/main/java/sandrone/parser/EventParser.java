@@ -87,7 +87,7 @@ public class EventParser extends Parser {
         LocalDate startDate = DateParser.parse(components[1]);
         LocalDate endDate = DateParser.parse(components[2]);
         if (startDate.isAfter(endDate)) {
-            throw new SandroneException(Messages.ERROR_DATE_ORDER);
+            throw new SandroneException(Messages.ERROR_EVENT_DATE_ORDER);
         }
 
         return new Event(desc, startDate, endDate);
