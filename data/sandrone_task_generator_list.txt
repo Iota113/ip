@@ -1,3 +1,4 @@
 D | P1W | NextInitDate:2026-02-20 | CS2103T quiz | 2026-02-20
 T | P1W | NextInitDate:2026-02-20 | MA2202 Lecture
-E | P1W | NextInitDate:2026-02-17 | CS2103T meeting | 2026-02-17 2000 | 2026-02-17 2100
+E | P1W | NextInitDate:2026-02-24 | CS2103T meeting | 2026-02-24 2000 | 2026-02-24 2100
+E | P1W | NextInitDate:2026-02-24 | CS2103T meeting | 2026-02-24 2000 | 2026-02-24 2100
