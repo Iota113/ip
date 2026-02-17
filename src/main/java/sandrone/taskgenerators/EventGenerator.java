@@ -6,6 +6,7 @@ import java.time.Period;
 
 import sandrone.task.Event;
 import sandrone.task.Task;
+import sandrone.util.DateUtils;
 
 /**
  * Represents a generator for recurring {@code Event} tasks.
@@ -38,12 +39,15 @@ public class EventGenerator extends TaskGenerator {
 
     @Override
     public String toFileFormat() {
+        String nextStartStr = this.nextStartDateTime.format(DateUtils.DATE_TIME_FORMATTER);
+        String nextEndStr = this.nextEndDateTime.format(DateUtils.DATE_TIME_FORMATTER);
+
         return getTaskTypeIcon() + " | "
                 + "P1W" + " | "
                 + "NextInitDate:" + this.nextInitDate + " | "
                 + this.taskDescription + " | "
-                + this.nextStartDateTime + " | "
-                + this.nextEndDateTime;
+                + nextStartStr + " | "
+                + nextEndStr;
     }
 
     @Override

@@ -5,6 +5,7 @@
     -fx-background-insets: 0; /* Removing the 7px gap for consistency */
     -fx-border-insets: 0;
     -fx-font-family: "HYWenHei 85W";
+    -fx-font-size: 10;
 }
 
 /* todo, deadline, event */
