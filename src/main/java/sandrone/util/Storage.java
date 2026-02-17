@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sandrone.exception.SandroneException;
+import sandrone.parser.DateParser;
 import sandrone.task.Deadline;
 import sandrone.task.Event;
 import sandrone.task.Task;
@@ -200,11 +201,11 @@ public class Storage {
             task = new Todo(description);
             break;
         case "D":
-            task = new Deadline(description, Pulonia.parseDate(dataComponents[4]));
+            task = new Deadline(description, DateParser.parse(dataComponents[4]));
             break;
         case "E":
-            task = new Event(description, Pulonia.parseDate(dataComponents[4]),
-                    Pulonia.parseDate(dataComponents[5]));
+            task = new Event(description, DateParser.parse(dataComponents[4]),
+                    DateParser.parse(dataComponents[5]));
             break;
         default: return null;
         }
@@ -227,12 +228,12 @@ public class Storage {
             Todo newTodo = new Todo(taskDescription);
             return new TodoGenerator(newTodo, freq, nextInitDate);
         case "D":
-            LocalDate nextDueDate = Pulonia.parseDate(components[4].trim());
+            LocalDate nextDueDate = DateParser.parse(components[4].trim());
             Deadline newDeadline = new Deadline(taskDescription, nextDueDate);
             return new DeadlineGenerator(newDeadline, freq, nextInitDate);
         case "E":
-            LocalDate nextStartDate = Pulonia.parseDate(components[4].trim());
-            LocalDate nextEndDate = Pulonia.parseDate(components[5].trim());
+            LocalDate nextStartDate = DateParser.parse(components[4].trim());
+            LocalDate nextEndDate = DateParser.parse(components[5].trim());
             Event newEvent = new Event(taskDescription, nextStartDate, nextEndDate);
             return new EventGenerator(newEvent, freq, nextInitDate);
         default: return null;
