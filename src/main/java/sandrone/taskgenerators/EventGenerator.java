@@ -1,6 +1,7 @@
 package sandrone.taskgenerators;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 
 import sandrone.task.Event;
@@ -13,8 +14,8 @@ import sandrone.task.Task;
  * according to a specified frequency.
  */
 public class EventGenerator extends TaskGenerator {
-    private LocalDate nextStartDate;
-    private LocalDate nextEndDate;
+    private LocalDateTime nextStartDateTime;
+    private LocalDateTime nextEndDateTime;
 
     /**
      * Constructs an {@code EventGenerator} task with a description, a frequency,
@@ -26,8 +27,8 @@ public class EventGenerator extends TaskGenerator {
      */
     public EventGenerator(Event eventBlueprint, Period frequency, LocalDate nextInitDate) {
         super(eventBlueprint, frequency, nextInitDate);
-        this.nextStartDate = eventBlueprint.getStartDate();
-        this.nextEndDate = eventBlueprint.getEndDate();
+        this.nextStartDateTime = eventBlueprint.getStartDateTime();
+        this.nextEndDateTime = eventBlueprint.getEndDateTime();
     }
 
     @Override
@@ -41,13 +42,13 @@ public class EventGenerator extends TaskGenerator {
                 + "P1W" + " | "
                 + "NextInitDate:" + this.nextInitDate + " | "
                 + this.taskDescription + " | "
-                + this.nextStartDate + " | "
-                + this.nextEndDate;
+                + this.nextStartDateTime + " | "
+                + this.nextEndDateTime;
     }
 
     @Override
     public Task createInstance() {
-        Task newRecurringTask = new Event(taskDescription, nextStartDate, nextEndDate);
+        Task newRecurringTask = new Event(taskDescription, nextStartDateTime, nextEndDateTime);
         newRecurringTask.setRecurring(true);
         return newRecurringTask;
     }
@@ -55,7 +56,7 @@ public class EventGenerator extends TaskGenerator {
     @Override
     public void advance() {
         this.nextInitDate = this.nextInitDate.plus(this.frequency);
-        this.nextStartDate = this.nextStartDate.plus(this.frequency);
-        this.nextEndDate = this.nextEndDate.plus(this.frequency);
+        this.nextStartDateTime = this.nextStartDateTime.plus(this.frequency);
+        this.nextEndDateTime = this.nextEndDateTime.plus(this.frequency);
     }
 }

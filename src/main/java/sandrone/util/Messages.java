@@ -50,9 +50,11 @@ public class Messages {
 
     // Error Messages
     public static final String ERROR_INVALID_DATE_FORMAT =
-            "Incorrect date format. Use yyyy-MM-dd. I have no time for your sloppy notation";
+            "Incorrect date format. Use yyyy-MM-dd for deadlines. I have no time for your sloppy notation";
     public static final String ERROR_DATE_DOES_NOT_EXIST =
             "That date doesn't exist. Check your calendar.";
+    public static final String ERROR_INVALID_DATE_TIME_FORMAT =
+            "Use the format yyyy-MM-dd HHmm (e.g., 2026-02-17 1830) for events!";
 
     public static final String ERROR_NONINTEGER_INDEX =
             "I required a number, not whatever gibberish you just provided.";
