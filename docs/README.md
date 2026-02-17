@@ -12,15 +12,15 @@ Inspired by the character Sandrone from Genshin Impact, the chatbot has a mean b
 **Getting Started**
 
 Upon bootup, Sandrone will send a greeting message. The user may then interact with the chatbot via some specific commands.
-<p align="center">
-<img width="400" alt="Sandrone Greeting" src="https://github.com/user-attachments/assets/7bfc2be1-366a-4217-815e-c5d1f79cd916" />
+<p>
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/203a2c14-31b7-444d-abad-e268f5c3e468" />
 </p>
 
 **Command Validation**
 
 Texts that do not fall under the list of commands will be rejected.
-<p align="center">
-<img width="400" alt="Invalid Command Error" src="https://github.com/user-attachments/assets/fff157e7-32b7-48d4-9caf-4ea6049a9016" />
+<p>
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/71951252-1062-46e7-b8fa-02e55894044d" />
 </p>
 
 ## Quick Start
@@ -78,6 +78,9 @@ Shows a list of all available commands and their usage formats.
 ### bye
 Sandrone will send a farewell message before closing the application in a promptly.
 * **Format:** `bye`
+
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/d66cfd84-e1f6-429d-8998-073677c9c975" />
+
 
 <a name="list"></a>
 ### list
@@ -181,11 +184,11 @@ Refer to the table below to fix common issues:
 
 | Issue | Typical Error Message | How to Fix                                                     |
 | :--- | :--- |:---------------------------------------------------------------|
-| **Empty Description** | "A task without a description? Give a proper description." | Ensure text follows the command (e.g., `todo laundry`).        |
-| **Missing Tag** | "Your command is incomplete. It requires a '/by' or '/from' tag." | Include the mandatory prefix for deadlines and events.         |
-| **Invalid Index** | "Index must be a positive integer... too large." | Use a number corresponding to an existing item in your `list`. |
-| **Wrong Date Format** | "I don't understand this date..." | Use the **yyyy-mm-dd** format (and **HHmm** for events).       |
-| **Empty Date/Time** | "You provided me with neither a description nor the due date?" | Ensure a value follows your `/by`, `/from`, or `/to` tags.     |
+| **Empty Description** | "A task without a description? What do you expect me to do with it?" | Ensure text follows the command (e.g., `todo laundry`).        |
+| **Missing Tag** | "Your deadline command is incomplete. It requires a ' /by ' tag." | Include the mandatory prefix for deadlines and events.         |
+| **Invalid Index** | "Look at your list. Do you see that index? No. Because it isn't there." | Use a number corresponding to an existing item in your `list`. |
+| **Wrong Date Format** | "Incorrect date format. Use yyyy-MM-dd for deadlines. I have no time for your sloppy notation" | Use the **yyyy-mm-dd** format (and **HHmm** for events).       |
+| **Empty Date/Time** | "Hello? You are missing both the beginning and the end of your event." | Ensure a value follows your `/by`, `/from`, or `/to` tags.     |
 
 <a name="recurring_tasks"></a>
 ## Recurring Tasks
