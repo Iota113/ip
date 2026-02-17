@@ -23,6 +23,28 @@ Texts that do not fall under the list of commands will be rejected.
 <img width="400" alt="Invalid Command Error" src="https://github.com/user-attachments/assets/fff157e7-32b7-48d4-9caf-4ea6049a9016" />
 </p>
 
+## Quick Start
+If you're already familiar with CLI tools, here is a cheat sheet of the most common commands to get you started:
+
+```
+# Add tasks
+todo CS2109S Lecture
+deadline submit MA2202 Homework 2 /by 2026-02-20
+event CS2103T meeting /from 2026-02-18 1400 /to 2026-02-18 1600
+
+# Manage tasks
+list
+mark 1
+delete 2
+find CS
+
+# Automation
+recur deadline CS2103T Quiz /by 2026-02-20
+sync
+
+# Exit
+bye
+```
 
 ## Detailed Guide
 * Features
@@ -39,7 +61,8 @@ Texts that do not fall under the list of commands will be rejected.
   * [`recur`](#recur) -- to be combined with todo / deadline / event to add a recurring task
   * [`drecur`](#drecur) -- deletes a recurring task
   * [`sync`](#sync) -- adds recurring tasks to active task list.
-* [Saving and loading data](#storage)
+* [Saving and loading data](#saveload)
+* [Troubleshooting & Error Messages](#troubleshooting)
 * [Recurring Tasks](#recurring_tasks)
 
 ---
@@ -53,7 +76,7 @@ Shows a list of all available commands and their usage formats.
 
 <a name="bye"></a>
 ### bye
-Sandrone will send a farewell message before closeing the application in a promptly.
+Sandrone will send a farewell message before closing the application in a promptly.
 * **Format:** `bye`
 
 <a name="list"></a>
@@ -75,15 +98,19 @@ Adds a task that needs to be done by a specific date.
 
 <a name="event"></a>
 ### event
-Adds a task that occurs between two dates.
-* **Format:** `event <description> /from <yyyy-MM-dd> /to <yyyy-MM-dd>`
-* **Example:** `CS2103T project meeting /from 2026-02-18 /to 2026-02-18`
+Adds a task that occurs within a specific time frame.
+* **Format:** `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
+* **Example:** `CS2103T project meeting /from 2026-02-18 2000 /to 2026-02-18 2100`
 
 <a name="delete"></a>
 ### delete
-Removes a task from the list using its index number.
+Removes a task from the list using its 1-based index number.
 * **Format:** `delete <index>`
 * **Example:** `delete 3`
+
+#### Usage Notes:
+* Index Range: The index must be a positive integer within the range of the current list (e.g., if you have 5 tasks, delete 6 will fail). 
+* Syncing: Deleting a task instance does not delete the recurring generator (use `drecur` for that).
 
 <a name="mark"></a>
 ### mark
@@ -120,22 +147,62 @@ Stops a task from recurring by deleting the recurring task.
 calls on task generators to create an instance of the task. Read more on how this works under the [**Recurring Tasks**](#recurring_tasks) section.
 * **Format:** `sync`
 
-<a name="storage"></a>
+<a name="saveload"></a>
 ## Saving and Loading Data
-Data is saved automatically every time a task or recurring task is added, deleted, marked or unmarked.
+You don't need to manually save your progress. 
+Sandrone automatically saves your state every time you add, delete, mark, unmark a task or used the sync command.
 
-Tasks and Recurring Tasks are stored in text files: _sandrone_tesk_list.txt_ and _sandrone_task_generator_list.txt_ respectively. 
+### Storage Location
+When you run the application, Sandrone creates a `/data` folder in the same directory as your `.jar` file. Your data is split into two specialized text files:
 
-Both files are kept in a _data_ folder that is created in the same folder as the .jar file.
+* **`sandrone_task_list.txt`**: Stores your active one-time tasks.
+* **`sandrone_task_generator_list.txt`**: Stores your recurring task blueprints.
 
-The two text files are loaded from the folder upon initialization of the app.
+### File Structure
+```text
+.
+├── sandrone.jar
+└── data/
+    ├── sandrone_task_list.txt
+    └── sandrone_task_generator_list.txt
+ ``` 
+
+### Automatic Loading
+Upon startup, Sandrone automatically scans the /data folder. If existing files are found, your previous tasks and recurring generators are restored instantly. If no files exist, Sandrone starts with a clean slate.
+
+>[!WARNING]
+Manual Editing: While these are text files, manual editing is discouraged. If the formatting is corrupted, Sandrone may be unable to load your tasks correctly!
+
+<a name="troubleshooting"></a>
+## Troubleshooting & Error Messages
+If you provide an invalid input, Sandrone will let you know (usually with a bit of attitude).
+
+Refer to the table below to fix common issues:
+
+| Issue | Typical Error Message | How to Fix                                                     |
+| :--- | :--- |:---------------------------------------------------------------|
+| **Empty Description** | "A task without a description? Give a proper description." | Ensure text follows the command (e.g., `todo laundry`).        |
+| **Missing Tag** | "Your command is incomplete. It requires a '/by' or '/from' tag." | Include the mandatory prefix for deadlines and events.         |
+| **Invalid Index** | "Index must be a positive integer... too large." | Use a number corresponding to an existing item in your `list`. |
+| **Wrong Date Format** | "I don't understand this date..." | Use the **yyyy-mm-dd** format (and **HHmm** for events).       |
+| **Empty Date/Time** | "You provided me with neither a description nor the due date?" | Ensure a value follows your `/by`, `/from`, or `/to` tags.     |
 
 <a name="recurring_tasks"></a>
 ## Recurring Tasks
-Recurring tasks are implemented using a corresponding generator for each type of task. These generators store a LocalDate called nextInitDate that indicates
-the next date a task is to be added to the list of tasks.
 
-Every Recurring Task (generator) stores a blueprint of the task which it uses to generate instances of it as a recurring task.
+Recurring tasks allow you to automate your schedule without cluttering your active list. 
+Instead of adding a single task, Sandrone saves a **Generator** -- a blueprint that knows when the next instance of that task is due.
 
-There are plans for automating this process in the future, but it is done manually now by the user -- The generator creates an instance of this task with the `sync` command, which generates an instance of the task for all tasks with their next initialization date not set to some date after today, and advances the nextInitDate.
+### How it Works
+* **The Blueprint:** Each recurring task stores its description and frequency (currently weekly).
+* **The `nextInitDate`:** This is the internal "checkpoint" date. Sandrone uses this to track when the next instance should be added to your active list.
+* **Manual Control:** To keep your list tidy, Sandrone only adds these tasks when you tell her to.
 
+> [!IMPORTANT]
+> **Note on Syncing:** Sandrone won't automatically spam your list. You must manually use the `sync` command to generate the next batch of tasks.
+
+### The `sync` Workflow
+When you run `sync`, Sandrone checks all active Generators:
+1. If the `nextInitDate` is today or in the past, an instance of that task is created in your main list.
+2. The `nextInitDate` is then automatically advanced by one week.
+3. If the date is still in the future, nothing happens—keeping your list clean and relevant.
