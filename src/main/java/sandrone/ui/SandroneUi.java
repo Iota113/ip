@@ -4,6 +4,7 @@ import java.util.List;
 
 import sandrone.task.Task;
 import sandrone.taskgenerators.TaskGenerator;
+import sandrone.util.Messages;
 
 /**
  * Handles the user interface and interactions for the Sandrone chatbot.
@@ -14,19 +15,12 @@ import sandrone.taskgenerators.TaskGenerator;
  * @version 0.1
  */
 public class SandroneUi {
-    private static final String greetings =
-            "Look very closely, for standing before you is none other than Marionette.\n"
-                    + "Seventh of the Fatui Harbingers.";
-    private static final String farewell = "Ad astra abyssosque! Welcome to Nod-Krai, dominion of the Fatui.";
-    private static final String pleasedResponse = "Very well.";
-    private static final String unhappyResponse = "Utterly risible.";
-
     public String getGreetings() {
-        return greetings;
+        return Messages.greetings;
     }
 
     public String getFarewell() {
-        return farewell;
+        return Messages.FAREWELL;
     }
 
     /**
@@ -77,8 +71,32 @@ public class SandroneUi {
      * @param totalCount The new total number of tasks in the list.
      */
     public String showTaskAdded(Task task, int totalCount) {
-        StringBuilder sb = new StringBuilder("Very well. You have " + totalCount + " task(s) now.");
+        StringBuilder sb = new StringBuilder(Messages.MESSAGE_TASK_ADDED);
         sb.append(task);
+        sb.append("\n");
+        sb.append("You have " + totalCount + " task(s) now.");
+        return sb.toString();
+    }
+
+    public String showTaskDeleted(Task task, int totalCount) {
+        StringBuilder sb = new StringBuilder(Messages.MESSAGE_TASK_DELETED);
+        sb.append(task);
+        sb.append("\n");
+        sb.append("You have " + totalCount + " task(s) now. ");
+        return sb.toString();
+    }
+
+    public String showTaskMarked(Task task) {
+        StringBuilder sb = new StringBuilder(Messages.MESSAGE_TASK_MARKED);
+        sb.append(task);
+        sb.append("\n");
+        return sb.toString();
+    }
+
+    public String showTaskUnmarked(Task task) {
+        StringBuilder sb = new StringBuilder(Messages.MESSAGE_TASK_UNMARKED);
+        sb.append(task);
+        sb.append("\n");
         return sb.toString();
     }
 
@@ -91,17 +109,19 @@ public class SandroneUi {
      * @param totalCount The new total number of tasks in the list.
      */
     public String showTaskGeneratorAdded(TaskGenerator taskGenerator, int totalCount) {
-        StringBuilder sb = new StringBuilder("Very well. You have " + totalCount + " recurring task(s) now.");
+        StringBuilder sb = new StringBuilder(Messages.MESSAGE_RECURRING_TASK_ADDED);
         sb.append(taskGenerator);
+        sb.append("\n");
+        sb.append("Very well. You have " + totalCount + " recurring task(s) now.");
         return sb.toString();
     }
 
-    public String getPleasedResponse() {
-        return pleasedResponse;
-    }
-
-    public String getUnhappyResponse() {
-        return unhappyResponse;
+    public String showTaskGeneratorDeleted(TaskGenerator taskGenerator, int totalCount) {
+        StringBuilder sb = new StringBuilder(Messages.MESSAGE_RECURRING_TASK_DELETED);
+        sb.append(taskGenerator);
+        sb.append("\n");
+        sb.append("Deleted! You have " + totalCount + " recurring task(s) now.");
+        return sb.toString();
     }
 
 }

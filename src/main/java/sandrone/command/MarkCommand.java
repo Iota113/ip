@@ -2,6 +2,7 @@ package sandrone.command;
 
 import sandrone.AppState;
 import sandrone.exception.SandroneException;
+import sandrone.task.Task;
 import sandrone.task.TaskList;
 import sandrone.ui.SandroneUi;
 import sandrone.util.Storage;
@@ -33,6 +34,7 @@ public class MarkCommand extends Command {
         boolean isMarked = taskList.getTask(taskIndex).isMarked();
         assert isMarked : "Task List did not mark the task properly~";
         storage.saveTasks(taskList);
-        return ui.getPleasedResponse();
+        Task task = taskList.getTask(taskIndex);
+        return ui.showTaskMarked(task);
     }
 }

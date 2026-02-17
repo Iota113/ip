@@ -12,6 +12,11 @@ package sandrone.util;
  * @version 0.1
  */
 public class Messages {
+    public static String greetings =
+            "Look very closely, for standing before you is none other than Marionette.\n"
+                    + "Seventh of the Fatui Harbingers.";
+    public static final String FAREWELL = "Ad astra abyssosque! Welcome to Nod-Krai, dominion of the Fatui.";
+
     public static final String MESSAGE_VALID_COMMANDS = "Here are the valid commands:\n"
             + "1. todo <description> \n"
             + "2. deadline <description> /by <date>\n"
@@ -24,6 +29,14 @@ public class Messages {
             + "9. drecur <index>\n"
             + "10. sync\n"
             + "11. bye";
+
+    public static final String MESSAGE_TASK_ADDED = "Very well. I have added this task:\n";
+    public static final String MESSAGE_TASK_DELETED = "Very well. I have removed this task:\n";
+    public static final String MESSAGE_TASK_MARKED = "Very well. I have marked this task:\n";
+    public static final String MESSAGE_TASK_UNMARKED = "Very well. I have unmarked this task.\n";
+
+    public static final String MESSAGE_RECURRING_TASK_ADDED = "Oh? I see. I have added this recurring task:\n";
+    public static final String MESSAGE_RECURRING_TASK_DELETED = "Hmm, ok. I have removed this recurring task:\n";
 
     // Error Messages
     public static final String ERROR_INVALID_COMMAND = "You fool. What are you saying\n"

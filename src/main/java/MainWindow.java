@@ -40,7 +40,7 @@ public class MainWindow extends AnchorPane {
     private void showWelcomeMessage() {
         String greeting = sandrone.getGreetings();
         dialogContainer.getChildren().add(
-                DialogBox.getSandroneDialog(greeting, sandroneImage, false)
+                DialogBox.getSandroneDialog(greeting, sandroneImage)
         );
     }
 
@@ -52,18 +52,27 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response;
-        boolean isError = false;
+        String styleClass = "utility";
 
         try {
             response = sandrone.getResponse(input);
+
+            String command = input.split("\\s+")[0].toLowerCase();
+
+            styleClass = switch (command) {
+            case "todo", "deadline", "event" -> "add";
+            case "recur", "drecur", "sync" -> "recur";
+            default -> "utility";
+            };
+
         } catch (SandroneException e) {
             response = e.getMessage();
-            isError = true; // Flag this as an error
+            styleClass = "error";
         }
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getSandroneDialog(response, sandroneImage, isError)
+                DialogBox.getSandroneDialog(response, sandroneImage, styleClass)
         );
         userInput.clear();
 

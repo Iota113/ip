@@ -27,12 +27,12 @@
 
 .button {
     -fx-font: bold 12px "Arial";
-    -fx-background-color: #5D4037; /* Dark Bronze/Brown */
+    -fx-background-color: #8D6E63; /* Dark Bronze/Brown */
     -fx-text-fill: #E0E0E0; /* Light grey text for readability */
 }
 
 .button:hover {
-    -fx-background-color: gold;
+    -fx-background-color: #5D4037;
     -fx-font-size: 14px;
 }
 

@@ -53,11 +53,19 @@ public class DialogBox extends HBox {
         return db;
     }
 
-    public static DialogBox getSandroneDialog(String text, Image img, boolean isError) {
+    /** Standard dialog with a default utility style */
+    public static DialogBox getSandroneDialog(String text, Image img) {
+        return getSandroneDialog(text, img, "utility");
+    }
+
+    /** Specialized dialog with a specific CSS style class */
+    public static DialogBox getSandroneDialog(String text, Image img, String type) {
         var db = new DialogBox(text, img);
         db.flip();
-        if (isError) {
-            db.dialog.getStyleClass().add("error");
+        // Dynamically add the style class based on the 'type' provided
+        // This maps directly to the .action, .danger, or .utility CSS classes
+        if (type != null && !type.isEmpty()) {
+            db.dialog.getStyleClass().add(type);
         }
         return db;
     }

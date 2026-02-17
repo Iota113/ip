@@ -6,10 +6,28 @@
     -fx-border-insets: 0;
 }
 
+/* todo, deadline, event */
+.label.add {
+    -fx-background-color: #1B5E20;
+    -fx-text-fill: #E8F5E9;
+    -fx-border-color: #4CAF50;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+}
+
 .label.error {
     -fx-background-color: #7B1113; /* Crimson/Dark Red */
     -fx-text-fill: white;
     -fx-border-color: #FF0000;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+}
+
+/* recur, drecur, sync */
+.label.recur {
+    -fx-background-color: #37474F;
+    -fx-text-fill: #CFD8DC;
+    -fx-border-color: #90A4AE;
     -fx-border-width: 2;
     -fx-border-radius: 10;
 }

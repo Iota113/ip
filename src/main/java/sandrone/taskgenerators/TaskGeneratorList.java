@@ -42,4 +42,8 @@ public class TaskGeneratorList {
         return this.taskGenerators.size();
     }
 
+    public TaskGenerator getGenerator(int index) {
+        return taskGenerators.get(index);
+    }
+
 }
