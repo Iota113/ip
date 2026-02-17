@@ -55,15 +55,22 @@ public class Messages {
 
     public static final String ERROR_EMPTY_DESCRIPTION = "A task without a description? What do you expect me to do with it? "
             + "Give a proper description.";
-    public static final String ERROR_INVALID_DEADLINE_FORMAT = "Your deadline command is incomplete. It requires a ' /by ' tag.";
-    public static final String ERROR_EMPTY_DESCRIPTION_AND_DUEDATE = "You provided me with neither a description nor the due date?";
-    public static final String ERROR_EMPTY_DUEDATE = "You provided a deadline without a duedate.";
-    public static final String ERROR_INVALID_EVENT_FORMAT = "Your event syntax is a mess. "
-            + "It requires both ' /from ' and ' /to '. Try to keep up.";
-    public static final String ERROR_EVENT_DATE_ORDER = "Time flows forward, not backward. Fix your event dates.";
     public static final String ERROR_DUPLCIATE_DESCRIPTION =
             "Excuse me. You already have a task with the same description."
                     + " I am not adding this.";
+
+    public static final String ERROR_INVALID_DEADLINE_FORMAT = "Your deadline command is incomplete. It requires a ' /by ' tag.";
+    public static final String ERROR_EMPTY_DESCRIPTION_AND_DUEDATE = "You provided me with neither a description nor the due date?";
+    public static final String ERROR_EMPTY_DUEDATE = "You provided a deadline without a duedate.";
+
+    public static final String ERROR_INVALID_EVENT_FORMAT = "Your event syntax is a mess. "
+            + "It requires both ' /from ' and ' /to '. Try to keep up.";
+    public static final String ERROR_EVENT_DATE_ORDER = "Time flows forward, not backward. Fix your event dates.";
+    public static final String ERROR_EMPTY_EVENT_START_AND_END = "Hello? You are missing both the beginning and the end of your event.";
+    public static final String ERROR_EMPTY_EVENT_START_DATE = "You've omitted the start of your event. "
+            + "I cannot track a 'from' that does not exist.";
+    public static final String ERROR_EMPTY_EVENT_END_DATE = "An event with no end in mind? What are you doing. "
+            + "Provide a date after the '/to' tag.";
 
     public static final String ERROR_RECUR_TYPE = "I can only replicate todos, deadlines, or events. "
             + "Don't test my patience threshold.";

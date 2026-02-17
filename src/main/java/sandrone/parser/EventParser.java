@@ -60,13 +60,13 @@ public class EventParser extends Parser {
 
         if (timeParts.length < 2) {
             if (timeParts[0].trim().isEmpty()) {
-                throw new SandroneException("Both from and to fields are empty!");
+                throw new SandroneException(Messages.ERROR_EMPTY_EVENT_START_AND_END);
             }
-            throw new SandroneException("The to field is empty!");
+            throw new SandroneException(Messages.ERROR_EMPTY_EVENT_END_DATE);
         }
 
         if (timeParts[0].trim().isEmpty()) {
-            throw new SandroneException("The from field is empty!");
+            throw new SandroneException(Messages.ERROR_EMPTY_EVENT_START_DATE);
         }
 
         return new String[] {desc, timeParts[0].trim(), timeParts[1].trim()};
