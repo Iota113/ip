@@ -32,25 +32,10 @@ public class DeadlineParser extends Parser {
         return new AddCommand(newDeadline);
     }
 
-    /**
-     * Splits the raw command string into its constituent parts: description and date string.
-     *
-     * @param remainingCommand The arguments string to be partitioned.
-     * @return A String array where index 0 is the description and index 1 is the date string.
-     * @throws SandroneException If the "/by" delimiter is missing or fields are empty.
-     */
-    private static String[] extractDeadlineComponents(String remainingCommand) throws SandroneException {
-        String[] descTime = remainingCommand.split(" /by ");
-        if (descTime.length < 2 || descTime[1].trim().isEmpty()) {
-            throw new SandroneException(Messages.ERROR_EMPTY_BY);
+    private static void validateDeadlineFormat(String userInput) throws SandroneException {
+        if (!userInput.contains("/by")) {
+            throw new SandroneException(Messages.ERROR_INVALID_DEADLINE_FORMAT);
         }
-
-        String desc = descTime[0].trim();
-        if (desc.isEmpty()) {
-            throw new SandroneException(Messages.ERROR_EMPTY_DESCRIPTION);
-        }
-
-        return new String[] {desc, descTime[1]};
     }
 
     /**
@@ -69,9 +54,32 @@ public class DeadlineParser extends Parser {
         return new Deadline(desc, dueDate);
     }
 
-    private static void validateDeadlineFormat(String userInput) throws SandroneException {
-        if (!userInput.contains(" /by ")) {
-            throw new SandroneException(Messages.ERROR_INVALID_DEADLINE);
+    /**
+     * Splits the raw command string into its constituent parts: description and date string.
+     *
+     * @param remainingCommand The arguments string to be partitioned.
+     * @return A String array where index 0 is the description and index 1 is the date string.
+     * @throws SandroneException If the "/by" delimiter is missing or fields are empty.
+     */
+    private static String[] extractDeadlineComponents(String remainingCommand) throws SandroneException {
+        String[] descTime = remainingCommand.split("/by");
+
+        if (descTime.length == 0) {
+            throw new SandroneException(Messages.ERROR_EMPTY_DESCRIPTION_AND_DUEDATE);
         }
+
+        String desc = descTime[0].trim();
+        String dueDate = (descTime.length > 1) ? descTime[1].trim() : "";
+
+        if (desc.isEmpty()) {
+            throw new SandroneException(Messages.ERROR_EMPTY_DESCRIPTION);
+        }
+
+        if (dueDate.isEmpty()) {
+            throw new SandroneException(Messages.ERROR_EMPTY_DUEDATE);
+        }
+
+        return new String[] {desc, dueDate};
     }
+
 }

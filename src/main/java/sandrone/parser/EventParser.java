@@ -33,8 +33,8 @@ public class EventParser extends Parser {
     }
 
     private static void validateEventFormat(String userInput) throws SandroneException {
-        boolean hasNoFrom = !userInput.contains(" /from ");
-        boolean hasNoTo = !userInput.contains(" /to");
+        boolean hasNoFrom = !userInput.contains("/from");
+        boolean hasNoTo = !userInput.contains("/to");
 
         if (hasNoFrom || hasNoTo) {
             throw new SandroneException(Messages.ERROR_INVALID_EVENT_FORMAT);
@@ -53,20 +53,20 @@ public class EventParser extends Parser {
 
         String desc = descTime[0].trim();
         if (desc.isEmpty()) {
-            throw new SandroneException("The description of a task cannot be empty!");
+            throw new SandroneException(Messages.ERROR_EMPTY_DESCRIPTION);
         }
 
         String[] timeParts = descTime[1].split("/to");
 
         if (timeParts.length < 2) {
             if (timeParts[0].trim().isEmpty()) {
-                throw new SandroneException("Both from and to fields are empty!");
+                throw new SandroneException(Messages.ERROR_EMPTY_EVENT_START_AND_END);
             }
-            throw new SandroneException("The to field is empty!");
+            throw new SandroneException(Messages.ERROR_EMPTY_EVENT_END_DATE);
         }
 
         if (timeParts[0].trim().isEmpty()) {
-            throw new SandroneException("The from field is empty!");
+            throw new SandroneException(Messages.ERROR_EMPTY_EVENT_START_DATE);
         }
 
         return new String[] {desc, timeParts[0].trim(), timeParts[1].trim()};
@@ -87,7 +87,7 @@ public class EventParser extends Parser {
         LocalDate startDate = DateParser.parse(components[1]);
         LocalDate endDate = DateParser.parse(components[2]);
         if (startDate.isAfter(endDate)) {
-            throw new SandroneException(Messages.ERROR_DATE_ORDER);
+            throw new SandroneException(Messages.ERROR_EVENT_DATE_ORDER);
         }
 
         return new Event(desc, startDate, endDate);
