@@ -50,7 +50,7 @@ public class Messages {
 
     // Error Messages
     public static final String ERROR_INVALID_DATE_FORMAT =
-            "Incorrect date format. Use yyyy-MM-dd for deadlines. I have no time for your sloppy notation";
+            "Incorrect date format. Use yyyy-MM-dd for deadlines. I have no time for your sloppy notation.";
     public static final String ERROR_DATE_DOES_NOT_EXIST =
             "That date doesn't exist. Check your calendar.";
     public static final String ERROR_INVALID_DATE_TIME_FORMAT =
@@ -70,7 +70,7 @@ public class Messages {
                     + "Use \"help\" if you need to see the list of valid commands.";
 
     public static final String ERROR_EMPTY_DESCRIPTION =
-            "A task without a description? What do you expect me to do with it? Give a proper description.";
+            "A task without a description? What do you expect me to do with it?";
     public static final String ERROR_DUPLCIATE_DESCRIPTION =
             "Excuse me. You already have a task with the same description. I am not adding this.";
 
