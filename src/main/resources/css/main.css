@@ -14,21 +14,24 @@
 }
 
 .text-field {
-    -fx-background-color: #1A1A1D, #FDF5E6; /* Antique Lace */
+    -fx-background-color: #1A1A1D, #FDF5E6;
     -fx-background-insets: 0, 2;
-    -fx-background-radius: 5;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
     -fx-padding: 8;
     -fx-text-fill: black;
+    -fx-background-
 }
 
 .text-field:focused {
-    -fx-background-color: #7B1113, #FDF5E6; /* Changes border to Crimson when typing */
+    -fx-background-color: #7B1113, #FDF5E6;
 }
 
 .button {
     -fx-font: bold 12px "Arial";
     -fx-background-color: #8D6E63; /* Dark Bronze/Brown */
     -fx-text-fill: #E0E0E0; /* Light grey text for readability */
+    -fx-background-radius: 20;
 }
 
 .button:hover {
@@ -48,14 +51,33 @@
     -fx-background: transparent;
 }
 
+/* The background/track of the scrollbar */
 .scroll-bar {
-    -fx-font-size: 10px;  /* Change width of scroll bar. */
-    -fx-background-color: main-color;
+    -fx-background-color: #1A1A1D; /* Dark charcoal to match text field border */
+    -fx-background-insets: 0;
+    -fx-padding: 2;
 }
 
+/* The actual draggable part (The Thumb) */
 .scroll-bar .thumb {
-    -fx-background-color: #ff9cb4;
-    -fx-background-radius: 1em;
+    -fx-background-color: #7B1113;
+    -fx-background-insets: 2;
+    -fx-background-radius: 5;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #8D6E63;
+}
+
+.scroll-bar .thumb:pressed {
+    -fx-background-color: #FDF5E6;
+}
+
+/* The track background behind the thumb */
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: #5D4037; /* Subtle dark brown border for the track */
+    -fx-border-width: 0 0 0 1; /* Left-side border only for a sleek look */
 }
 
 /* Hides the increment and decrement buttons. */

@@ -3,6 +3,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sandrone.Sandrone;
@@ -24,6 +25,11 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setSandrone(sandrone);
+
+            Image icon = new Image(getClass().getResourceAsStream("/images/sandrone_puppet_master.jpg"));
+            stage.getIcons().add(icon);
+            stage.setTitle("Sandrone");
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
