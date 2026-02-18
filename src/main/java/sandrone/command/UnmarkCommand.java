@@ -31,10 +31,10 @@ public class UnmarkCommand extends Command {
     public String execute(AppState appState, SandroneUi ui, Storage storage) throws SandroneException {
         TaskList taskList = appState.getTaskList();
         taskList.setTaskStatus(taskIndex, false);
-        boolean isMarked = taskList.getTask(taskIndex).isMarked();
+        boolean isMarked = taskList.get(taskIndex).isMarked();
         assert !isMarked : "Task List did not unmark the task properly~";
         storage.saveTasks(taskList);
-        Task task = taskList.getTask(taskIndex);
+        Task task = taskList.get(taskIndex);
         return ui.showTaskUnmarked(task);
     }
 }

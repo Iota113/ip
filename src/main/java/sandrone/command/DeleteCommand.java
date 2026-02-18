@@ -30,10 +30,9 @@ public class DeleteCommand extends Command {
     @Override
     public String execute(AppState appState, SandroneUi ui, Storage storage) throws SandroneException {
         TaskList taskList = appState.getTaskList();
-        Task deletedTask = taskList.getTask(taskIndex);
-        taskList.deleteTask(taskIndex);
+        Task deletedTask = taskList.delete(taskIndex);
         storage.saveTasks(taskList);
-        return ui.showTaskDeleted(deletedTask, taskList.getTasksCount());
+        return ui.showTaskDeleted(deletedTask, taskList.getCount());
     }
 
 }

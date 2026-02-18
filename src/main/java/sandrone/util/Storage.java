@@ -78,11 +78,11 @@ public class Storage {
      * @param taskList The TaskList object to be saved
      */
     public void saveTasks(TaskList taskList) {
-        saveToFile(taskFilePath, taskList.getAllTasks(), "Failed to save tasks");
+        saveToFile(taskFilePath, taskList.getAll(), "Failed to save tasks");
     }
 
     public void saveGenerators(TaskGeneratorList genList) {
-        saveToFile(generatorFilePath, genList.getAllGenerators(), "Failed to save generators");
+        saveToFile(generatorFilePath, genList.getAll(), "Failed to save generators");
     }
 
     /**

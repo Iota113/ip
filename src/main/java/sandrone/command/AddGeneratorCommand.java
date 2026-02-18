@@ -21,9 +21,9 @@ public class AddGeneratorCommand extends Command {
     @Override
     public String execute(AppState appState, SandroneUi ui, Storage storage) {
         TaskGeneratorList taskGeneratorList = appState.getGeneratorList();
-        taskGeneratorList.addTaskGenerator(newTaskGenerator);
+        taskGeneratorList.add(newTaskGenerator);
         storage.saveGenerators(taskGeneratorList);
-        int totalCount = taskGeneratorList.getGeneratorCount();
+        int totalCount = taskGeneratorList.getCount();
         return ui.showTaskGeneratorAdded(newTaskGenerator, totalCount);
     }
 }

@@ -1,6 +1,7 @@
 package sandrone.command;
 
 import sandrone.AppState;
+import sandrone.exception.SandroneException;
 import sandrone.taskgenerators.TaskGenerator;
 import sandrone.taskgenerators.TaskGeneratorList;
 import sandrone.ui.SandroneUi;
@@ -24,11 +25,10 @@ public class DeleteGeneratorCommand extends Command {
     }
 
     @Override
-    public String execute(AppState appState, SandroneUi ui, Storage storage) {
+    public String execute(AppState appState, SandroneUi ui, Storage storage) throws SandroneException {
         TaskGeneratorList taskGeneratorList = appState.getGeneratorList();
-        TaskGenerator deletedTaskGenerator = taskGeneratorList.getGenerator(taskGeneratorIndex);
-        taskGeneratorList.deleteTaskGenerator(taskGeneratorIndex);
+        TaskGenerator deletedTaskGenerator = taskGeneratorList.delete(taskGeneratorIndex);
         storage.saveGenerators(taskGeneratorList);
-        return ui.showTaskGeneratorDeleted(deletedTaskGenerator, taskGeneratorList.getGeneratorCount());
+        return ui.showTaskGeneratorDeleted(deletedTaskGenerator, taskGeneratorList.getCount());
     }
 }

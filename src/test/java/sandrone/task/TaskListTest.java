@@ -11,23 +11,23 @@ import sandrone.exception.SandroneException;
 public class TaskListTest {
 
     @Test
-    public void addTask_validInput_taskAddedToList() throws SandroneException {
+    public void add_validInput_addedToList() throws SandroneException {
         StorageStub testStorage = new StorageStub();
         TaskList taskList = new TaskList(testStorage);
-        taskList.addTask(new Todo("Read book"));
+        taskList.add(new Todo("Read book"));
 
-        assertEquals(1, taskList.getTasksCount());
-        assertEquals("Read book", taskList.getTask(0).getTaskDescription());
+        assertEquals(1, taskList.getCount());
+        assertEquals("Read book", taskList.get(0).getTaskDescription());
     }
 
     @Test
-    public void deleteTask_validInput_taskRemovedFromList() throws SandroneException {
+    public void delete_validInput_removedFromList() throws SandroneException {
         StorageStub testStorage = new StorageStub();
         TaskList taskList = new TaskList(testStorage);
-        taskList.addTask(new Todo("Read book"));
-        taskList.addTask(new Deadline("MA2104 Tutorial", LocalDate.of(2026, 1, 30)));
-        taskList.deleteTask(0);
-        assertEquals("[·][D][·] MA2104 Tutorial (by: 2026 Jan 30)", taskList.getTask(0).toString());
+        taskList.add(new Todo("Read book"));
+        taskList.add(new Deadline("MA2104 Tutorial", LocalDate.of(2026, 1, 30)));
+        taskList.delete(0);
+        assertEquals("[·][D][·] MA2104 Tutorial (by: 2026 Jan 30)", taskList.get(0).toString());
     }
 
 }

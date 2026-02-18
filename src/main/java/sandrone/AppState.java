@@ -55,14 +55,14 @@ public class AppState {
     public void generateTasks() throws SandroneException {
         LocalDate today = LocalDate.now();
 
-        for (TaskGenerator gen : generatorList.getAllGenerators()) {
+        for (TaskGenerator gen : generatorList.getAll()) {
             // While loop handles "catch-up" (e.g., if you didn't open Sandrone for a week)
             while (!gen.getNextInitDate().isAfter(today)) {
                 // 1. Generate the Task instance
                 Task newTask = gen.createInstance();
 
                 // 2. Add to TaskList
-                taskList.addTask(newTask);
+                taskList.add(newTask);
 
                 // 3. Advance the generator state (crucial for duplicate prevention!)
                 gen.advance();

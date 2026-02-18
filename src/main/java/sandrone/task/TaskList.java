@@ -28,16 +28,34 @@ public class TaskList {
         this.tasks = storage.loadTasks();
     }
 
+    private void checkValidTaskIndex(int taskIndex) throws SandroneException {
+        if (taskIndex > tasks.size()) {
+            throw new SandroneException(Messages.ERROR_INDEX_OUT_OF_RANGE);
+        }
+    }
+
     /**
      * Adds a new task to the collection.
      *
      * @param newTask The task to be added.
      */
-    public void addTask(Task newTask) throws SandroneException {
+    public void add(Task newTask) throws SandroneException {
         if (tasks.contains(newTask)) {
             throw new SandroneException(Messages.ERROR_DUPLCIATE_DESCRIPTION);
         }
         tasks.add(newTask);
+    }
+
+    /**
+     * Removes and returns the task at the specified index from the task list.
+     *
+     * @param taskIndex The 0-based index of the task to be removed.
+     * @return The {@code Task} object that was removed.
+     * @throws SandroneException If the provided index is out of bounds.
+     */
+    public Task delete(int taskIndex) throws SandroneException {
+        checkValidTaskIndex(taskIndex);
+        return this.tasks.remove(taskIndex);
     }
 
     /**
@@ -46,7 +64,7 @@ public class TaskList {
      * @param taskIndex The 0-based index of the task in the list.
      * @param isMark {@code true} to mark as completed, {@code false} to unmark.
      */
-    public void setTaskStatus(int taskIndex, boolean isMark) throws SandroneException {
+    public Task setTaskStatus(int taskIndex, boolean isMark) throws SandroneException {
         checkValidTaskIndex(taskIndex);
 
         if (isMark) {
@@ -54,33 +72,19 @@ public class TaskList {
         } else {
             tasks.get(taskIndex).unmark();
         }
+
+        return tasks.get(taskIndex);
     }
 
-    private void checkValidTaskIndex(int taskIndex) throws SandroneException {
-        if (taskIndex > tasks.size()) {
-            throw new SandroneException(Messages.ERROR_INDEX_OUT_OF_RANGE);
-        }
-    }
-
-    /**
-     * Removes a task from the list based on its index.
-     *
-     * @param taskIndex The 0-based index of the task to be removed.
-     */
-    public void deleteTask(int taskIndex) throws SandroneException {
-        checkValidTaskIndex(taskIndex);
-        tasks.remove(taskIndex);
-    }
-
-    public List<Task> getAllTasks() {
+    public List<Task> getAll() {
         return this.tasks;
     }
 
-    public int getTasksCount() {
+    public int getCount() {
         return this.tasks.size();
     }
 
-    public Task getTask(int id) {
+    public Task get(int id) {
         return this.tasks.get(id);
     }
 
