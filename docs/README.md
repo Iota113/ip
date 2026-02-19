@@ -1,7 +1,7 @@
 # Sandrone User Guide
 
 Sandrone is a modified version of Duke Chatbot as part of CS2103T's individual project. 
-Inspired by the character Sandrone from Genshin Impact, the chatbot has a mean but loveable personality. Do not get too offended by her responses!
+Inspired by the character Sandrone from Genshin Impact, this task manager chatbot has a mean but loveable personality.
 
 ## Requirements
 1. Make sure you have **Java 17** or above installed on your computer.
@@ -35,9 +35,12 @@ Inspired by the character Sandrone from Genshin Impact, the chatbot has a mean b
 <a name="getting_started"></a>
 ## Getting Started
 Upon bootup, Sandrone will send a greeting message. You may then interact with her via some specific commands.
-<p>
-<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/203a2c14-31b7-444d-abad-e268f5c3e468" />
-</p>
+
+<img 
+  src="https://github.com/user-attachments/assets/0d6f0973-0fe5-4ef2-bac6-9fc669a1aff9"
+  alt="sandrone_greetings" 
+  style="max-width: 100%; height: auto; width: 400px;" 
+/>
 
 ### Sample Commands
 > Here are some sample commands meant to be keyed in sequentially for you to play around with the app!
@@ -75,8 +78,11 @@ Shows a list of all available commands and their usage formats.
 Sandrone will send a farewell message before closing the application in a promptly.
 * **Format:** `bye`
 
-<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/d66cfd84-e1f6-429d-8998-073677c9c975" />
-
+<img 
+  src="https://github.com/user-attachments/assets/abb32ce2-e18a-4aa3-96c2-22cded47217a"
+  alt="sandrone_message_farewell" 
+  style="max-width: 100%; height: auto; width: 400px;" 
+/>
 
 <a name="list"></a>
 ### list
@@ -176,9 +182,11 @@ Manual Editing: While these are text files, manual editing is discouraged. If th
 ## Troubleshooting and Error Messages
 If you provide an invalid input, Sandrone will let you know (usually with a bit of attitude).
 
-<p>
-<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/71951252-1062-46e7-b8fa-02e55894044d" />
-</p>
+<img 
+  src="https://github.com/user-attachments/assets/d05da2c5-4a4a-4f96-9ac1-5d0871ba40c2"
+  alt="sandrone_error_invalid_command" 
+  style="max-width: 100%; height: auto; width: 400px;" 
+/>
 
 Refer to the table below to fix common issues:
 
