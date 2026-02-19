@@ -1,30 +1,46 @@
 # Sandrone User Guide
 
 Sandrone is a modified version of Duke Chatbot as part of CS2103T's individual project. 
-Inspired by the character Sandrone from Genshin Impact, the chatbot has a mean but loveable personality, and supports the following features:
+Inspired by the character Sandrone from Genshin Impact, the chatbot has a mean but loveable personality. Do not get too offended by her responses!
 
-1. Adding and deleting a task (todo, deadline and events);
-2. Marking and unmarking tasks;
-3. Storing / loading tasks in / from a text file;
-4. Finding a specific task;
-5. Adding and deleting recurring tasks.
+## Requirements
+1. Make sure you have **Java 17** or above installed on your computer.
+   - Mac users please ensure you have the exact JDK version as prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html)
+2. Download the latest `.jar` file from [here](https://github.com/Iota113/ip/releases/tag/A-Release).
+3. Move the `.jar` file into a folder you want to use as the home folder for your app.
+4. Open the app by the `.jar` file directly or via command line with the command `java -jar sandrone.jar`
 
-**Getting Started**
+## Content
+* [Getting Started](#getting_started)
+* [Features](#features)
+  * [`help`](#help) -- returns the list of commands and their usage format
+  * [`bye`](#bye) -- exits the application
+  * [`list`](#list) -- prints out the list of tasks and recurring tasks
+  * [`todo`](#todo) -- adds a todo task
+  * [`deadline`](#deadline) -- adds a deadline task
+  * [`event`](#event) -- adds an event task
+  * [`delete`](#delete) -- deletes a task
+  * [`mark`](#mark) -- marks a task
+  * [`unmark`](#unmark) -- unmarks a task
+  * [`find`](#find) -- prints out the list of tasks that contain a specific keyword
+  * [`recur`](#recur) -- to be combined with todo / deadline / event to add a recurring task
+  * [`drecur`](#drecur) -- deletes a recurring task
+  * [`sync`](#sync) -- adds recurring tasks to active task list.
+* [Saving and Loading data](#saveload)
+* [Troubleshooting and Error Messages](#troubleshooting)
+* [Recurring Tasks](#recurring_tasks)
 
-Upon bootup, Sandrone will send a greeting message. The user may then interact with the chatbot via some specific commands.
+---
+
+<a name="getting_started"></a>
+## Getting Started
+Upon bootup, Sandrone will send a greeting message. You may then interact with her via some specific commands.
 <p>
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/203a2c14-31b7-444d-abad-e268f5c3e468" />
 </p>
 
-**Command Validation**
-
-Texts that do not fall under the list of commands will be rejected.
-<p>
-<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/71951252-1062-46e7-b8fa-02e55894044d" />
-</p>
-
-## Quick Start
-If you're already familiar with CLI tools, here is a cheat sheet of the most common commands to get you started:
+### Sample Commands
+> Here are some sample commands meant to be keyed in sequentially for you to play around with the app!
 
 ```
 # Add tasks
@@ -46,36 +62,16 @@ sync
 bye
 ```
 
-## Detailed Guide
-* Features
-  * [`help`](#help) -- returns the list of commands and their format
-  * [`bye`](#bye) -- to exit the application
-  * [`list`](#list) -- print out the list of tasks and recurring tasks
-  * [`todo`](#todo) -- add a todo task
-  * [`deadline`](#deadline) -- add a deadline task
-  * [`event`](#event) -- add an event task
-  * [`delete`](#delete) -- deletes a task
-  * [`mark`](#mark) -- marks a task
-  * [`unmark`](#unmark) -- unmarks a task
-  * [`find`](#find) -- print out the list of tasks that contain a specific keyword
-  * [`recur`](#recur) -- to be combined with todo / deadline / event to add a recurring task
-  * [`drecur`](#drecur) -- deletes a recurring task
-  * [`sync`](#sync) -- adds recurring tasks to active task list.
-* [Saving and loading data](#saveload)
-* [Troubleshooting & Error Messages](#troubleshooting)
-* [Recurring Tasks](#recurring_tasks)
-
----
-
-## Command guide
+<a name="features"></a>
+## Features
 
 <a name="help"></a>
-### help
+### `help`
 Shows a list of all available commands and their usage formats.
 * **Format:** `help`
 
 <a name="bye"></a>
-### bye
+### `bye`
 Sandrone will send a farewell message before closing the application in a promptly.
 * **Format:** `bye`
 
@@ -84,7 +80,7 @@ Sandrone will send a farewell message before closing the application in a prompt
 
 <a name="list"></a>
 ### list
-Displays all current tasks in your list, including their status, type, and recurring status.
+Displays all current active tasks and recurring tasks in your list.
 * **Format:** `list`
 
 <a name="todo"></a>
@@ -147,7 +143,7 @@ Stops a task from recurring by deleting the recurring task.
 
 <a name="sync"></a>
 ### sync
-calls on task generators to create an instance of the task. Read more on how this works under the [**Recurring Tasks**](#recurring_tasks) section.
+calls on recurring task generators to create an instance of the task. Read more on how this works under the [**Recurring Tasks**](#recurring_tasks) section.
 * **Format:** `sync`
 
 <a name="saveload"></a>
@@ -177,8 +173,12 @@ Upon startup, Sandrone automatically scans the /data folder. If existing files a
 Manual Editing: While these are text files, manual editing is discouraged. If the formatting is corrupted, Sandrone may be unable to load your tasks correctly!
 
 <a name="troubleshooting"></a>
-## Troubleshooting & Error Messages
+## Troubleshooting and Error Messages
 If you provide an invalid input, Sandrone will let you know (usually with a bit of attitude).
+
+<p>
+<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/71951252-1062-46e7-b8fa-02e55894044d" />
+</p>
 
 Refer to the table below to fix common issues:
 
