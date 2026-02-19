@@ -5,24 +5,24 @@ Inspired by the character Sandrone from Genshin Impact, this task manager chatbo
 
 ## Requirements
 1. Make sure you have **Java 17** or above installed on your computer.
-   - Mac users please ensure you have the exact JDK version as prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html)
+   - Mac users, please ensure you have the exact JDK version as prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 2. Download the latest `.jar` file from [here](https://github.com/Iota113/ip/releases/tag/A-Release).
 3. Move the `.jar` file into a folder you want to use as the home folder for your app.
-4. Open the app by the `.jar` file directly or via command line with the command `java -jar sandrone.jar`
+4. Open the app by double-clicking the `.jar` file or via the command line using `java -jar sandrone.jar`
 
 ## Content
 * [Getting Started](#getting_started)
 * [Features](#features)
   * [`help`](#help) -- returns the list of commands and their usage format
   * [`bye`](#bye) -- exits the application
-  * [`list`](#list) -- prints out the list of tasks and recurring tasks
+  * [`list`](#list) -- displays the list of tasks and recurring tasks
   * [`todo`](#todo) -- adds a todo task
   * [`deadline`](#deadline) -- adds a deadline task
   * [`event`](#event) -- adds an event task
   * [`delete`](#delete) -- deletes a task
   * [`mark`](#mark) -- marks a task
   * [`unmark`](#unmark) -- unmarks a task
-  * [`find`](#find) -- prints out the list of tasks that contain a specific keyword
+  * [`find`](#find) -- displays the list of tasks that contain a specific keyword
   * [`recur`](#recur) -- to be combined with todo / deadline / event to add a recurring task
   * [`drecur`](#drecur) -- deletes a recurring task
   * [`sync`](#sync) -- adds recurring tasks to active task list.
@@ -34,7 +34,7 @@ Inspired by the character Sandrone from Genshin Impact, this task manager chatbo
 
 <a name="getting_started"></a>
 ## Getting Started
-Upon bootup, Sandrone will send a greeting message. You may then interact with her via some specific commands.
+Upon startup, Sandrone will send a greeting message. You may then interact with her using specific commands.
 
 <img 
   src="https://github.com/user-attachments/assets/0d6f0973-0fe5-4ef2-bac6-9fc669a1aff9"
@@ -75,7 +75,7 @@ Shows a list of all available commands and their usage formats.
 
 <a name="bye"></a>
 ### `bye`
-Sandrone will send a farewell message before closing the application in a promptly.
+Sandrone will send a farewell message before closing the application promptly.
 * **Format:** `bye`
 
 <img 
@@ -86,7 +86,7 @@ Sandrone will send a farewell message before closing the application in a prompt
 
 <a name="list"></a>
 ### list
-Displays all current active tasks and recurring tasks in your list.
+Displays all active and recurring tasks in your list.
 * **Format:** `list`
 
 <a name="todo"></a>
@@ -105,7 +105,7 @@ Adds a task that needs to be done by a specific date.
 ### event
 Adds a task that occurs within a specific time frame.
 * **Format:** `event <description> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>`
-* **Example:** `CS2103T project meeting /from 2026-02-18 2000 /to 2026-02-18 2100`
+* **Example:** `event CS2103T project meeting /from 2026-02-18 2000 /to 2026-02-18 2100`
 
 <a name="delete"></a>
 ### delete
@@ -149,13 +149,13 @@ Stops a task from recurring by deleting the recurring task.
 
 <a name="sync"></a>
 ### sync
-calls on recurring task generators to create an instance of the task. Read more on how this works under the [**Recurring Tasks**](#recurring_tasks) section.
+Calls recurring task generators to create task instances. Read more on how this works under the [**Recurring Tasks**](#recurring_tasks) section.
 * **Format:** `sync`
 
 <a name="saveload"></a>
 ## Saving and Loading Data
 You don't need to manually save your progress. 
-Sandrone automatically saves your state every time you add, delete, mark, unmark a task or used the sync command.
+Sandrone automatically saves your state every time you add, delete, mark, or unmark a task, or use the `sync` command.
 
 ### Storage Location
 When you run the application, Sandrone creates a `/data` folder in the same directory as your `.jar` file. Your data is split into two specialized text files:
@@ -173,10 +173,10 @@ When you run the application, Sandrone creates a `/data` folder in the same dire
  ``` 
 
 ### Automatic Loading
-Upon startup, Sandrone automatically scans the /data folder. If existing files are found, your previous tasks and recurring generators are restored instantly. If no files exist, Sandrone starts with a clean slate.
+Upon startup, Sandrone automatically scans the `/data` folder. If existing files are found, your previous tasks and recurring generators are restored instantly. If no files exist, Sandrone starts with a clean slate.
 
->[!WARNING]
-Manual Editing: While these are text files, manual editing is discouraged. If the formatting is corrupted, Sandrone may be unable to load your tasks correctly!
+> [!WARNING]
+> **Manual Editing**: While these are text files, manual editing is discouraged. If the formatting is corrupted, Sandrone may be unable to load your tasks correctly!
 
 <a name="troubleshooting"></a>
 ## Troubleshooting and Error Messages
@@ -195,14 +195,14 @@ Refer to the table below to fix common issues:
 | **Empty Description** | "A task without a description? What do you expect me to do with it?" | Ensure text follows the command (e.g., `todo laundry`).        |
 | **Missing Tag** | "Your deadline command is incomplete. It requires a ' /by ' tag." | Include the mandatory prefix for deadlines and events.         |
 | **Invalid Index** | "Look at your list. Do you see that index? No. Because it isn't there." | Use a number corresponding to an existing item in your `list`. |
-| **Wrong Date Format** | "Incorrect date format. Use yyyy-MM-dd for deadlines. I have no time for your sloppy notation" | Use the **yyyy-mm-dd** format (and **HHmm** for events).       |
+| **Wrong Date Format** | "Incorrect date format. Use yyyy-MM-dd for deadlines. I have no time for your sloppy notation." | Use the **yyyy-MM-dd** format (and **HHmm** for events).       |
 | **Empty Date/Time** | "Hello? You are missing both the beginning and the end of your event." | Ensure a value follows your `/by`, `/from`, or `/to` tags.     |
 
 <a name="recurring_tasks"></a>
 ## Recurring Tasks
 
 Recurring tasks allow you to automate your schedule without cluttering your active list. 
-Instead of adding a single task, Sandrone saves a **Generator** -- a blueprint that knows when the next instance of that task is due.
+Instead of adding a single task, Sandrone saves a **generator** — a blueprint that knows when the next instance of that task is due.
 
 ### How it Works
 * **The Blueprint:** Each recurring task stores its description and frequency (currently weekly).
@@ -213,7 +213,7 @@ Instead of adding a single task, Sandrone saves a **Generator** -- a blueprint t
 > **Note on Syncing:** Sandrone won't automatically spam your list. You must manually use the `sync` command to generate the next batch of tasks.
 
 ### The `sync` Workflow
-When you run `sync`, Sandrone checks all active Generators:
+When you run `sync`, Sandrone checks all active generators:
 1. If the `nextInitDate` is today or in the past, an instance of that task is created in your main list.
 2. The `nextInitDate` is then automatically advanced by one week.
 3. If the date is still in the future, nothing happens—keeping your list clean and relevant.
