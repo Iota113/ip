@@ -66,7 +66,7 @@ public class Messages {
             "Look at your list. Do you see that index? No. Because it isn't there.";
 
     public static final String ERROR_INVALID_COMMAND =
-            "You fool. What are you saying\n"
+            "You fool. What are you saying.\n"
                     + "Use \"help\" if you need to see the list of valid commands.";
 
     public static final String ERROR_EMPTY_DESCRIPTION =

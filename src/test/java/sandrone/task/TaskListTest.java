@@ -27,7 +27,7 @@ public class TaskListTest {
         taskList.add(new Todo("Read book"));
         taskList.add(new Deadline("MA2104 Tutorial", LocalDate.of(2026, 1, 30)));
         taskList.delete(0);
-        assertEquals("[·][D][·] MA2104 Tutorial (by: 2026 Jan 30)", taskList.get(0).toString());
+        assertEquals("[-][D][-] MA2104 Tutorial (by: 2026 Jan 30)", taskList.get(0).toString());
     }
 
 }
